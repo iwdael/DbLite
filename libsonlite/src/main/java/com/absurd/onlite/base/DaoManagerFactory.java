@@ -36,7 +36,7 @@ public class DaoManagerFactory {
         try {
             baseDao=clazz.newInstance();
             baseDao.init(entityClass,sqLiteDatabase);
-            
+
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
