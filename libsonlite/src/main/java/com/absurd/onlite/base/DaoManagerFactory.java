@@ -42,5 +42,6 @@ public class DaoManagerFactory {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        return (T) baseDao;
     }
 }
