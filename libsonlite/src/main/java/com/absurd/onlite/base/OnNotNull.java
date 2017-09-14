@@ -8,10 +8,9 @@ import java.lang.annotation.Target;
 /**
  * Author: mr-absurd
  * Github: http://github.com/mr-absurd
- * Data: 2017/9/13.
+ * Data: 2017/9/14.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface OnField {
-    String value();
+@Target(ElementType.FIELD)
+public @interface OnNotNull {
 }

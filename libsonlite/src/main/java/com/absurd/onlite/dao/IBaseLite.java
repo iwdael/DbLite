@@ -1,0 +1,22 @@
+package com.absurd.onlite.dao;
+
+import java.util.List;
+
+/**
+ * Author: mr-absurd
+ * Github: http://github.com/mr-absurd
+ * Data: 2017/9/13.
+ */
+
+public interface IBaseLite<T> {
+    String CONDITION_WHERE = "WHERE_CLASS";
+    String CONDITION_ARGS = "WHERE_ARGS";
+
+    Long insert(T entity);
+
+    int updata(T entity, T where);
+
+    List<T> select(T where);
+
+    int delete(T where);
+}
