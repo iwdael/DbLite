@@ -30,7 +30,7 @@ public class OnLiteFactory {
         if (instence == null) {
             synchronized (OnLiteFactory.class) {
                 if (instence == null)
-                    instence = new OnLiteFactory();
+                    instence = new OnLiteFactory(path);
             }
         }
         return instence;
