@@ -13,7 +13,7 @@ import java.io.File;
 public class OnLiteFactory {
     private static OnLiteFactory instence;
     private static final String DATABASENAME = "onlite.db";
-    private String path = "/sdcard/Music/" + DATABASENAME;
+    private String path = "/sdcard/Music/";
     private SQLiteDatabase sqLiteDatabase;
 
     public static OnLiteFactory getInstance() {
@@ -37,7 +37,7 @@ public class OnLiteFactory {
     }
 
     private OnLiteFactory(String path) {
-        this.path = path + DATABASENAME;
+        this.path = path;
         openDatabase();
     }
 
@@ -47,7 +47,7 @@ public class OnLiteFactory {
 
     private void openDatabase() {
         new File(this.path).mkdirs();
-        sqLiteDatabase = SQLiteDatabase.openOrCreateDatabase(path, null);
+        sqLiteDatabase = SQLiteDatabase.openOrCreateDatabase(path + DATABASENAME, null);
     }
 
     public synchronized <T extends BaseLite<M>, M> T getDataHelper(Class<T> clazz, Class<M> entityClass) {
