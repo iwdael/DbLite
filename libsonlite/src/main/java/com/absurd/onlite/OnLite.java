@@ -169,6 +169,7 @@ public abstract class OnLite<T> extends BaseLite<T> {
     @Override
     protected Map<String, String> getValues(T entity) {
         HashMap<String, String> map = new HashMap<>();
+        if(entity==null)return map;
         for (Map.Entry<String, Field> entry : cacheMap.entrySet()) {
             String cacheKey = null;
             String cacheValue = null;
