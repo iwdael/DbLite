@@ -94,7 +94,6 @@ public abstract class OnLite<T> extends BaseLite<T> {
         }
         String temp = builder.toString();
         temp = temp.substring(0, temp.length() - 2) + ")";
-        Log.v("TAG", "-----temp----->>" + temp);
         return temp;
     }
 

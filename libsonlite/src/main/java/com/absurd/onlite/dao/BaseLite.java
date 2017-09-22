@@ -3,6 +3,7 @@ package com.absurd.onlite.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.absurd.onlite.base.OnTable;
 
@@ -36,6 +37,15 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
             sqLiteDatabase.execSQL(createTable(entityClass));
             initCacheMap();
         }
+    }
+
+    @Override
+    public Long insert(List<T> entitys) {
+        Long result = -1L;
+        for (T entity : entitys) {
+            result = insert(entity);
+        }
+        return result;
     }
 
     @Override
@@ -84,6 +94,12 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
         int result = -1;
         result = sqLiteDatabase.delete(tableName, (String) condition.get(CONDITION_WHERE), (String[]) condition.get(CONDITION_ARGS));
         return result;
+    }
+
+    @Override
+    public void delete() {
+        String sql = " DROP TABLE " + this.tableName + " IF NOT EXISTS ";
+        sqLiteDatabase.execSQL(sql);
     }
 
     protected abstract void initCacheMap();

@@ -14,9 +14,13 @@ public interface IBaseLite<T> {
 
     Long insert(T entity);
 
+    Long insert(List<T> entity);
+
     int updata(T entity, T where);
 
     List<T> select(T where);
 
     int delete(T where);
+
+    void delete();
 }
