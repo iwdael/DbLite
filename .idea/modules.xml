@@ -3,10 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OnLite.iml" filepath="$PROJECT_DIR$/OnLite.iml" />
-      <module fileurl="file://$PROJECT_DIR$/OnLite.iml" filepath="$PROJECT_DIR$/OnLite.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libsonlite/libsonlite.iml" filepath="$PROJECT_DIR$/libsonlite/libsonlite.iml" />
       <module fileurl="file://$PROJECT_DIR$/libsonlite/libsonlite.iml" filepath="$PROJECT_DIR$/libsonlite/libsonlite.iml" />
     </modules>
   </component>

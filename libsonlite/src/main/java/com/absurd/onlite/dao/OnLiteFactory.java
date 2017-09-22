@@ -37,7 +37,7 @@ public class OnLiteFactory {
     }
 
     private OnLiteFactory(String path) {
-        this.path = path;
+        this.path = path + DATABASENAME;
         openDatabase();
     }
 
