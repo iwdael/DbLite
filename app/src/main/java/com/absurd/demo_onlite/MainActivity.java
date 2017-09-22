@@ -31,5 +31,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         user.setMlong((long) 10000);
         userLite.insert(user);
         Log.v("TAG",userLite.select(null).toString());
+        userLite.delete();
     }
 }

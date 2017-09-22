@@ -97,10 +97,15 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
     }
 
     @Override
-    public void delete() {
-        String sql = " DROP TABLE " + this.tableName + " IF NOT EXISTS ";
+    public boolean delete() {
+        if (!tableIsExist()) return false;
+        String sql = " DROP TABLE " + this.tableName;
         sqLiteDatabase.execSQL(sql);
+        return true;
     }
+
+    protected abstract boolean tableIsExist();
+
 
     protected abstract void initCacheMap();
 

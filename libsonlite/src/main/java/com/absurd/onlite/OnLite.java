@@ -221,4 +221,18 @@ public abstract class OnLite<T> extends BaseLite<T> {
         return result;
 
     }
+
+    @Override
+    protected boolean tableIsExist() {
+        boolean result = false;
+        String sql = "SELECT COUNT(*) FROM sqlite_master where type='table' and name='" + tableName + "'";
+        Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
+        if (cursor.moveToNext()) {
+            int count = cursor.getInt(0);
+            if (count > 0) {
+                result = true;
+            }
+        }
+        return result;
+    }
 }
