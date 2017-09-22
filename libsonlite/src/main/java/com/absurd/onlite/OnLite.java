@@ -2,14 +2,11 @@ package com.absurd.onlite;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.util.Log;
-
 import com.absurd.onlite.base.OnAutoIncreament;
 import com.absurd.onlite.base.OnColumn;
 import com.absurd.onlite.base.OnNotNull;
 import com.absurd.onlite.base.OnUnique;
 import com.absurd.onlite.dao.BaseLite;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;

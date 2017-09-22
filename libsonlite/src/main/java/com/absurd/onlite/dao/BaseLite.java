@@ -3,10 +3,7 @@ package com.absurd.onlite.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
 import com.absurd.onlite.base.OnTable;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +94,7 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
     }
 
     @Override
-    public boolean delete() {
+    public boolean deleteTable() {
         if (!tableIsExist()) return false;
         String sql = " DROP TABLE " + this.tableName;
         sqLiteDatabase.execSQL(sql);

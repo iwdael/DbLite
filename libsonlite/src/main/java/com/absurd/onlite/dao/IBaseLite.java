@@ -22,5 +22,5 @@ public interface IBaseLite<T> {
 
     int delete(T where);
 
-    boolean delete();
+    boolean deleteTable();
 }
