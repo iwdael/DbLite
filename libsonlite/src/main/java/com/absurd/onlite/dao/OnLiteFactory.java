@@ -2,6 +2,8 @@ package com.absurd.onlite.dao;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.File;
+
 /**
  * Author: mr-absurd
  * Github: http://github.com/mr-absurd
@@ -44,6 +46,7 @@ public class OnLiteFactory {
     }
 
     private void openDatabase() {
+        new File(this.path).mkdirs();
         sqLiteDatabase = SQLiteDatabase.openOrCreateDatabase(path, null);
     }
 
