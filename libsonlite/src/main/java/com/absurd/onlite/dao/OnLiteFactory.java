@@ -13,14 +13,14 @@ import java.io.File;
 public class OnLiteFactory {
     private static OnLiteFactory instence;
     private static final String DATABASENAME = "onlite.db";
-    private String path = "/sdcard/Music/";
+    private String path;
     private SQLiteDatabase sqLiteDatabase;
 
     public static OnLiteFactory getInstance() {
         if (instence == null) {
             synchronized (OnLiteFactory.class) {
                 if (instence == null)
-                    instence = new OnLiteFactory();
+                    throw new RuntimeException("You must first implement a parameter constructor !");
             }
         }
         return instence;
