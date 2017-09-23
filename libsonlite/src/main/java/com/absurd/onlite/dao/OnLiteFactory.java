@@ -11,7 +11,7 @@ import java.io.File;
  */
 
 public class OnLiteFactory {
-    private static OnLiteFactory instence;
+    private static volatile OnLiteFactory instence = null;
     private static final String DATABASENAME = "onlite.db";
     private String path;
     private SQLiteDatabase sqLiteDatabase;
@@ -20,7 +20,7 @@ public class OnLiteFactory {
         if (instence == null) {
             synchronized (OnLiteFactory.class) {
                 if (instence == null)
-                    throw new RuntimeException("You must first implement a parameter constructor !");
+                    throw new RuntimeException("You must first implement a parameter constructor before you use OnLite !");
             }
         }
         return instence;
@@ -38,10 +38,6 @@ public class OnLiteFactory {
 
     private OnLiteFactory(String path) {
         this.path = path;
-        openDatabase();
-    }
-
-    private OnLiteFactory() {
         openDatabase();
     }
 
