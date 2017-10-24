@@ -3,7 +3,10 @@ package com.absurd.onlite.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import com.absurd.onlite.base.OnTable;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,12 +57,50 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
     }
 
     @Override
+    public int updataOrInsert(T entity, T where) {
+        int result = updata(entity, where);
+        if (result == 0 | result == -1) {
+            result = Integer.valueOf(String.valueOf(insert(entity)));
+        }
+        return result;
+    }
+
+    @Override
     public int updata(T entity, T where) {
         Map<String, String> mapValues = getValues(entity);
         ContentValues values = getContentValues(mapValues);
         Map<String, Object> condition = getCondition(where);
         int result = -1;
         result = sqLiteDatabase.update(this.tableName, values, (String) condition.get(CONDITION_WHERE), (String[]) condition.get(CONDITION_ARGS));
+        Log.v("TAG", "CONDITION_WHERE---->>" + (String) condition.get(CONDITION_WHERE));
+        String[] strings = (String[]) condition.get(CONDITION_ARGS);
+        for (String string : strings) {
+            Log.v("TAG", "CONDITION_ARGS----->>" + string);
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<T> select(T where, Integer limit) {
+        Cursor cursor;
+        List<T> result = new ArrayList<>();
+        if (where == null) {
+            cursor = sqLiteDatabase.query(false, tableName, null, null, null, null, null, null, String.valueOf(limit));
+        } else {
+            Map<String, Object> condition = getCondition(where);
+            cursor = sqLiteDatabase.query(false, tableName, null, (String) condition.get(CONDITION_WHERE), (String[]) condition.get(CONDITION_ARGS), null, null, null, String.valueOf(limit));
+        }
+        while (cursor.moveToNext()) {
+            try {
+                T t = entityClass.newInstance();
+                setValues(t, cursor);
+                result.add(t);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        cursor.close();
         return result;
     }
 
@@ -82,6 +123,7 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
                 e.printStackTrace();
             }
         }
+        cursor.close();
         return result;
     }
 

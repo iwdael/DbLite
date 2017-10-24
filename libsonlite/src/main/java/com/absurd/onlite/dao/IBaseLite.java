@@ -18,7 +18,11 @@ public interface IBaseLite<T> {
 
     int updata(T entity, T where);
 
+    int updataOrInsert(T entity, T where);
+
     List<T> select(T where);
+
+    List<T> select(T where, Integer limit);
 
     int delete(T where);
 

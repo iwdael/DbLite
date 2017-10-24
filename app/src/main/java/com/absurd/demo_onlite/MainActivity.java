@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        OnLiteFactory.getInstance("/sdcard/Music/");
         userLite = OnLiteFactory.getInstance().getDataHelper(UserLite.class, User.class);
     }
 
@@ -21,16 +22,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
 
         User user = new User();
-        user.setPswd("21312");
-        user.setUsername("admin");
+        user.setUsername("admin123Test");
         user.setMbyte("sdasqewrqew".getBytes());
         user.setMdouble(123);
-        user.setMfloat(1.000f);
+        user.setMfloat(1.200f);
         short s = 1;
         user.setMshort(s);
-        user.setMlong((long) 10000);
-        userLite.insert(user);
+        user.setMlong((long) 12345);
+        User where = new User();
+        where.setUsername("admin");
+        Log.v("TAG", "------->>" + userLite.updataOrInsert(user, where));
         Log.v("TAG", userLite.select(null).toString());
-        userLite.delete(null);
+        Log.v("TAG", userLite.select(null, 0).toString());
     }
 }

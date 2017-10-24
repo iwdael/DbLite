@@ -18,8 +18,8 @@ public class User {
     private String pswd;
     private Long mlong;
     private Short mshort;
-    private double mdouble;
-    private float mfloat;
+    private Double mdouble;
+    private Float mfloat;
     private byte[] mbyte;
 
     public Integer getId() {
