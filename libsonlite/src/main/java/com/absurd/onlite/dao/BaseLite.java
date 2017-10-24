@@ -72,12 +72,6 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
         Map<String, Object> condition = getCondition(where);
         int result = -1;
         result = sqLiteDatabase.update(this.tableName, values, (String) condition.get(CONDITION_WHERE), (String[]) condition.get(CONDITION_ARGS));
-        Log.v("TAG", "CONDITION_WHERE---->>" + (String) condition.get(CONDITION_WHERE));
-        String[] strings = (String[]) condition.get(CONDITION_ARGS);
-        for (String string : strings) {
-            Log.v("TAG", "CONDITION_ARGS----->>" + string);
-        }
-
         return result;
     }
 
