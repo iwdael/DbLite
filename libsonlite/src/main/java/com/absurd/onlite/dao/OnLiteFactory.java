@@ -46,10 +46,10 @@ public class OnLiteFactory {
         sqLiteDatabase = SQLiteDatabase.openOrCreateDatabase(path + DATABASENAME, null);
     }
 
-    public synchronized <T extends BaseLite<M>, M> T getDataHelper(Class<T> clazz, Class<M> entityClass) {
+    public synchronized <T extends BaseLite<M>, M> T getDataHelper(Class<T> liteClass, Class<M> entityClass) {
         BaseLite baseLite = null;
         try {
-            baseLite = clazz.newInstance();
+            baseLite = liteClass.newInstance();
             baseLite.init(entityClass, sqLiteDatabase);
 
         } catch (InstantiationException e) {

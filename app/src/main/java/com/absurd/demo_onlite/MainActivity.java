@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.absurd.onlite.dao.OnLiteFactory;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     UserLite userLite;
 
@@ -20,19 +22,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        UserLite lite = OnLiteFactory.getInstance().getDataHelper(UserLite.class, User.class);
 
-        User user = new User();
-        user.setUsername("admin123Test");
-        user.setMbyte("sdasqewrqew".getBytes());
-        user.setMdouble(123);
-        user.setMfloat(1.200f);
-        short s = 1;
-        user.setMshort(s);
-        user.setMlong((long) 12345);
+        List<User> userLimitAndPage;
         User where = new User();
-        where.setUsername("admin");
-        Log.v("TAG", "------->>" + userLite.updataOrInsert(user, where));
-        Log.v("TAG", userLite.select(null).toString());
-        Log.v("TAG", userLite.select(null, 0).toString());
+        where.setUsername("admin10");
+        for (int i = 1; i < 7; i++) {
+            userLimitAndPage = lite.select(where, 10, i,"id",false);
+            Log.v("TAG", "----------------------page-->" + i + "-----------------------------------");
+            for (User user : userLimitAndPage) {
+                Log.v("TAG", user.toString());
+            }
+        }
+        Log.v("TAG", "---------------------------------------------------------");
     }
 }

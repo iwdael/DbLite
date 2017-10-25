@@ -3,7 +3,6 @@ package com.absurd.onlite.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.absurd.onlite.base.OnTable;
 
@@ -76,14 +75,24 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
     }
 
     @Override
-    public List<T> select(T where, Integer limit) {
+    public List<T> select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc) {
         Cursor cursor;
         List<T> result = new ArrayList<>();
+        String limitStr = null;
+        if (limit != null && page != null) {
+            limitStr = (limit * (page - 1)) + "," + limit;
+        } else if (limit != null && page == null) {
+            limitStr = String.valueOf(limit);
+        }
+        String order = null;
+        if (orderColumnName != null) {
+            order = orderColumnName + (asc ? " asc" : " desc");
+        }
         if (where == null) {
-            cursor = sqLiteDatabase.query(false, tableName, null, null, null, null, null, null, String.valueOf(limit));
+            cursor = sqLiteDatabase.query(false, tableName, null, null, null, null, null, order, limitStr);
         } else {
             Map<String, Object> condition = getCondition(where);
-            cursor = sqLiteDatabase.query(false, tableName, null, (String) condition.get(CONDITION_WHERE), (String[]) condition.get(CONDITION_ARGS), null, null, null, String.valueOf(limit));
+            cursor = sqLiteDatabase.query(false, tableName, null, (String) condition.get(CONDITION_WHERE), (String[]) condition.get(CONDITION_ARGS), null, null, order, limitStr);
         }
         while (cursor.moveToNext()) {
             try {
@@ -99,27 +108,30 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
     }
 
     @Override
-    public List<T> select(T where) {
-        Cursor cursor;
-        List<T> result = new ArrayList<>();
-        if (where == null) {
-            cursor = sqLiteDatabase.query(false, tableName, null, null, null, null, null, null, null);
-        } else {
-            Map<String, Object> condition = getCondition(where);
-            cursor = sqLiteDatabase.query(false, tableName, null, (String) condition.get(CONDITION_WHERE), (String[]) condition.get(CONDITION_ARGS), null, null, null, null);
-        }
-        while (cursor.moveToNext()) {
-            try {
-                T t = entityClass.newInstance();
-                setValues(t, cursor);
-                result.add(t);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        cursor.close();
-        return result;
+    public List<T> select(T where, Integer limit, Integer page) {
+        return select(where, limit, page, null, null);
     }
+
+    @Override
+    public List<T> select(T where, Integer limit, String orderColumnName, Boolean asc) {
+        return select(where, limit, null, orderColumnName, asc);
+    }
+
+    @Override
+    public List<T> select(T where, Integer limit) {
+        return select(where, limit, null, null, null);
+    }
+
+    @Override
+    public List<T> select(T where, String orderColumnName, Boolean asc) {
+        return select(where, null, null, orderColumnName, asc);
+    }
+
+    @Override
+    public List<T> select(T where) {
+        return select(where, null, null, null, null);
+    }
+
 
     @Override
     public int delete(T where) {
@@ -152,6 +164,5 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
     protected abstract void setValues(T t, Cursor cursor);
 
     protected abstract Map<String, Object> getCondition(T where);
-
 
 }

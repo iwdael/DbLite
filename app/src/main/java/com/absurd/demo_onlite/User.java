@@ -16,11 +16,6 @@ public class User {
     private Integer id;
     private String username;
     private String pswd;
-    private Long mlong;
-    private Short mshort;
-    private Double mdouble;
-    private Float mfloat;
-    private byte[] mbyte;
 
     public Integer getId() {
         return id;
@@ -46,57 +41,12 @@ public class User {
         this.pswd = pswd;
     }
 
-    public Long getMlong() {
-        return mlong;
-    }
-
-    public void setMlong(Long mlong) {
-        this.mlong = mlong;
-    }
-
-    public Short getMshort() {
-        return mshort;
-    }
-
-    public void setMshort(Short mshort) {
-        this.mshort = mshort;
-    }
-
-    public double getMdouble() {
-        return mdouble;
-    }
-
-    public void setMdouble(double mdouble) {
-        this.mdouble = mdouble;
-    }
-
-    public float getMfloat() {
-        return mfloat;
-    }
-
-    public void setMfloat(float mfloat) {
-        this.mfloat = mfloat;
-    }
-
-    public byte[] getMbyte() {
-        return mbyte;
-    }
-
-    public void setMbyte(byte[] mbyte) {
-        this.mbyte = mbyte;
-    }
-
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", pswd='" + pswd + '\'' +
-                ", mlong=" + mlong +
-                ", mshort=" + mshort +
-                ", mdouble=" + mdouble +
-                ", mfloat=" + mfloat +
-                ", mbyte=" + Arrays.toString(mbyte) +
                 '}';
     }
 }
