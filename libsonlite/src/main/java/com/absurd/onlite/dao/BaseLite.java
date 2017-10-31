@@ -1,9 +1,9 @@
 package com.absurd.onlite.dao;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.absurd.onlite.base.OnTable;
+import com.absurd.onlite.entity.Condition;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +73,7 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
     }
 
     @Override
-    public List<T> select(T where, Map<String, List<String>> condition, Integer limit, Integer page, String orderColumnName, Boolean asc) {
+    public List<T> select(T where, List<Condition> condition, Integer limit, Integer page, String orderColumnName, Boolean asc) {
         Cursor cursor;
         List<T> result = new ArrayList<>();
         String limitStr = null;
@@ -88,11 +88,13 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
         StringBuilder d_para = new StringBuilder();
         String[] d_value = null;
         if (condition != null) {
-            for (String s : condition.get(CONDITION_WHERE)) {
+            List<String> list=new ArrayList<>();
+            for (Condition s : condition) {
                 d_para.append(" and    ");
-                d_para.append(s);
+                d_para.append(s.getCondition());
+                list.add(s.getValue());
             }
-            d_value = condition.get(CONDITION_ARGS).toArray(new String[condition.get(CONDITION_ARGS).size()]);
+            d_value = list.toArray(new String[list.size()]);
         }
         if (where != null) {
             Map<String, Object> con = getCondition(where);
@@ -102,11 +104,10 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
                 List<String> condList = new ArrayList<>();
                 for (String s : condArgv) {
                     condList.add(s);
-                 }
+                }
                 for (String s : d_value) {
                     condList.add(s);
-                 }
-
+                }
                 key = condWhere + d_para.toString();
                 value = (String[]) condList.toArray(new String[condList.size()]);
             } else {

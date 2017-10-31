@@ -1,5 +1,7 @@
 package com.absurd.onlite.dao;
 
+import com.absurd.onlite.entity.Condition;
+
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +36,7 @@ public interface IBaseLite<T> {
 
     List<T> select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc);
 
-    List<T> select(T where, Map<String,List<String>> condition, Integer limit, Integer page, String orderColumnName, Boolean asc);
+    List<T> select(T where, List<Condition> condition, Integer limit, Integer page, String orderColumnName, Boolean asc);
 
     int delete(T where);
 

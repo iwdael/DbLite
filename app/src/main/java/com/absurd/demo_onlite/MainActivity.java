@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.absurd.onlite.OnLite;
 import com.absurd.onlite.dao.OnLiteFactory;
+import com.absurd.onlite.entity.Condition;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,15 +32,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         List<User> userLimitAndPage;
         User where = new User();
         where.setUsername("admin10");
-        List<String> w=new ArrayList<>();
-        w.add("id > ?");
-        List<String> a=new ArrayList<>();
-        a.add("300");
-        Map<String,List<String>> condition=new HashMap<>();
-        condition.put(OnLite.CONDITION_WHERE,w);
-        condition.put(OnLite.CONDITION_ARGS,a);
+
+        List<Condition> conditions=new ArrayList<>();
+        conditions.add(new Condition("id > ?","300"));
+
         for (int i = 1; i < 7; i++) {
-            userLimitAndPage = lite.select(null,null, 10, i,"id",false);
+            userLimitAndPage = lite.select(where,conditions, 10, i,"id",false);
             Log.v("TAG", "----------------------page-->" + i + "-----------------------------------");
             for (User user : userLimitAndPage) {
                 Log.v("TAG", user.toString());
