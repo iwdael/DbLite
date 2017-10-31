@@ -3,9 +3,7 @@ package com.absurd.onlite.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.absurd.onlite.base.OnTable;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +73,7 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
     }
 
     @Override
-    public List<T> select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc) {
+    public List<T> select(T where, Map<String, List<String>> condition, Integer limit, Integer page, String orderColumnName, Boolean asc) {
         Cursor cursor;
         List<T> result = new ArrayList<>();
         String limitStr = null;
@@ -84,16 +82,50 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
         } else if (limit != null && page == null) {
             limitStr = String.valueOf(limit);
         }
+
+        String key = null;
+        String[] value = null;
+        StringBuilder d_para = new StringBuilder();
+        String[] d_value = null;
+        if (condition != null) {
+            for (String s : condition.get(CONDITION_WHERE)) {
+                d_para.append(" and    ");
+                d_para.append(s);
+            }
+            d_value = condition.get(CONDITION_ARGS).toArray(new String[condition.get(CONDITION_ARGS).size()]);
+        }
+        if (where != null) {
+            Map<String, Object> con = getCondition(where);
+            String condWhere = ((String) con.get(CONDITION_WHERE));
+            String[] condArgv = (String[]) con.get(CONDITION_ARGS);
+            if (condition != null) {
+                List<String> condList = new ArrayList<>();
+                for (String s : condArgv) {
+                    condList.add(s);
+                 }
+                for (String s : d_value) {
+                    condList.add(s);
+                 }
+
+                key = condWhere + d_para.toString();
+                value = (String[]) condList.toArray(new String[condList.size()]);
+            } else {
+                key = condWhere;
+                value = condArgv;
+            }
+        } else {
+            if (condition != null) {
+                key = d_para.toString().substring(6, d_para.toString().length());
+                value = d_value;
+            }
+        }
         String order = null;
         if (orderColumnName != null) {
             order = orderColumnName + (asc ? " asc" : " desc");
         }
-        if (where == null) {
-            cursor = sqLiteDatabase.query(false, tableName, null, null, null, null, null, order, limitStr);
-        } else {
-            Map<String, Object> condition = getCondition(where);
-            cursor = sqLiteDatabase.query(false, tableName, null, (String) condition.get(CONDITION_WHERE), (String[]) condition.get(CONDITION_ARGS), null, null, order, limitStr);
-        }
+
+        cursor = sqLiteDatabase.query(false, tableName, null, key, value, null, null, order, limitStr);
+
         while (cursor.moveToNext()) {
             try {
                 T t = entityClass.newInstance();
@@ -105,6 +137,11 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
         }
         cursor.close();
         return result;
+    }
+
+    @Override
+    public List<T> select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc) {
+        return select(where, null, limit, page, orderColumnName, asc);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.absurd.onlite.dao;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: mr-absurd
@@ -9,8 +10,8 @@ import java.util.List;
  */
 
 public interface IBaseLite<T> {
-    String CONDITION_WHERE = "WHERE_CLASS";
-    String CONDITION_ARGS = "WHERE_ARGS";
+   public static String CONDITION_WHERE = "WHERE_CLASS";
+    public static String CONDITION_ARGS = "WHERE_ARGS";
 
     Long insert(T entity);
 
@@ -32,6 +33,8 @@ public interface IBaseLite<T> {
     List<T> select(T where, Integer limit, Integer page);
 
     List<T> select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc);
+
+    List<T> select(T where, Map<String,List<String>> condition, Integer limit, Integer page, String orderColumnName, Boolean asc);
 
     int delete(T where);
 
