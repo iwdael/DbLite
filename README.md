@@ -1,4 +1,4 @@
-# OnLite  [![](https://jitpack.io/v/mr-absurd/onlite.svg)](https://jitpack.io/#mr-absurd/onlite)
+# OnLite  [![](https://jitpack.io/v/aliletter/onlite.svg)](https://jitpack.io/#aliletter/onlite)
 OnLite is a database framework for Android, you do not need to write any sql statement. Onlite to achieve the database data records and java objects between the mapping, increase, delete, check, change, you can achieve through the java object.
 # How to
 To get a Git project into your build:
@@ -15,7 +15,7 @@ Add it in your root build.gradle at the end of repositories:
 ## Step 2. Add the dependency
 
 	dependencies {
-          compile 'com.github.mr-absurd:onlite:v1.0.1'
+          compile 'com.github.aliletter:onlite:v1.1.5'
           
 	}
 # Instruction
