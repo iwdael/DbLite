@@ -11,8 +11,8 @@ import java.util.List;
  */
 
 public interface IBaseLite<T> {
-   public static String CONDITION_WHERE = "WHERE_CLASS";
-    public static String CONDITION_ARGS = "WHERE_ARGS";
+    String CONDITION_WHERE = "WHERE_CLASS";
+    String CONDITION_ARGS = "WHERE_ARGS";
 
     Long insert(T entity);
 

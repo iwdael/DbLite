@@ -1,6 +1,6 @@
 package com.aliletter.demo_onlite;
 
-import com.aliletter.onlite.base.OnAutoIncreament;
+import com.aliletter.onlite.annotation.OnAutoIncreament;
 
 /**
  * Author: mr-absurd

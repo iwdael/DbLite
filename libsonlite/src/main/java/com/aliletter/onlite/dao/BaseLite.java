@@ -2,7 +2,7 @@ package com.aliletter.onlite.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.aliletter.onlite.base.OnTable;
+import com.aliletter.onlite.annotation.OnTable;
 import com.aliletter.onlite.entity.Condition;
 import java.lang.reflect.Field;
 import java.util.ArrayList;

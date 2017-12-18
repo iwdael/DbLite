@@ -2,11 +2,14 @@ package com.aliletter.onlite;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import com.aliletter.onlite.base.OnAutoIncreament;
-import com.aliletter.onlite.base.OnColumn;
-import com.aliletter.onlite.base.OnNotNull;
-import com.aliletter.onlite.base.OnUnique;
+
+import com.aliletter.onlite.annotation.OnAutoIncreament;
+import com.aliletter.onlite.annotation.OnColumn;
+import com.aliletter.onlite.annotation.OnNotNull;
+import com.aliletter.onlite.annotation.OnUnique;
 import com.aliletter.onlite.dao.BaseLite;
+import com.aliletter.onlite.util.OnLiteUtil;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +37,7 @@ public abstract class OnLite<T> extends BaseLite<T> {
     protected static String SHORT = " int(32) ";
     protected static String INT = " int(32) ";
     protected static String BLOB = " blob ";
+    protected static String TEXT = " TEXT ";
 
     @Override
     protected String createTable(Class<T> entityClass) {
@@ -77,6 +81,9 @@ public abstract class OnLite<T> extends BaseLite<T> {
                 builder.append(" ").append(BLOB).append(" ");
             } else if (field.getType() == Byte[].class) {
                 builder.append(" ").append(BLOB).append(" ");
+            } else {
+                //不是基本类型以字符串的方式处理
+                builder.append(" ").append(TEXT).append(" ");
             }
 
             if (field.getAnnotation(OnAutoIncreament.class) != null) {
@@ -158,6 +165,9 @@ public abstract class OnLite<T> extends BaseLite<T> {
                     field.set(t, cursor.getBlob(index));
                 } else if (field.getType() == Byte[].class) {
                     field.set(t, cursor.getBlob(index));
+                } else {
+                    //需要从字符串转为对象,必须为Json字符串，否则转换失败。
+                    field.set(t, OnLiteUtil.fromJsonString(cursor.getString(index), field.getType()));
                 }
             }
         } catch (IllegalAccessException e) {
@@ -169,7 +179,7 @@ public abstract class OnLite<T> extends BaseLite<T> {
     @Override
     protected Map<String, String> getValues(T entity) {
         HashMap<String, String> map = new HashMap<>();
-        if(entity==null)return map;
+        if (entity == null) return map;
         for (Map.Entry<String, Field> entry : cacheMap.entrySet()) {
             String cacheKey = null;
             String cacheValue = null;
@@ -180,7 +190,6 @@ public abstract class OnLite<T> extends BaseLite<T> {
             }
             try {
                 if (null != entry.getValue().get(entity)) {
-
                     cacheValue = entry.getValue().get(entity).toString();
                 }
             } catch (IllegalAccessException e) {

@@ -1,4 +1,4 @@
-package com.aliletter.onlite.base;
+package com.aliletter.onlite.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

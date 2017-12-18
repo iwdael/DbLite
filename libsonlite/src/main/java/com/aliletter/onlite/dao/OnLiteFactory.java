@@ -46,7 +46,7 @@ public class OnLiteFactory {
         sqLiteDatabase = SQLiteDatabase.openOrCreateDatabase(path + DATABASENAME, null);
     }
 
-    public synchronized <T extends BaseLite<M>, M> T getDataHelper(Class<T> liteClass, Class<M> entityClass) {
+    public <T extends BaseLite<M>, M> T getDataHelper(Class<T> liteClass, Class<M> entityClass) {
         BaseLite baseLite = null;
         try {
             baseLite = liteClass.newInstance();

@@ -1,4 +1,4 @@
-package com.aliletter.onlite.base;
+package com.aliletter.onlite.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,6 +12,5 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface OnAutoIncreament {
-
+public @interface OnUnique {
 }
