@@ -168,6 +168,7 @@ public abstract class OnLite<T> extends BaseLite<T> {
                 } else {
                     //需要从字符串转为对象,必须为Json字符串，否则转换失败。
                     field.set(t, OnLiteUtil.fromJsonString(cursor.getString(index), field.getType()));
+
                 }
             }
         } catch (IllegalAccessException e) {
