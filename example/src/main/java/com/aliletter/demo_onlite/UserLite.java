@@ -9,12 +9,5 @@ import com.aliletter.onlite.OnLite;
  */
 
 public class UserLite extends OnLite<User> {
-//    @Override
-//    public String createTable(Class<User> entityClass) {
-//        return "CREATE TABLE IF NOT EXISTS User (\n" +
-//                "  userid INTEGER PRIMARY KEY AUTOINCREMENT ,\n" +
-//                "  name varchar(255) DEFAULT NULL,\n" +
-//                "  pswd varchar(255) DEFAULT NULL\n" +
-//                ")";
-//    }
+
 }

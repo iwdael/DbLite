@@ -38,12 +38,4 @@ public class User {
         this.pswd = pswd;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", pswd='" + pswd + '\'' +
-                '}';
-    }
 }
