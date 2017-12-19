@@ -125,7 +125,7 @@ Add it in your application module build.gradle at the end of dependencies where 
 	}
 ```
 ### Step 3. Add the permission
-Add it in your application AndroidManifest.xml in the manifest label.   [click here for details](https://github.com/aliletter/OnHttp/blob/master/androidmanifest.gradle.png)
+Add it in your application AndroidManifest.xml in the manifest label.   [click here for details](https://github.com/aliletter/OnHttp/blob/master/androimanifest.png)
 ```Java
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
