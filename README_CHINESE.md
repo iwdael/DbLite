@@ -1,8 +1,9 @@
 # OnLite  [![](https://jitpack.io/v/aliletter/onlite.svg)](https://jitpack.io/#aliletter/onlite)
-OnLite is a database framework for Android, you do not need to write any sql statement. Onlite to achieve the database data records and java objects between the mapping, increase, delete, check, change, you can achieve through the java object.[中文文档](https://github.com/aliletter/OnLite/blob/master/README_CHINESE.md)
-## Instruction
-Before using OnLite, you must initialize Onlite with the getInstance method in the OnLiteFactory. OnLite to achieve some of the more complex queries, such as in accordance with a field ascending order or paged paging query.
-### Sample Code
+OnLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite实现数据库的数据记录和java对象之间的映射。增加，删除，查询，修改，都可以通过java对象来实现。
+## 使用说明
+在使用OnLite之前，必须先通过OnLiteFactory中的getInstance方法初始化Onlite。OnLite实现了一些比较复杂的查询，比如按照某个字段升序或者倒序分页查询等。
+### 代码示例
+# How to
 To get a Git project into your build:
 ## Step 1. Add the JitPack repository to your build file
 Add it in your root build.gradle at the end of repositories:
@@ -17,9 +18,9 @@ Add it in your root build.gradle at the end of repositories:
 ## Step 2. Add the dependency
 
 	dependencies {
-               compile 'com.github.aliletter:onlite:v1.1.5'
-               
-     	}
+          compile 'com.github.aliletter:onlite:v1.1.5'
+          
+	}
 # Instruction
 ## You do not need to write sql, you can directly operate javabean.
 ```Java
