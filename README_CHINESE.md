@@ -52,10 +52,10 @@ public class UserLite extends OnLite<User> {
 ```
 插入数据
 ```Java
-	User user = new User();
+    User user = new User();
     user.setPswd("admin");
     user.setUsername("admin");
-	userLite.insert(user)
+    userLite.insert(user)
 ```
 删除所有数据
 ```Java
