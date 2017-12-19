@@ -72,6 +72,16 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
         return result;
     }
 
+    /**
+     *
+     * @param where
+     * @param condition
+     * @param limit
+     * @param page
+     * @param orderColumnName
+     * @param asc
+     * @return
+     */
     @Override
     public List<T> select(T where, List<Condition> condition, Integer limit, Integer page, String orderColumnName, Boolean asc) {
         Cursor cursor;

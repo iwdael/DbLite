@@ -51,10 +51,11 @@ get a reference to the data table
     UserLite userLite = OnLiteFactory.getInstance().getDataHelper(UserLite.class, User.class);
 ```
 insert table
+
 ```Java
 	User user = new User();
-        user.setPswd("admin");
-        user.setUsername("admin");
+    user.setPswd("admin");
+    user.setUsername("admin");
 	userLite.insert(user)
 ```
 delete all
@@ -76,22 +77,32 @@ updata some data which you want
     User user = new User();
     user.setPswd("admin");
     user.setUsername("1233");
-
-	User where=new User();
-	where.setUsername("admin");
-
-	userLite.updata(user,where);
+    User where=new User();
+    where.setUsername("admin");
+    userLite.updata(user,where);
 ```
 updata some data which you want, if not exist , will insert it
 ```Java
     User user = new User();
     user.setPswd("admin");
     user.setUsername("1233");
+    User where=new User();
+    where.setUsername("admin");
+    userLite.updataOrInsert(user,where);
+```
+select some data
+```Java
+    /**
+     * @param where condition
+     * @param conditions customized condition set
+     * @param limit The number of data
+     * @param page page number
+     * @param orderColumnName Ascending or descending corresponding to the field or descending corresponding to the field
+     * @param asc if true,ascending
+     * @return list<User>
+     */
+    userLite.select(User where, List<Condition> conditions, Integer limit, Integer page, String orderColumnName, Boolean asc);
 
-	User where=new User();
-	where.setUsername("admin");
-
-	userLite.updataOrInsert(user,where);
 ```
 To get a Git project into your build:
 ## Step 1. Add the JitPack repository to your build file
