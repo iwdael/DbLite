@@ -123,11 +123,10 @@ public class UserLite extends OnLite<User> {
 	}
 ```
 ### Step 3. 添加权限
-合并以下代码到应用的AndroidManifest.xml的manifest标签中。[点击查看详情](https://github.com/aliletter/OnHttp/blob/master/androidmanifest.gradle.png)
+合并以下代码到应用的AndroidManifest.xml的manifest标签中。[点击查看详情](https://github.com/aliletter/OnHttp/blob/master/androidmanifest.png)
 ```Java
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
 ```
 ## 感谢浏览
 如果你有任何疑问，请加入QQ群，我将竭诚为你解答。欢迎Star和Fork本仓库，当然也欢迎你关注我。
