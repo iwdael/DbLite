@@ -104,9 +104,10 @@ select some data
     userLite.select(User where, List<Condition> conditions, Integer limit, Integer page, String orderColumnName, Boolean asc);
 
 ```
+## How to
 To get a Git project into your build:
-## Step 1. Add the JitPack repository to your build file
-Add it in your root build.gradle at the end of repositories:
+### Step 1. Add the JitPack repository to your build file
+Add it in your root build.gradle at the end of repositories.[click here for details](https://github.com/aliletter/CarouselBanner/blob/master/root_build.gradle.png)
 
 	allprojects {
 		repositories {
@@ -114,72 +115,22 @@ Add it in your root build.gradle at the end of repositories:
 			maven { url 'https://jitpack.io' }
 		}
 	}
-  
-## Step 2. Add the dependency
 
+### Step 2. Add the dependency
+Add it in your application module build.gradle at the end of dependencies where you want to use.   [click here for details](https://github.com/aliletter/CarouselBanner/blob/master/application_build.gradle.png)
+```Java
 	dependencies {
-               compile 'com.github.aliletter:onlite:v1.1.5'
-               
-     	}
-# Instruction
-## You do not need to write sql, you can directly operate javabean.
-```Java
-    
-    //@OnTable("tablename") table name is class name if you don't annotate.
-    public class User{
-      //@OnAutoInscrement() 
-      private Integer id;
-      private String username;
-      private String passwd;
-    }
+	  ...
+          compile 'com.github.aliletter:onlite:v1.1.5'
+	}
 ```
-## Create a new class to inherit onlite, you do not need to implement any method inside
+### Step 3. Add the permission
+Add it in your application AndroidManifest.xml in the manifest label.   [click here for details](https://github.com/aliletter/OnHttp/blob/master/androidmanifest.gradle.png)
 ```Java
-public class UserLite extends OnLite<User> {
-
-}
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
-## Get a reference to the data table
-```Java
-	UserLite userLite = OnLiteFactory.getInstance().getDataHelper(UserLite.class, User.class);
-```
-## Insert
-```Java
-	User user = new User();
-        user.setPswd("admin");
-        user.setUsername("admin");
-	userLite.insert(user)
-```
-## Delete
-```Java
-	//delete all
-	userLite.delete(null);
-	//delete that username is 'admin'
-	User where=new User();
-	where.setUsername("admin");
-	userLite.delete(where);
-```
-## Updata
-```Java
-	User user = new User();
-        user.setPswd("admin");
-        user.setUsername("1233");
-	
-	User where=new User();
-	where.setUsername("admin");
-	// Update the data for username is admin
-	userLite.updata(user,where);
-```
-## Select
-```Java
-	//select all
-	userLite.select(null);
-	//select that username is 'admin'
-	User where=new User();
-	where.setUsername("admin");
-	userLite.select(where);
-```
-## Delete the current reference table, and the reference will also be invalid
-```Java
- 	userLite.deleteTable();
-```
+## Thank you for your browsing
+If you have any questions, please join the QQ group. I will do my best to answer it for you. Welcome to star and fork this repository, alse follow me.
+<br>
+![Image Text](https://github.com/aliletter/CarouselBanner/blob/master/qq_group.png)

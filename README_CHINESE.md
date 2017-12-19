@@ -41,12 +41,12 @@ public class User {
 
 }
 ```
-UserLite
+创建Lite类，通过lite才能操作数据库
 ```Java
 public class UserLite extends OnLite<User> {
 }
 ```
-获取表的引用
+获Lite的对象
 ```Java
     UserLite userLite = OnLiteFactory.getInstance().getDataHelper(UserLite.class, User.class);
 ```
@@ -102,10 +102,10 @@ public class UserLite extends OnLite<User> {
      */
     userLite.select(User where, List<Condition> conditions, Integer limit, Integer page, String orderColumnName, Boolean asc);
 ```
-# How to
-To get a Git project into your build:
-## Step 1. Add the JitPack repository to your build file
-Add it in your root build.gradle at the end of repositories:
+## 如何配置
+将本仓库引入你的项目:
+### Step 1. 添加JitPack仓库到Build文件
+合并以下代码到项目根目录下的build.gradle文件的repositories尾。[点击查看详情](https://github.com/aliletter/CarouselBanner/blob/master/root_build.gradle.png)
 
 	allprojects {
 		repositories {
@@ -113,72 +113,23 @@ Add it in your root build.gradle at the end of repositories:
 			maven { url 'https://jitpack.io' }
 		}
 	}
-  
-## Step 2. Add the dependency
 
+### Step 2. 添加依赖
+合并以下代码到需要使用的application Module的dependencies尾。[点击查看详情](https://github.com/aliletter/CarouselBanner/blob/master/application_build.gradle.png)
+```Java
 	dependencies {
-          compile 'com.github.aliletter:onlite:v1.1.5'
-          
+	  ...
+          compile 'com.github.aliletter:onlite:v1.1.9'
 	}
-# Instruction
-## You do not need to write sql, you can directly operate javabean.
-```Java
-    
-    //@OnTable("tablename") table name is class name if you don't annotate.
-    public class User{
-      //@OnAutoInscrement() 
-      private Integer id;
-      private String username;
-      private String passwd;
-    }
 ```
-## Create a new class to inherit onlite, you do not need to implement any method inside
+### Step 3. 添加权限
+合并以下代码到应用的AndroidManifest.xml的manifest标签中。[点击查看详情](https://github.com/aliletter/OnHttp/blob/master/androidmanifest.gradle.png)
 ```Java
-public class UserLite extends OnLite<User> {
-
-}
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 ```
-## Get a reference to the data table
-```Java
-	UserLite userLite = OnLiteFactory.getInstance().getDataHelper(UserLite.class, User.class);
-```
-## Insert
-```Java
-	User user = new User();
-        user.setPswd("admin");
-        user.setUsername("admin");
-	userLite.insert(user)
-```
-## Delete
-```Java
-	//delete all
-	userLite.delete(null);
-	//delete that username is 'admin'
-	User where=new User();
-	where.setUsername("admin");
-	userLite.delete(where);
-```
-## Updata
-```Java
-	User user = new User();
-        user.setPswd("admin");
-        user.setUsername("1233");
-	
-	User where=new User();
-	where.setUsername("admin");
-	// Update the data for username is admin
-	userLite.updata(user,where);
-```
-## Select
-```Java
-	//select all
-	userLite.select(null);
-	//select that username is 'admin'
-	User where=new User();
-	where.setUsername("admin");
-	userLite.select(where);
-```
-## Delete the current reference table, and the reference will also be invalid
-```Java
- 	userLite.deleteTable();
-```
+## 感谢浏览
+如果你有任何疑问，请加入QQ群，我将竭诚为你解答。欢迎Star和Fork本仓库，当然也欢迎你关注我。
+<br>
+![Image Text](https://github.com/aliletter/CarouselBanner/blob/master/qq_group.png)
