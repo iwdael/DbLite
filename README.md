@@ -53,10 +53,10 @@ get a reference to the data table
 insert table
 
 ```Java
-	User user = new User();
+    User user = new User();
     user.setPswd("admin");
     user.setUsername("admin");
-	userLite.insert(user)
+    userLite.insert(user)
 ```
 delete all
 ```Java
