@@ -121,7 +121,7 @@ Add it in your application module build.gradle at the end of dependencies where 
 ```Java
 	dependencies {
 	  ...
-          compile 'com.github.aliletter:onlite:v1.1.5'
+          compile 'com.github.aliletter:onlite:v1.1.9'
 	}
 ```
 ### Step 3. Add the permission
