@@ -92,12 +92,12 @@ public class UserLite extends OnLite<User> {
 查询表
 ```Java
     /**
-     * @param where condition
-     * @param conditions customized condition set
-     * @param limit The number of data
-     * @param page page number
-     * @param orderColumnName Ascending or descending corresponding to the field or descending corresponding to the field
-     * @param asc if true,ascending
+     * @param where 查询条件
+     * @param conditions 自定义的查询条件集合 
+     * @param limit 返回的数据条数 
+     * @param page page number 页码
+     * @param orderColumnName 用来排序的字段 
+     * @param asc  为真，表示升序查询
      * @return list<User>
      */
     userLite.select(User where, List<Condition> conditions, Integer limit, Integer page, String orderColumnName, Boolean asc);
