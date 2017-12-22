@@ -20,6 +20,8 @@ public interface IBaseLite<T> {
 
     int updata(T entity, T where);
 
+    int updata(T entity, String where, String[] value);
+
     int updataOrInsert(T entity, T where);
 
     List<T> select(T where);
@@ -38,6 +40,8 @@ public interface IBaseLite<T> {
     List<T> select(T where, List<Condition> condition, Integer limit, Integer page, String orderColumnName, Boolean asc);
 
     int delete(T where);
+
+    int delete(String where, String[] value);
 
     boolean deleteTable();
 }

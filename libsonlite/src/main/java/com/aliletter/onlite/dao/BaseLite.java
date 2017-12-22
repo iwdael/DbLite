@@ -1,9 +1,12 @@
 package com.aliletter.onlite.dao;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.aliletter.onlite.annotation.OnTable;
 import com.aliletter.onlite.entity.Condition;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +75,16 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
         return result;
     }
 
+    @Override
+    public int updata(T entity, String where, String[] value) {
+        Map<String, String> mapValues = getValues(entity);
+        ContentValues values = getContentValues(mapValues);
+        int result ;
+        result = sqLiteDatabase.update(this.tableName, values, where, value);
+        return result;
+    }
+
     /**
-     *
      * @param where
      * @param condition
      * @param limit
@@ -98,7 +109,7 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
         StringBuilder d_para = new StringBuilder();
         String[] d_value = null;
         if (condition != null) {
-            List<String> list=new ArrayList<>();
+            List<String> list = new ArrayList<>();
             for (Condition s : condition) {
                 d_para.append(" and    ");
                 d_para.append(s.getCondition());
@@ -186,6 +197,13 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
         Map<String, Object> condition = getCondition(where);
         int result = -1;
         result = sqLiteDatabase.delete(tableName, (String) condition.get(CONDITION_WHERE), (String[]) condition.get(CONDITION_ARGS));
+        return result;
+    }
+
+    @Override
+    public int delete(String where, String[] value) {
+        int result;
+        result = sqLiteDatabase.delete(tableName, where, value);
         return result;
     }
 
