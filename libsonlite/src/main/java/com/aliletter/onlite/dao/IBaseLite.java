@@ -24,20 +24,36 @@ public interface IBaseLite<T> {
 
     int updataOrInsert(T entity, T where);
 
-    List<T> select(T where);
+    int updataOrInsert(T entity, String where, String[] value);
 
-    List<T> select(T where, String orderColumnName, Boolean asc);
+    List<T> select(T where);
 
     List<T> select(T where, Integer limit);
 
-    List<T> select(T where, Integer limit, String orderColumnName, Boolean asc);
-
-
     List<T> select(T where, Integer limit, Integer page);
+
+    List<T> select(T where, String orderColumnName, Boolean asc);
+
+    List<T> select(T where, Integer limit, String orderColumnName, Boolean asc);
 
     List<T> select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc);
 
-    List<T> select(T where, List<Condition> condition, Integer limit, Integer page, String orderColumnName, Boolean asc);
+    List<T> select(String where, String[] value, Integer limit, Integer page, String orderColumnName, Boolean asc);
+
+    List<T> select(String where, String[] value);
+
+
+    List<T> select(String where, String[] value, String orderColumnName, Boolean asc);
+
+
+    List<T> select(String where, String[] value, Integer limit);
+
+
+    List<T> select(String where, String[] value, Integer limit, String orderColumnName, Boolean asc);
+
+
+    List<T> select(String where, String[] value, Integer limit, Integer page);
+
 
     int delete(T where);
 

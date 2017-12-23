@@ -1,5 +1,6 @@
 package com.aliletter.onlite.dao;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.io.File;
@@ -58,5 +59,14 @@ public class OnLiteFactory {
             e.printStackTrace();
         }
         return (T) baseLite;
+    }
+
+
+    public Cursor rawQuery(String sql, String[] value) {
+        return sqLiteDatabase.rawQuery(sql, value);
+    }
+
+    public void execSQL(String sql) {
+        sqLiteDatabase.execSQL(sql);
     }
 }

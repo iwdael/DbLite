@@ -66,6 +66,15 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
     }
 
     @Override
+    public int updataOrInsert(T entity, String where, String[] value) {
+        int result = updata(entity, where, value);
+        if (result == 0 | result == -1) {
+            result = Integer.valueOf(String.valueOf(insert(entity)));
+        }
+        return result;
+    }
+
+    @Override
     public int updata(T entity, T where) {
         Map<String, String> mapValues = getValues(entity);
         ContentValues values = getContentValues(mapValues);
@@ -79,75 +88,35 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
     public int updata(T entity, String where, String[] value) {
         Map<String, String> mapValues = getValues(entity);
         ContentValues values = getContentValues(mapValues);
-        int result ;
+        int result;
         result = sqLiteDatabase.update(this.tableName, values, where, value);
         return result;
     }
 
-    /**
-     * @param where
-     * @param condition
-     * @param limit
-     * @param page
-     * @param orderColumnName
-     * @param asc
-     * @return
-     */
     @Override
-    public List<T> select(T where, List<Condition> condition, Integer limit, Integer page, String orderColumnName, Boolean asc) {
-        Cursor cursor;
+    public List<T> select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc) {
+
         List<T> result = new ArrayList<>();
+        String conditionWhere = null;
+        String[] conditionValue = null;
+        //升序或者降序
+        String order = null;
+        if (orderColumnName != null) {
+            order = orderColumnName + (asc ? " asc" : " desc");
+        }
+        //分页查询
         String limitStr = null;
         if (limit != null && page != null) {
             limitStr = (limit * (page - 1)) + "," + limit;
         } else if (limit != null && page == null) {
             limitStr = String.valueOf(limit);
         }
-
-        String key = null;
-        String[] value = null;
-        StringBuilder d_para = new StringBuilder();
-        String[] d_value = null;
-        if (condition != null) {
-            List<String> list = new ArrayList<>();
-            for (Condition s : condition) {
-                d_para.append(" and    ");
-                d_para.append(s.getCondition());
-                list.add(s.getValue());
-            }
-            d_value = list.toArray(new String[list.size()]);
-        }
         if (where != null) {
             Map<String, Object> con = getCondition(where);
-            String condWhere = ((String) con.get(CONDITION_WHERE));
-            String[] condArgv = (String[]) con.get(CONDITION_ARGS);
-            if (condition != null) {
-                List<String> condList = new ArrayList<>();
-                for (String s : condArgv) {
-                    condList.add(s);
-                }
-                for (String s : d_value) {
-                    condList.add(s);
-                }
-                key = condWhere + d_para.toString();
-                value = (String[]) condList.toArray(new String[condList.size()]);
-            } else {
-                key = condWhere;
-                value = condArgv;
-            }
-        } else {
-            if (condition != null) {
-                key = d_para.toString().substring(6, d_para.toString().length());
-                value = d_value;
-            }
+            conditionWhere = ((String) con.get(CONDITION_WHERE));
+            conditionValue = (String[]) con.get(CONDITION_ARGS);
         }
-        String order = null;
-        if (orderColumnName != null) {
-            order = orderColumnName + (asc ? " asc" : " desc");
-        }
-
-        cursor = sqLiteDatabase.query(false, tableName, null, key, value, null, null, order, limitStr);
-
+        Cursor cursor = sqLiteDatabase.query(false, tableName, null, conditionWhere, conditionValue, null, null, order, limitStr);
         while (cursor.moveToNext()) {
             try {
                 T t = entityClass.newInstance();
@@ -159,11 +128,8 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
         }
         cursor.close();
         return result;
-    }
 
-    @Override
-    public List<T> select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc) {
-        return select(where, null, limit, page, orderColumnName, asc);
+
     }
 
     @Override
@@ -191,6 +157,58 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
         return select(where, null, null, null, null);
     }
 
+    @Override
+    public List<T> select(String where, String[] value, Integer limit, Integer page, String orderColumnName, Boolean asc) {
+        List<T> result = new ArrayList<>();
+        String order = null;
+        if (orderColumnName != null) {
+            order = orderColumnName + (asc ? " asc" : " desc");
+        }
+        String limitStr = null;
+        if (limit != null && page != null) {
+            limitStr = (limit * (page - 1)) + "," + limit;
+        } else if (limit != null && page == null) {
+            limitStr = String.valueOf(limit);
+        }
+        Cursor cursor = sqLiteDatabase.query(false, tableName, null, where, value, null, null, order, limitStr);
+        while (cursor.moveToNext()) {
+            try {
+                T t = entityClass.newInstance();
+                setValues(t, cursor);
+                result.add(t);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        cursor.close();
+        return result;
+    }
+
+
+    @Override
+    public List<T> select(String where, String[] value, Integer limit, String orderColumnName, Boolean asc) {
+        return select(where, value, limit, null, orderColumnName, asc);
+    }
+
+    @Override
+    public List<T> select(String where, String[] value, String orderColumnName, Boolean asc) {
+        return select(where, value, null, null, orderColumnName, asc);
+    }
+
+    @Override
+    public List<T> select(String where, String[] value, Integer limit, Integer page) {
+        return select(where, value, limit, page, null, null);
+    }
+
+    @Override
+    public List<T> select(String where, String[] value, Integer limit) {
+        return select(where, value, limit, null, null, null);
+    }
+
+    @Override
+    public List<T> select(String where, String[] value) {
+        return select(where, value, null, null, null);
+    }
 
     @Override
     public int delete(T where) {
@@ -215,11 +233,10 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
         return true;
     }
 
+
     protected abstract boolean tableIsExist();
 
-
     protected abstract void initCacheMap();
-
 
     protected abstract String createTable(Class<T> entityClass);
 
