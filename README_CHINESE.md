@@ -119,7 +119,7 @@ public class UserLite extends OnLite<User> {
 ```Java
 	dependencies {
 	  ...
-          compile 'com.github.aliletter:onlite:v1.1.9'
+          compile 'com.github.aliletter:onlite:v1.2.1'
 	}
 ```
 ### Step 3. 添加权限
