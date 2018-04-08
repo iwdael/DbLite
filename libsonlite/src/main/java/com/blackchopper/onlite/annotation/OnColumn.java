@@ -1,4 +1,4 @@
-package com.aliletter.onlite.annotation;
+package com.blackchopper.onlite.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -8,9 +8,10 @@ import java.lang.annotation.Target;
 /**
  * Author: aliletter
  * Github: http://github.com/aliletter
- * Data: 2017/9/14.
+ * Data: 2017/9/13.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface OnUnique {
+public @interface OnColumn {
+    String value();
 }

@@ -1,11 +1,13 @@
-package com.aliletter.onlite.dao;
+package com.blackchopper.onlite.dao;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.aliletter.onlite.annotation.OnTable;
-import com.aliletter.onlite.entity.Condition;
+import com.blackchopper.onlite.JsonConverter;
+import com.blackchopper.onlite.OnLite;
+import com.blackchopper.onlite.annotation.OnTable;
+import com.blackchopper.onlite.util.OnLiteUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
     protected String tableName;
     protected Class<T> entityClass;
     protected Map<String, Field> cacheMap;
+    protected JsonConverter converter;
 
     public synchronized void init(Class<T> entity, SQLiteDatabase sqLiteDatabase) {
         if (!isInit) {
@@ -37,6 +40,11 @@ public abstract class BaseLite<T> implements IBaseLite<T> {
             sqLiteDatabase.execSQL(createTable(entityClass));
             initCacheMap();
         }
+    }
+
+    public synchronized void init(Class<T> entity, SQLiteDatabase sqLiteDatabase, JsonConverter converter) {
+        this.converter = converter;
+        init(entity, sqLiteDatabase);
     }
 
     @Override

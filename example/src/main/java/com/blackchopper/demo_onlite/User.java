@@ -1,6 +1,6 @@
-package com.aliletter.demo_onlite;
+package com.blackchopper.demo_onlite;
 
-import com.aliletter.onlite.annotation.OnAutoIncreament;
+import com.blackchopper.onlite.annotation.OnAutoIncreament;
 
 /**
  * Author: mr-absurd

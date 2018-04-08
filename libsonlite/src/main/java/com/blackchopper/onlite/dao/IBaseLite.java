@@ -1,6 +1,4 @@
-package com.aliletter.onlite.dao;
-
-import com.aliletter.onlite.entity.Condition;
+package com.blackchopper.onlite.dao;
 
 import java.util.List;
 

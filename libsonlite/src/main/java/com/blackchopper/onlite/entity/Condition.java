@@ -1,4 +1,4 @@
-package com.aliletter.onlite.entity;
+package com.blackchopper.onlite.entity;
 
 /**
  * Author: aliletter

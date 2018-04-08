@@ -1,5 +1,5 @@
-# OnLite  [![](https://jitpack.io/v/aliletter/onlite.svg)](https://jitpack.io/#aliletter/onlite)
-OnLite is a database framework for Android, you do not need to write any sql statement. Onlite to achieve the database data records and java objects between the mapping, increase, delete, check, change, you can achieve through the java object.[中文文档](https://github.com/aliletter/OnLite/blob/master/README_CHINESE.md)
+# OnLite  [![](https://jitpack.io/v/blackchopper/onlite.svg)](https://jitpack.io/#blackchopper/onlite)
+OnLite is a database framework for Android, you do not need to write any sql statement. Onlite to achieve the database data records and java objects between the mapping, increase, delete, check, change, you can achieve through the java object.[中文文档](https://github.com/blackchopper/OnLite/blob/master/README_CHINESE.md)
 ## Instruction
 Before using OnLite, you must initialize Onlite with the getInstance method in the OnLiteFactory. OnLite to achieve some of the more complex queries, such as in accordance with a field ascending order or paged paging query.
 ### Sample Code
@@ -48,7 +48,7 @@ public class UserLite extends OnLite<User> {
 ```
 get a reference to the data table
 ```Java
-    UserLite userLite = OnLiteFactory.getInstance().getDataHelper(UserLite.class, User.class);
+    UserLite userLite = OnLiteFactory.getDataHelper(UserLite.class, User.class);
 ```
 insert table
 
@@ -107,7 +107,7 @@ select some data
 ## How to
 To get a Git project into your build:
 ### Step 1. Add the JitPack repository to your build file
-Add it in your root build.gradle at the end of repositories.[click here for details](https://github.com/aliletter/CarouselBanner/blob/master/root_build.gradle.png)
+Add it in your root build.gradle at the end of repositories.[click here for details](https://github.com/blackchopper/CarouselBanner/blob/master/root_build.gradle.png)
 
 	allprojects {
 		repositories {
@@ -117,15 +117,15 @@ Add it in your root build.gradle at the end of repositories.[click here for deta
 	}
 
 ### Step 2. Add the dependency
-Add it in your application module build.gradle at the end of dependencies where you want to use.   [click here for details](https://github.com/aliletter/CarouselBanner/blob/master/application_build.gradle.png)
+Add it in your application module build.gradle at the end of dependencies where you want to use.   [click here for details](https://github.com/blackchopper/CarouselBanner/blob/master/application_build.gradle.png)
 ```Java
 	dependencies {
 	  ...
-          compile 'com.github.aliletter:onlite:v1.2.1'
+          compile 'com.github.blackchopper:onlite:v1.2.2'
 	}
 ```
 ### Step 3. Add the permission
-Add it in your application AndroidManifest.xml in the manifest label.   [click here for details](https://github.com/aliletter/OnHttp/blob/master/androimanifest.png)
+Add it in your application AndroidManifest.xml in the manifest label.   [click here for details](https://github.com/blackchopper/OnHttp/blob/master/androimanifest.png)
 ```Java
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -133,4 +133,4 @@ Add it in your application AndroidManifest.xml in the manifest label.   [click h
 ## Thank you for your browsing
 If you have any questions, please join the QQ group. I will do my best to answer it for you. Welcome to star and fork this repository, alse follow me.
 <br>
-![Image Text](https://github.com/aliletter/CarouselBanner/blob/master/qq_group.png)
+![Image Text](https://github.com/blackchopper/CarouselBanner/blob/master/qq_group.png)

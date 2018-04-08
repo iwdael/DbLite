@@ -1,4 +1,4 @@
-package com.aliletter.onlite.dao;
+package com.blackchopper.onlite.dao;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -47,11 +47,12 @@ public class OnLiteFactory {
         sqLiteDatabase = SQLiteDatabase.openOrCreateDatabase(path + DATABASENAME, null);
     }
 
-    public <T extends BaseLite<M>, M> T getDataHelper(Class<T> liteClass, Class<M> entityClass) {
+    public static <T extends BaseLite<M>, M> T getLiteHelper(Class<T> liteClass, Class<M> entityClass) {
+        OnLiteFactory factory = getInstance();
         BaseLite baseLite = null;
         try {
             baseLite = liteClass.newInstance();
-            baseLite.init(entityClass, sqLiteDatabase);
+            baseLite.init(entityClass, factory.sqLiteDatabase);
 
         } catch (InstantiationException e) {
             e.printStackTrace();

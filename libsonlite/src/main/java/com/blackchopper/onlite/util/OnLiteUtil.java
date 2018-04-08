@@ -1,4 +1,6 @@
-package com.aliletter.onlite.util;
+package com.blackchopper.onlite.util;
+
+import android.database.Cursor;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -139,6 +141,5 @@ public class OnLiteUtil {
 
         return null;
     }
-
 
 }

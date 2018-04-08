@@ -1,14 +1,14 @@
-package com.aliletter.onlite;
+package com.blackchopper.onlite;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.aliletter.onlite.annotation.OnAutoIncreament;
-import com.aliletter.onlite.annotation.OnColumn;
-import com.aliletter.onlite.annotation.OnNotNull;
-import com.aliletter.onlite.annotation.OnUnique;
-import com.aliletter.onlite.dao.BaseLite;
-import com.aliletter.onlite.util.OnLiteUtil;
+import com.blackchopper.onlite.annotation.OnAutoIncreament;
+import com.blackchopper.onlite.annotation.OnColumn;
+import com.blackchopper.onlite.annotation.OnNotNull;
+import com.blackchopper.onlite.annotation.OnUnique;
+import com.blackchopper.onlite.dao.BaseLite;
+import com.blackchopper.onlite.util.OnLiteUtil;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

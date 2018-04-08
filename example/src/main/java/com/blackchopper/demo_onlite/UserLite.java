@@ -1,6 +1,6 @@
-package com.aliletter.demo_onlite;
+package com.blackchopper.demo_onlite;
 
-import com.aliletter.onlite.OnLite;
+import com.blackchopper.onlite.OnLite;
 
 /**
  * Author: mr-absurd
