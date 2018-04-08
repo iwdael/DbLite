@@ -6,11 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import java.io.File;
 
 /**
- * Author: aliletter
- * Github: http://github.com/aliletter
- * Data: 2017/9/13.
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : OnLite
  */
-
 public class OnLiteFactory {
     private static volatile OnLiteFactory instence = null;
     private static final String DATABASENAME = "onlite.db";

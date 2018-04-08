@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: aliletter
- * Github: http://github.com/aliletter
- * Data: 2017/9/13.
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : OnLite
  */
-
 public abstract class BaseLite<T> implements IBaseLite<T> {
 
     protected SQLiteDatabase sqLiteDatabase;

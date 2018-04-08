@@ -3,11 +3,11 @@ package com.blackchopper.onlite.dao;
 import java.util.List;
 
 /**
- * Author: aliletter
- * Github: http://github.com/aliletter
- * Data: 2017/9/13.
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : OnLite
  */
-
 public interface IBaseLite<T> {
     String CONDITION_WHERE = "WHERE_CLASS";
     String CONDITION_ARGS = "WHERE_ARGS";

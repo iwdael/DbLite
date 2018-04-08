@@ -1,6 +1,5 @@
 package com.blackchopper.onlite.util;
 
-import android.database.Cursor;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,12 +14,11 @@ import java.util.List;
 
 
 /**
- * Author：alilettter
- * Github: http://github.com/aliletter
- * Email: 4884280@qq.com
- * data: 2017/12/18
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : OnLite
  */
-
 public class OnLiteUtil {
 
     public static Object fromJsonString(String content, Class<?> clazz) {

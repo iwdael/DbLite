@@ -1,9 +1,10 @@
 package com.blackchopper.onlite.entity;
 
 /**
- * Author: aliletter
- * Github: http://github.com/aliletter
- * Data: 2017/10/31.
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : OnLite
  */
 
 public class Condition {

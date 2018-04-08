@@ -3,11 +3,11 @@ package com.blackchopper.demo_onlite;
 import com.blackchopper.onlite.annotation.OnAutoIncreament;
 
 /**
- * Author: mr-absurd
- * Github: http://github.com/mr-absurd
- * Data: 2017/9/14.
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : OnLite
  */
-
 public class User {
     @OnAutoIncreament
     private Integer id;

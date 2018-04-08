@@ -17,11 +17,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: aliletter
- * Github: http://github.com/aliletter
- * Data: 2017/9/13.
+ * author  : Black Chopper
+ * e-mail  : 4884280@qq.com
+ * github  : http://github.com/BlackChopper
+ * project : OnLite
  */
-
 public abstract class OnLite<T> extends BaseLite<T> {
     protected static String CREATE = " CREATE TABLE IF NOT EXISTS ";
     protected static String NOT_NULL = "NOT NULL";
