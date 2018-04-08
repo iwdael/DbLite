@@ -119,7 +119,7 @@ public class UserLite extends OnLite<User> {
 ```Java
 	dependencies {
 	  ...
-          compile 'com.github.blackchopper:onlite:v1.2.2'
+          compile 'com.github.blackchopper:onlite:v1.2.3'
 	}
 ```
 ### Step 3. 添加权限
