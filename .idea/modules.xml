@@ -7,8 +7,12 @@
       <module fileurl="file://C:\Users\alile\Desktop\OnLite\app\app.iml" filepath="C:\Users\alile\Desktop\OnLite\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/example/example.iml" filepath="$PROJECT_DIR$/example/example.iml" />
       <module fileurl="file://C:\Users\absurd\Desktop\OnLite\example\example.iml" filepath="C:\Users\absurd\Desktop\OnLite\example\example.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libsonlite/libsonlite.iml" filepath="$PROJECT_DIR$/libsonlite/libsonlite.iml" />
+      <module fileurl="file://C:\Users\aliletter\Desktop\OnLite\libsonlite\libsonlite.iml" filepath="C:\Users\aliletter\Desktop\OnLite\libsonlite\libsonlite.iml" />
+      <module fileurl="file://C:\Users\aliletter\Desktop\OnLite\onlite\libsonlite.iml" filepath="C:\Users\aliletter\Desktop\OnLite\onlite\libsonlite.iml" />
       <module fileurl="file://C:\Users\absurd\Desktop\OnLite\libsonlite\libsonlite.iml" filepath="C:\Users\absurd\Desktop\OnLite\libsonlite\libsonlite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/onlite/onlite.iml" filepath="$PROJECT_DIR$/onlite/onlite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/onlite-annotation/onlite-annotation.iml" filepath="$PROJECT_DIR$/onlite-annotation/onlite-annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/onlite-compiler/onlite-compiler.iml" filepath="$PROJECT_DIR$/onlite-compiler/onlite-compiler.iml" />
     </modules>
   </component>
 </project>

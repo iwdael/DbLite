@@ -121,7 +121,8 @@ Add it in your application module build.gradle at the end of dependencies where 
 ```Java
 	dependencies {
 	  ...
-          compile 'com.github.blackchopper:onlite:v1.2.3'
+          compile 'com.github.blackchopper.onlite:onlite:v1.2.4'
+          annotationProcessor 'com.github.blackchopper.onlite:onlite-compiler:v1.2.4'
 	}
 ```
 ### Step 3. Add the permission

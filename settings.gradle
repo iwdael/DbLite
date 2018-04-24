@@ -1,1 +1,1 @@
-include ':example', ':libsonlite'
+include ':example', ':onlite', ':onlite-annotation', ':onlite-compiler'

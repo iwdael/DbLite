@@ -1,6 +1,8 @@
 package com.blackchopper.demo_onlite;
 
-import com.blackchopper.onlite.annotation.OnAutoIncreament;
+import com.blackchopper.onlite.annotation.AutoInc;
+import com.blackchopper.onlite.annotation.Column;
+import com.blackchopper.onlite.annotation.Table;
 
 /**
  * author  : Black Chopper
@@ -8,9 +10,10 @@ import com.blackchopper.onlite.annotation.OnAutoIncreament;
  * github  : http://github.com/BlackChopper
  * project : OnLite
  */
+@Table("userinfo")
 public class User {
-    @OnAutoIncreament
-    private Integer id;
+    @AutoInc
+    private Integer id;//123213123
     private String username;
     private String pswd;
 
@@ -38,4 +41,12 @@ public class User {
         this.pswd = pswd;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", pswd='" + pswd + '\'' +
+                '}';
+    }
 }
