@@ -11,12 +11,7 @@ import java.util.List;
  * project : OnLite
  */
 public class Filed {
-    public static final String AUTHOR = "\n\n/**\n" +
-            " * author  : Black Chopper\n" +
-            " * e-mail  : 4884280@qq.com\n" +
-            " * github  : http://github.com/BlackChopper\n" +
-            " * project : OnLite\n" +
-            " */\n";
+    public static final String AUTHOR = "\n";
     public static final String AutoInc = "@AutoInc";
     public static final String Column = "@Column";
     public static final String NotNull = "@NotNull";
@@ -25,7 +20,7 @@ public class Filed {
     public static final String Ignore = "@Ignore";
     public static final String empty = "";
     protected static String CREATE = "CREATE TABLE IF NOT EXISTS";
-    protected static String NOT_NULL = "NOT NULL";
+    protected static String NOT_NULL = " NOT NULL";
     protected static String NULL = " DEFAULT NULL";
     protected static String INTEGER = " INTEGER";
     protected static String PRIMARY_KEY = " PRIMARY KEY";

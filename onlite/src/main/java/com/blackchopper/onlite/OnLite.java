@@ -37,14 +37,14 @@ public abstract class OnLite<T> implements ILite<T> {
     protected abstract T createObject(Cursor cursor);
 
     @Override
-    public Long insert(T entity) {
-        Long result = sqLiteDatabase.insert(tableName, null, createContentValues(entity));
+    public long insert(T entity) {
+        long result = sqLiteDatabase.insert(tableName, null, createContentValues(entity));
         return result;
     }
 
     @Override
-    public Long insert(List<T> entitys) {
-        Long result = -1L;
+    public long insert(List<T> entitys) {
+        long result = -1L;
         for (T entity : entitys) {
             result = insert(entity);
         }

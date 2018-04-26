@@ -10,9 +10,9 @@ import java.util.List;
  */
 public interface ILite<T> {
 
-    Long insert(T entity);
+    long insert(T entity);
 
-    Long insert(List<T> entity);
+    long insert(List<T> entity);
 
     int updata(T entity, T where);
 

@@ -1,6 +1,7 @@
 package com.blackchopper.demo_onlite;
 
 import com.blackchopper.onlite.annotation.Table;
+import com.blackchopper.onlite.annotation.Unique;
 
 /**
  * author  : Black Chopper
@@ -11,6 +12,7 @@ import com.blackchopper.onlite.annotation.Table;
 @Table("music")
 public class Music {
     String path;
+    @Unique
     String name;
 
     public Music(String admin, String s) {
