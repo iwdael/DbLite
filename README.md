@@ -7,7 +7,7 @@ initial OnLiteFactory
 ```Java
     OnLiteFactory.getInstance("/sdcard/Android/data/package/db");
 ```
-Create javaBean, annotate table name and buile project, automatically generate Lite class. There are 6 annotations to better create tables, its significance is just like its name. Except Table, other annotations are not required(@AutoInc/@Column/@Ignore/@NotNull/@Table/@Unique)
+Create javaBean, annotate table name and buile project, automatically generate Lite class. There are 6 annotations to better create tables, its significance is just like its name. Except Table, other annotations are not required.(@AutoInc/@Column/@Ignore/@NotNull/@Table/@Unique)
 ```Java
 @Table("user")
 public class User {

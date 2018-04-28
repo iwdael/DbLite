@@ -7,7 +7,7 @@ OnLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite
 ```Java
     OnLiteFactory.getInstance("/sdcard/Android/data/package/db");
 ```
-创建javabean，注解表名和build project，会自动生成Lite类。有6个注解能够更好的创建表，其意义正如其名，除了Table以外，其他注解都不是必须的。
+创建javabean，注解表名和build project，会自动生成Lite类。有6个注解能够更好的创建表，其意义正如其名，除了Table以外，其他注解都不是必须的。(@AutoInc/@Column/@Ignore/@NotNull/@Table/@Unique)
 ```Java
 @Table("user")
 public class User {
