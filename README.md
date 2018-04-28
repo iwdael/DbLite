@@ -5,12 +5,12 @@ Before using OnLite, you must initialize Onlite with the getInstance method in t
 ### Sample Code
 initial OnLiteFactory
 ```Java
-    OnLiteFactory.getInstance("/sdcard/Music/");
+    OnLiteFactory.getInstance("/sdcard/Android/data/package/db");
 ```
-JavaBean
+Create javaBean, annotate table name and buile project, automatically generate Lite class.
 ```Java
 public class User {
-    @OnAutoIncreament
+    @AutoIncreament
     private Integer id;
     private String username;
     private String pswd;
@@ -41,14 +41,10 @@ public class User {
 
 }
 ```
-UserLite
-```Java
-public class UserLite extends OnLite<User> {
-}
-```
+
 get a reference to the data table
 ```Java
-    UserLite userLite = OnLiteFactory.getDataHelper(UserLite.class, User.class);
+    UserLite userLite = OnLiteFactory.create(UserLite.class);
 ```
 insert table
 
@@ -94,14 +90,13 @@ select some data
 ```Java
     /**
      * @param where condition
-     * @param conditions customized condition set
      * @param limit The number of data
      * @param page page number
      * @param orderColumnName Ascending or descending corresponding to the field or descending corresponding to the field
      * @param asc if true,ascending
      * @return list<User>
      */
-    userLite.select(User where, List<Condition> conditions, Integer limit, Integer page, String orderColumnName, Boolean asc);
+    userLite.select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc);
 
 ```
 ## How to

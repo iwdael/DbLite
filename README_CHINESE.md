@@ -5,9 +5,9 @@ OnLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite
 ### 代码示例
 初始化OnLiteFactory，并设置数据库储存的位置
 ```Java
-    OnLiteFactory.getInstance("/sdcard/Music/");
+    OnLiteFactory.getInstance("/sdcard/Android/data/package/db");
 ```
-JavaBean实体类
+创建javabean，注解表名和build project，会自动生成Lite类。
 ```Java
 public class User {
     @OnAutoIncreament
@@ -41,14 +41,10 @@ public class User {
 
 }
 ```
-创建Lite类，通过lite才能操作数据库
-```Java
-public class UserLite extends OnLite<User> {
-}
 ```
 获Lite的对象
 ```Java
-    UserLite userLite = OnLiteFactory.getInstance().getDataHelper(UserLite.class, User.class);
+    UserLite userLite = OnLiteFactory.create(UserLite.class);
 ```
 插入数据
 ```Java
@@ -93,14 +89,13 @@ public class UserLite extends OnLite<User> {
 ```Java
     /**
      * @param where 查询条件
-     * @param conditions 自定义的查询条件集合 
      * @param limit 返回的数据条数 
      * @param page page number 页码
      * @param orderColumnName 用来排序的字段 
      * @param asc  为真，表示升序查询
      * @return list<User>
      */
-    userLite.select(User where, List<Condition> conditions, Integer limit, Integer page, String orderColumnName, Boolean asc);
+    userLite.select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc);
 ```
 ## 如何配置
 将本仓库引入你的项目:
