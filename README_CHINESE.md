@@ -114,8 +114,8 @@ public class User {
 ```Java
 	dependencies {
 	  ...
-          compile 'com.github.blackchopper.onlite:onlite:v1.2.5'
-          annotationProcessor 'com.github.blackchopper.onlite:onlite-compiler:v1.2.5'
+          compile 'com.github.blackchopper.onlite:onlite:v1.2.6'
+          annotationProcessor 'com.github.blackchopper.onlite:onlite-compiler:v1.2.6'
 	}
 ```
 ### Step 3. 添加权限

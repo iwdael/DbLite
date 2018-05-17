@@ -150,7 +150,10 @@ public class LiteFile {
                 "        " + className + " " + StringUtil.toLowerCaseFirstOne(className) + " = new " + className + "();\n");
 
         for (Filed filed : fileds) {
-            builder.append("        " + StringUtil.toLowerCaseFirstOne(className) + ".set" + StringUtil.toUpperCaseFirstOne(filed.getVarible()) + "(cursor.get" + StringUtil.toUpperCaseFirstOne(filed.type2Cursor()) + "(cursor.getColumnIndex(\"" + filed.getVarible() + "\")));\n");
+            if (filed.getColumn() == null)
+                builder.append("        " + StringUtil.toLowerCaseFirstOne(className) + ".set" + StringUtil.toUpperCaseFirstOne(filed.getVarible()) + "(cursor.get" + StringUtil.toUpperCaseFirstOne(filed.type2Cursor()) + "(cursor.getColumnIndex(\"" + filed.getVarible() + "\")));\n");
+            else
+                builder.append("        " + StringUtil.toLowerCaseFirstOne(className) + ".set" + StringUtil.toUpperCaseFirstOne(filed.getVarible()) + "(cursor.get" + StringUtil.toUpperCaseFirstOne(filed.type2Cursor()) + "(cursor.getColumnIndex(\"" + filed.getColumn() + "\")));\n");
         }
         builder.append("        return " + StringUtil.toLowerCaseFirstOne(className) + ";\n" +
                 "    }");
@@ -161,8 +164,8 @@ public class LiteFile {
         StringBuilder builder = new StringBuilder();
         builder.append("\n\n    @Override\n" +
                 "    protected ContentValues createContentValues(" + className + " " + StringUtil.toLowerCaseFirstOne(className) + ") {\n" +
-                "        ContentValues values = new ContentValues();\n" +
-                "        if (" + StringUtil.toLowerCaseFirstOne(className) + " == null) return null;\n");
+                "        if (" + StringUtil.toLowerCaseFirstOne(className) + " == null) return null;\n" +
+                "        ContentValues values = new ContentValues();\n");
         for (Filed filed : fileds) {
             builder.append("        if (" + StringUtil.toLowerCaseFirstOne(className) + ".get" + StringUtil.toUpperCaseFirstOne(filed.getVarible()) + "() != null)\n");
             if (filed.getColumn() == null)
@@ -180,8 +183,8 @@ public class LiteFile {
         StringBuilder builder = new StringBuilder();
         builder.append("\n\n    @Override\n" +
                 "    protected String createSelection(" + className + " where) {\n" +
-                "        StringBuilder builder = new StringBuilder();\n" +
                 "        if (where == null) return null;\n" +
+                "        StringBuilder builder = new StringBuilder();\n" +
                 "        builder.append(\"1 = 1 \");\n");
         for (Filed filed : fileds) {
             builder.append("        if (where.get" + StringUtil.toUpperCaseFirstOne(filed.getVarible()) + "() != null)\n");
@@ -201,8 +204,8 @@ public class LiteFile {
         StringBuilder builder = new StringBuilder();
         builder.append("\n\n    @Override\n" +
                 "    protected String[] createSelectionArgv(" + className + " where) {\n" +
-                "        List<String> list = new ArrayList<>();\n" +
-                "        if (where == null) return null;\n");
+                "        if (where == null) return null;\n" +
+                "        List<String> list = new ArrayList<>();\n");
         for (Filed filed : fileds) {
             builder.append("        if (where.get" + StringUtil.toUpperCaseFirstOne(filed.getVarible()) + "() !=null )\n");
             builder.append("            list.add(String.valueOf(where.get" + StringUtil.toUpperCaseFirstOne(filed.getVarible()) + "()));\n");
