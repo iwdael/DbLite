@@ -28,11 +28,17 @@ public class Lite {
                     | content.contains("}")
                     | content.contains("{")
                     | content.contains("@Ignore")
-                    | content.contains("="))
+                    | content.contains("=")
+                    | content.contains("+")
+                    | content.contains("-")
+                    | content.contains("*")
+                    | content.contains("/")
+                    | content.contains("%")
+                    | content.contains("&"))
                 continue;
             Logger.v(content);
             target.add(new Filed(content));
-            Logger.v(target.get(target.size()-1).toString());
+            Logger.v(target.get(target.size() - 1).toString());
         }
         return target;
     }
