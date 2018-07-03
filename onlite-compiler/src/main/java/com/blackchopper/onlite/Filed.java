@@ -149,12 +149,29 @@ public class Filed {
 
     public String type2Cursor() {
 
-        if (clazzType.contains("[")) {
+        if (isByte()) {
             return "Blob";
         }
-        if (clazzType.contains("Integer")) {
+        if (isInteger()) {
             return "Int";
         }
+        if (isOther()) {
+            return "String";
+        }
         return clazzType;
+    }
+
+    public boolean isOther() {
+        if (isInteger()) {
+        } else if (isByte()) {
+        } else if (isDouble()) {
+        } else if (isFloat()) {
+        } else if (isLong()) {
+        } else if (isShort()) {
+        } else if (isString()) {
+        } else {
+            return true;
+        }
+        return false;
     }
 }
