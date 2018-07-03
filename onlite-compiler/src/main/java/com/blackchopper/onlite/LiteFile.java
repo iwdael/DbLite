@@ -169,9 +169,13 @@ public class LiteFile {
         for (Filed filed : fileds) {
             builder.append("        if (" + StringUtil.toLowerCaseFirstOne(className) + ".get" + StringUtil.toUpperCaseFirstOne(filed.getVarible()) + "() != null)\n");
             if (filed.getColumn() == null)
-                builder.append("            values.put(\"" + filed.getVarible() + "\", " + StringUtil.toLowerCaseFirstOne(className) + ".get" + StringUtil.toUpperCaseFirstOne(filed.getVarible()) + "());\n");
+                builder.append("            values.put(\"" + filed.getVarible() + "\", " + StringUtil.toLowerCaseFirstOne(className) + ".get" + StringUtil.toUpperCaseFirstOne(filed.getVarible()) + "()");
             else
-                builder.append("            values.put(\"" + filed.getColumn() + "\", " + StringUtil.toLowerCaseFirstOne(className) + ".get" + StringUtil.toUpperCaseFirstOne(filed.getVarible()) + "());\n");
+                builder.append("            values.put(\"" + filed.getColumn() + "\", " + StringUtil.toLowerCaseFirstOne(className) + ".get" + StringUtil.toUpperCaseFirstOne(filed.getVarible()) + "()");
+            if (filed.isOther())
+                builder.append(".toString());\n");
+            else
+                builder.append(");\n");
         }
         builder.append("        return values;\n" +
                 "    }");
