@@ -1,13 +1,12 @@
 package com.blackchopper.demo_onlite;
 
-import com.blackchopper.onlite.annotation.AutoInc;
-import com.blackchopper.onlite.annotation.Column;
-import com.blackchopper.onlite.annotation.Table;
+import com.hacknife.onlite.annotation.AutoInc;
+import com.hacknife.onlite.annotation.Table;
 
 /**
- * author  : Black Chopper
+ * author  : Hacknife
  * e-mail  : 4884280@qq.com
- * github  : http://github.com/BlackChopper
+ * github  : http://github.com/hacknife
  * project : OnLite
  */
 @Table("userinfo")
