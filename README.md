@@ -1,13 +1,13 @@
-# OnLite  [![](https://jitpack.io/v/blackchopper/onlite.svg)](https://jitpack.io/#blackchopper/onlite)
-OnLite is a database framework for Android, you do not need to write any sql statement. Onlite to achieve the database data records and java objects between the mapping, increase, delete, check, change, you can achieve through the java object.[中文文档](https://github.com/blackchopper/OnLite/blob/master/README_CHINESE.md)
-## Instruction
-Before using OnLite, you must initialize Onlite with the getInstance method in the OnLiteFactory. OnLite to achieve some of the more complex queries, such as in accordance with a field ascending order or paged paging query.
-### Sample Code
-initial OnLiteFactory
+# OnLite  [![](https://jitpack.io/v/hacknife/onlite.svg)](https://jitpack.io/#hacknife/onlite)
+OnLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite实现数据库的数据记录和java对象之间的映射。增加，删除，查询，修改，都可以通过java对象来实现。[English](https://github.com/hacknife/OnLite/blob/master/README.md)
+## 使用说明
+在使用OnLite之前，必须先通过OnLiteFactory中的getInstance方法初始化Onlite。OnLite实现了一些比较复杂的查询，比如按照某个字段升序或者倒序分页查询等。
+### 代码示例
+初始化OnLiteFactory，并设置数据库储存的位置
 ```Java
     OnLiteFactory.getInstance("/sdcard/Android/data/package/db");
 ```
-Create javaBean, annotate table name and buile project, automatically generate Lite class. There are 6 annotations to better create tables, its significance is just like its name. Except Table, other annotations are not required.(@AutoInc/@Column/@Ignore/@NotNull/@Table/@Unique)
+创建javabean，注解表名和build project，会自动生成Lite类。有6个注解能够更好的创建表，其意义正如其名，除了Table以外，其他注解都不是必须的。(@AutoInc/@Column/@Ignore/@NotNull/@Table/@Unique)
 ```Java
 @Table("user")
 public class User {
@@ -41,34 +41,33 @@ public class User {
 
 }
 ```
-
-get a reference to the data table
+```
+获Lite的对象
 ```Java
     UserLite userLite = OnLiteFactory.create(UserLite.class);
 ```
-insert table
-
+插入数据
 ```Java
     User user = new User();
     user.setPswd("admin");
     user.setUsername("admin");
     userLite.insert(user)
 ```
-delete all
+删除所有数据
 ```Java
     userLite.delete(null);
 ```
-delete some data which you want
+根据条件删除数据
 ```Java
 	User where=new User();
 	where.setUsername("admin");
 	userLite.delete(where);
 ```
-delete table
+删除数据表
 ```Java
     userLite.deleteTable();
 ```
-updata some data which you want
+根据条件更新数据
 ```Java
     User user = new User();
     user.setPswd("admin");
@@ -77,7 +76,7 @@ updata some data which you want
     where.setUsername("admin");
     userLite.updata(user,where);
 ```
-updata some data which you want, if not exist , will insert it
+根据条件更新数据，如果找不到匹配的数据就插入该数据
 ```Java
     User user = new User();
     user.setPswd("admin");
@@ -86,23 +85,22 @@ updata some data which you want, if not exist , will insert it
     where.setUsername("admin");
     userLite.updataOrInsert(user,where);
 ```
-select some data
+查询表
 ```Java
     /**
-     * @param where condition
-     * @param limit The number of data
-     * @param page page number
-     * @param orderColumnName Ascending or descending corresponding to the field or descending corresponding to the field
-     * @param asc if true,ascending
+     * @param where 查询条件
+     * @param limit 返回的数据条数 
+     * @param page page number 页码
+     * @param orderColumnName 用来排序的字段 
+     * @param asc  为真，表示升序查询
      * @return list<User>
      */
     userLite.select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc);
-
 ```
-## How to
-To get a Git project into your build:
-### Step 1. Add the JitPack repository to your build file
-Add it in your root build.gradle at the end of repositories.[click here for details](https://github.com/blackchopper/CarouselBanner/blob/master/root_build.gradle.png)
+## 如何配置
+将本仓库引入你的项目:
+### Step 1. 添加JitPack仓库到Build文件
+合并以下代码到项目根目录下的build.gradle文件的repositories尾。[点击查看详情](https://github.com/hacknife/CarouselBanner/blob/master/root_build.gradle.png)
 
 	allprojects {
 		repositories {
@@ -111,22 +109,22 @@ Add it in your root build.gradle at the end of repositories.[click here for deta
 		}
 	}
 
-### Step 2. Add the dependency
-Add it in your application module build.gradle at the end of dependencies where you want to use.   [click here for details](https://github.com/blackchopper/CarouselBanner/blob/master/application_build.gradle.png)
+### Step 2. 添加依赖
+合并以下代码到需要使用的application Module的dependencies尾。[点击查看详情](https://github.com/hacknife/CarouselBanner/blob/master/application_build.gradle.png)
 ```Java
 	dependencies {
 	  ...
-          compile 'com.github.blackchopper.onlite:onlite:v1.2.7'
-          annotationProcessor 'com.github.blackchopper.onlite:onlite-compiler:v1.2.7'
+          compile 'com.github.hacknife.onlite:onlite:v1.2.7'
+          annotationProcessor 'com.github.hacknife.onlite:onlite-compiler:v1.2.7'
 	}
 ```
-### Step 3. Add the permission
-Add it in your application AndroidManifest.xml in the manifest label.   [click here for details](https://github.com/blackchopper/OnHttp/blob/master/androimanifest.png)
+### Step 3. 添加权限
+合并以下代码到应用的AndroidManifest.xml的manifest标签中。[点击查看详情](https://github.com/hacknife/OnHttp/blob/master/androimanifest.png)
 ```Java
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
-## Thank you for your browsing
-If you have any questions, please join the QQ group. I will do my best to answer it for you. Welcome to star and fork this repository, alse follow me.
+## 感谢浏览
+如果你有任何疑问，请加入QQ群，我将竭诚为你解答。欢迎Star和Fork本仓库，当然也欢迎你关注我。
 <br>
-![Image Text](https://github.com/blackchopper/CarouselBanner/blob/master/qq_group.png)
+![Image Text](https://github.com/hacknife/CarouselBanner/blob/master/qq_group.png)
