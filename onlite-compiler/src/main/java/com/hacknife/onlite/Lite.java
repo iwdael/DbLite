@@ -17,7 +17,6 @@ public class Lite {
 
     public Lite(String source) {
         this.source = source;
-        Logger.v("------>>" + source);
     }
 
     public List<Filed> getFileds() {
@@ -36,9 +35,8 @@ public class Lite {
                     | content.contains("%")
                     | content.contains("&"))
                 continue;
-            Logger.v(content);
             target.add(new Filed(content));
-            Logger.v(target.get(target.size() - 1).toString());
+
         }
         return target;
     }

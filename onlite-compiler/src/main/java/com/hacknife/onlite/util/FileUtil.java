@@ -14,14 +14,13 @@ import java.io.FileReader;
 public class FileUtil {
     private static final String SPLIT = "/";
 
-    public static String readFile(String packages, String clazz, String type) {
-        String path = getPath(packages, clazz, type).replace("\\", "/");
-        Logger.v("path--->" + path);
+    public static String readFile(String modulePath,String packages, String clazz, String type) {
+        String path = getPath(modulePath,packages, clazz, type).replace("\\", "/");
         return readTextFile(path);
     }
 
-    private static String getPath(String packages, String clazz, String type) {
-        String module = findMainModule();
+    private static String getPath(String modulePath,String packages, String clazz, String type) {
+        String module = modulePath;
         if (type.contains("java")) {
             return module + SPLIT + "src/main/java/" + packages.replace(".", SPLIT) + SPLIT + clazz + "." + type;
         } else if (type.contains("xml")) {
@@ -57,18 +56,4 @@ public class FileUtil {
         return sb.toString();
     }
 
-    private static String findMainModule() {
-        File dir = new File(System.getProperty("user.dir") + SPLIT);
-        Logger.v("dir:" + dir.getAbsolutePath());
-        File[] modules = dir.listFiles();
-        for (File module : modules) {
-            if (!module.isDirectory()) continue;
-            if (!new File(module.getAbsoluteFile() + "/build.gradle").exists()) continue;
-            if (readTextFile(module.getAbsolutePath() + "/build.gradle").replace(" ","").contains("applyplugin:'com.android.application'")) {
-                Logger.v("main module: " + module.getAbsolutePath());
-                return module.getAbsolutePath();
-            }
-        }
-        return "";
-    }
 }

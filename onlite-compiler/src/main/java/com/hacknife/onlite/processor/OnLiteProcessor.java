@@ -4,6 +4,7 @@ import com.hacknife.onlite.LiteFile;
 import com.hacknife.onlite.annotation.Table;
 import com.hacknife.onlite.util.Logger;
 import com.google.auto.service.AutoService;
+import com.hacknife.onlite.util.StringUtil;
 
 import java.io.Writer;
 import java.util.HashSet;
@@ -31,10 +32,12 @@ import javax.tools.JavaFileObject;
  * project : OnLite
  */
 @AutoService(Processor.class)
-public class LiteProcessor extends AbstractProcessor {
+public class OnLiteProcessor extends AbstractProcessor {
     protected Messager messager;
     protected Elements elementUtils;
     protected Map<String, LiteFile> mProxyMap = new LinkedHashMap<>();
+    protected String buidPath;
+    protected boolean inited = false;
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
@@ -67,12 +70,11 @@ public class LiteProcessor extends AbstractProcessor {
     private void processLite(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         Set<? extends Element> tables = roundEnv.getElementsAnnotatedWith(Table.class);
         for (Element element : tables) {
-            Logger.v(element.asType().toString());
             String fullClassName = element.asType().toString();
             Table table = element.getAnnotation(Table.class);
 
             if (mProxyMap.get(fullClassName) == null) {
-                mProxyMap.put(fullClassName, new LiteFile(elementUtils, (TypeElement) element,table.value()));
+                mProxyMap.put(fullClassName, new LiteFile(elementUtils, (TypeElement) element, table.value()));
             }
         }
     }
@@ -85,8 +87,15 @@ public class LiteProcessor extends AbstractProcessor {
                         liteFile.getProxyClassFullName(),
                         liteFile.getTypeElement()
                 );
+                if (!inited) {
+                    //找到当前module
+                    buidPath = StringUtil.findBuildDir(jfo.toUri().getPath());
+                    Logger.v("find build directory: " + buidPath);
+                    inited = true;
+                }
+                Logger.v(jfo.toUri().getPath());
                 Writer writer = jfo.openWriter();
-                writer.write(liteFile.generateJavaCode());
+                writer.write(liteFile.generateJavaCode(buidPath));
                 writer.flush();
                 writer.close();
             } catch (Exception e) {
