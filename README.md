@@ -1,11 +1,12 @@
-# OnLite  [![](https://jitpack.io/v/hacknife/onlite.svg)](https://jitpack.io/#hacknife/onlite)
+# OnLite
+[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/hacknife/OnLite)  [![](https://img.shields.io/badge/version-1.3.1--alpha3-brightgreen.svg)](https://github.com/hacknife/OnLite)<br/>
 OnLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite实现数据库的数据记录和java对象之间的映射。增加，删除，查询，修改，都可以通过java对象来实现。[English](https://github.com/hacknife/OnLite/blob/master/README.md)
 ## 使用说明
 在使用OnLite之前，必须先通过OnLiteFactory中的getInstance方法初始化Onlite。OnLite实现了一些比较复杂的查询，比如按照某个字段升序或者倒序分页查询等。
 ### 代码示例
 初始化OnLiteFactory，并设置数据库储存的位置
 ```Java
-    OnLiteFactory.getInstance("/sdcard/Android/data/package/db");
+    OnLiteFactory.init("/sdcard/Android/data/package/db");
 ```
 创建javabean，注解表名和build project，会自动生成Lite类。有6个注解能够更好的创建表，其意义正如其名，除了Table以外，其他注解都不是必须的。(@AutoInc/@Column/@Ignore/@NotNull/@Table/@Unique)
 ```Java
@@ -99,13 +100,13 @@ public class User {
 ```
 ## 如何配置
 将本仓库引入你的项目:
-### Step 1. 添加JitPack仓库到Build文件
+### Step 1. 添加仓库到Build文件
 合并以下代码到项目根目录下的build.gradle文件的repositories尾。[点击查看详情](https://github.com/hacknife/CarouselBanner/blob/master/root_build.gradle.png)
 
 	allprojects {
 		repositories {
 			...
-			maven { url 'https://jitpack.io' }
+			maven { url 'https://hacknife.com' }
 		}
 	}
 
@@ -114,8 +115,8 @@ public class User {
 ```Java
 	dependencies {
 	  ...
-          compile 'com.github.hacknife.onlite:onlite:v1.2.7'
-          annotationProcessor 'com.github.hacknife.onlite:onlite-compiler:v1.2.7'
+          compile 'com.hacknife.onlite:onlite:version'
+          annotationProcessor 'com.hacknife.onlite:onlite-compiler:version'
 	}
 ```
 ### Step 3. 添加权限

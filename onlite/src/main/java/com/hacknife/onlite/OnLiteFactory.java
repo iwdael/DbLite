@@ -22,7 +22,11 @@ public class OnLiteFactory {
         openDatabase();
     }
 
-    public static OnLiteFactory getInstance() {
+    public static OnLiteFactory init(String path) {
+        return OnLiteFactory.getInstance(path);
+    }
+
+    private static OnLiteFactory getInstance() {
         if (instence == null) {
             synchronized (OnLiteFactory.class) {
                 if (instence == null)
@@ -32,7 +36,7 @@ public class OnLiteFactory {
         return instence;
     }
 
-    public static OnLiteFactory getInstance(String path) {
+    private static OnLiteFactory getInstance(String path) {
         if (instence == null) {
             synchronized (OnLiteFactory.class) {
                 if (instence == null)
