@@ -42,7 +42,7 @@ public class User {
 
 }
 ```
-```
+
 获Lite的对象
 ```Java
     UserLite userLite = OnLiteFactory.create(UserLite.class);
