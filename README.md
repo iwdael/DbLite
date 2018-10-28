@@ -111,7 +111,7 @@ public class User {
 	}
 
 ### Step 2. 添加依赖
-合并以下代码到需要使用的application Module的dependencies尾。[点击查看详情](https://github.com/hacknife/CarouselBanner/blob/master/application_build.gradle.png)
+合并以下代码到需要使用的application Module的dependencies尾,注意替换version版本号。[点击查看详情](https://github.com/hacknife/CarouselBanner/blob/master/application_build.gradle.png)
 ```Java
 	dependencies {
 	  ...
