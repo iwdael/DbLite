@@ -1,5 +1,5 @@
 # OnLite
-[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/hacknife/OnLite)  [![](https://img.shields.io/badge/version-1.3.2-brightgreen.svg)](https://github.com/hacknife/OnLite)<br/>
+[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/hacknife/OnLite)  [![](https://img.shields.io/badge/version-1.3.3-brightgreen.svg)](https://github.com/hacknife/OnLite)<br/>
 OnLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite实现数据库的数据记录和java对象之间的映射。增加，删除，查询，修改，都可以通过java对象来实现。[English](https://github.com/hacknife/OnLite/blob/master/README.md)
 ## 使用说明
 在使用OnLite之前，必须先通过OnLiteFactory中的getInstance方法初始化Onlite。OnLite实现了一些比较复杂的查询，比如按照某个字段升序或者倒序分页查询等。
