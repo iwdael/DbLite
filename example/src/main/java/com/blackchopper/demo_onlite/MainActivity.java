@@ -1,51 +1,76 @@
 package com.blackchopper.demo_onlite;
 
+import android.Manifest;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 
+import com.hacknife.briefness.BindLayout;
+import com.hacknife.briefness.Briefness;
 import com.hacknife.onlite.OnLiteFactory;
+import com.hacknife.onpermission.OnPermission;
+import com.hacknife.onpermission.Permission;
 
-import java.util.List;
 
-public class MainActivity extends Activity implements View.OnClickListener {
+@BindLayout(R.layout.activity_main)
+public class MainActivity extends Activity {
     UserLite userLite;
+    MainActivityBriefnessor briefnessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        OnLiteFactory.init("/sdcard/Music/");
-        userLite = OnLiteFactory.create(UserLite.class);
+        briefnessor = (MainActivityBriefnessor) Briefness.bind(this);
+        new OnPermission(this).grant(new Permission() {
+            @Override
+            public String[] permissions() {
+                return new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                };
+            }
+
+            @Override
+            public void onGranted(String[] strings) {
+                OnLiteFactory.init("/sdcard/db/");
+                userLite = OnLiteFactory.create(UserLite.class);
+            }
+
+            @Override
+            public void onDenied(String[] strings) {
+                finish();
+            }
+        });
     }
 
-    @Override
-    public void onClick(View view) {
-//        UserLite lite = OnLiteFactory.create(UserLite.class);
-//        List<User> userLimitAndPage;
-//        User where = new User();
-//        where.setUsername("admin10");
-//        where.setPswd("123");
-//        lite.insert(where);
-//
-//        for (int i = 1; i < 7; i++) {
-//            userLimitAndPage = lite.select(where, 10, i, "id", false);
-//            Log.v("TAG", "----------------------page-->" + i + "-----------------------------------");
-//            for (User user : userLimitAndPage) {
-//                Log.v("TAG", user.toString());
-//            }
-//        }
-        Log.v("TAG", "---------------------------------------------------------");
-        MusicLite lite = OnLiteFactory.create(MusicLite.class);
-//        lite.insert(new Music("admin", "123"));
-//        lite.insert(new Music("admin1", "1231"));
-//        lite.insert(new Music("admin2", "1232"));
-//        lite.insert(new Music("admin3", "1233"));
-        List<Music> music = lite.select(new Music("admin2", null));
-        for (int i = 0; i < music.size(); i++) {
-            Log.v("TAG", music.toString());
-        }
+    public void OnInsertClick() {
+        //插入单条数据
+        User user = new User();
+        user.setUsername("hacknife");
+        user.setPswd("hacknife1234");
+        userLite.insert(user);
+
+    }
+
+    public void OnDeleteClick() {
+        User user = new User();
+        user.setUsername("hacknife");
+        userLite.delete(user);//删除用户名为hacknife的数据
+    }
+
+    public void OnUpdateClick() {
+        User where = new User();
+        where.setUsername("hacknife");
+
+        User user = new User();
+        user.setUsername("java");
+        user.setPswd("123");
+        userLite.updata(user,where);//用户名为hacknife改为 用户名为Java  密码为123
+    }
+
+    public void OnQueryClick() {
+        User where = new User();
+        where.setUsername("hacknife");
+        userLite.select(where);//查询用户名为hacknife的所有数据
     }
 }

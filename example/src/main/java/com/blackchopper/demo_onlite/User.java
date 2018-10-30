@@ -12,7 +12,7 @@ import com.hacknife.onlite.annotation.Table;
 @Table("userinfo")
 public class User {
     @AutoInc
-    private Integer id;//123213123
+    private Integer id;
     private String username;
     private String pswd;
 

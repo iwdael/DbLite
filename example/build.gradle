@@ -30,4 +30,7 @@ dependencies {
     compile project(':onlite')
     compile project(':onlite-annotation')
     annotationProcessor project(':onlite-compiler')
+    implementation 'com.hacknife.briefness:briefness:1.8.8-alpha2'
+    implementation 'com.hacknife:onpermission:v1.1.1'
+    annotationProcessor 'com.hacknife.briefness:briefness-compiler:1.8.8-alpha2'
 }
