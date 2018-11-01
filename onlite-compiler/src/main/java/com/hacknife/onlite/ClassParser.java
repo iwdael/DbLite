@@ -19,7 +19,7 @@ import java.util.List;
 public class ClassParser {
 
 
-    public static void parser(String path, List<Filed> briefness) {
+    public static void parser(String path, final List<Field> fileds) {
         try {
             CompilationUnit parse = JavaParser.parse(new File(path));
             VoidVisitorAdapter<Object> adapter = new VoidVisitorAdapter<Object>() {
@@ -28,8 +28,8 @@ public class ClassParser {
                 public void visit(FieldDeclaration n, Object arg) {
                     super.visit(n, arg);
                     String[] ids = checkAnnatation(n.getAnnotations());
-                    if (ids != null)
-                        briefness.addField(new Field(n.getCommonType().toString(), n.getVariable(0).toString(), ids));
+//                    fileds.add(new Field(n.getVariable(0),))
+
                 }
 
 

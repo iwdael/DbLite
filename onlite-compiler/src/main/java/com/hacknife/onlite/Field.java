@@ -12,7 +12,13 @@ public class Field {
     public static final String Unique = "Unique";
     public static final String Ignore = "Ignore";
 
+    private String variable;
+    private String classType;
+    private String[] anntations;
 
-
-
+    public Field(String variable, String classType, String[] anntations) {
+        this.variable = variable;
+        this.classType = classType;
+        this.anntations = anntations;
+    }
 }
