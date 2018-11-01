@@ -9,6 +9,7 @@ import java.io.File;
  * project : OnLite
  */
 public class StringUtil {
+    public static String build="build";
     //首字母转小写
     public static String toLowerCaseFirstOne(String s) {
         if (Character.isLowerCase(s.charAt(0)))
@@ -28,7 +29,7 @@ public class StringUtil {
 
     public static String findBuildDir(String path) {
         File file = new File(path);
-        while (!file.getParentFile().getPath().endsWith(Constant.build)) {
+        while (!file.getParentFile().getPath().endsWith(build)) {
             file = file.getParentFile();
         }
         return file.getParentFile().getParentFile().getPath();

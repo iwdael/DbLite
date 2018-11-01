@@ -1,5 +1,6 @@
 package com.blackchopper.demo_onlite;
 
+import com.hacknife.onlite.annotation.Column;
 import com.hacknife.onlite.annotation.Table;
 import com.hacknife.onlite.annotation.Unique;
 
@@ -11,7 +12,9 @@ import com.hacknife.onlite.annotation.Unique;
  */
 @Table("music")
 public class Music {
+    @Column( "url" )
     String path;
+    @Column( "fileName" )
     @Unique
     String name;
 

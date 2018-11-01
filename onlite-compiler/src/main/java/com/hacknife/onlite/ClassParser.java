@@ -17,9 +17,8 @@ import java.util.List;
  */
 
 public class ClassParser {
-
-
-    public static void parser(String path, final List<Field> fileds) {
+    public static void parser(String modulePath, String packageName, String className, final List<Field> fields) {
+        String path = modulePath + "/src/main/java/" + packageName.replace(".", "/") + "/" + className + ".java";
         try {
             CompilationUnit parse = JavaParser.parse(new File(path));
             VoidVisitorAdapter<Object> adapter = new VoidVisitorAdapter<Object>() {
@@ -27,12 +26,10 @@ public class ClassParser {
                 @Override
                 public void visit(FieldDeclaration n, Object arg) {
                     super.visit(n, arg);
-                    String[] ids = checkAnnatation(n.getAnnotations());
-//                    fileds.add(new Field(n.getVariable(0),))
-
+                    String[] annotations = checkAnnatation(n.getAnnotations());
+                    if (annotations != null)
+                        fields.add(new Field(n.getVariable(0).getNameAsString(), n.getCommonType().asString(), annotations));
                 }
-
-
             };
             adapter.visit(parse, null);
         } catch (Exception e) {
@@ -45,31 +42,14 @@ public class ClassParser {
         for (AnnotationExpr annotationExpr : annotationExprs) {
             if (annotationExpr.toString().contains(Field.AutoInc) ||
                     annotationExpr.toString().contains(Field.Column) ||
-                    annotationExpr.toString().contains(Field.Ignore) ||
                     annotationExpr.toString().contains(Field.NotNull) ||
                     annotationExpr.toString().contains(Field.Unique))
-                annotaions.add(annotationExpr.getNameAsString());
+                annotaions.add(annotationExpr.toString());
+            if (annotationExpr.toString().contains(Field.Ignore))
+                return null;
         }
-        return (String[]) annotaions.toArray();
-    }
-
-    private static String subString(String anntation) {
-        if (anntation.contains("{")) {
-            int start = anntation.indexOf("{");
-            int end = anntation.lastIndexOf("}");
-            return anntation.substring(start + 1, end).replaceAll(" ", "");
-        } else {
-            int start = anntation.indexOf("(");
-            int end = anntation.lastIndexOf(")");
-            return anntation.substring(start + 1, end).replaceAll(" ", "");
-        }
-
+        return   annotaions.toArray(new String[annotaions.size()]);
     }
 
 
-//    public static void main(String[] argv) {
-//        Briefness briefness = new Briefness("");
-//        parser("C:\\Users\\Hacknife\\Desktop\\briefness\\example\\src\\main\\java\\com\\hacknife\\demo\\MainActivity.java", briefness);
-//        System.out.print(briefness.toString());
-//    }
 }
