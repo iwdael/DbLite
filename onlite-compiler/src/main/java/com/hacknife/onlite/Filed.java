@@ -1,6 +1,8 @@
 package com.hacknife.onlite;
 
 
+import com.hacknife.onlite.util.Logger;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -57,12 +59,16 @@ public class Filed {
             clazzType = list.get(list.size() - 2);
             varible = list.get(list.size() - 1);
         }
+        for (String s : annotation) {
+            Logger.v(s);
+        }
+        Logger.v(toString());
     }
 
     @Override
     public String toString() {
         return "Filed{" +
-                "annotation='" + annotation + '\'' +
+                "annotation='" + (annotation==null? annotation:annotation.toString()) + '\'' +
                 ", clazzType='" + clazzType + '\'' +
                 ", varible='" + varible + '\'' +
                 '}';

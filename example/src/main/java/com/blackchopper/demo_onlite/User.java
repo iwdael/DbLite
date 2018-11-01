@@ -1,6 +1,7 @@
 package com.blackchopper.demo_onlite;
 
 import com.hacknife.onlite.annotation.AutoInc;
+import com.hacknife.onlite.annotation.Column;
 import com.hacknife.onlite.annotation.Table;
 
 /**
@@ -13,6 +14,7 @@ import com.hacknife.onlite.annotation.Table;
 public class User {
     @AutoInc
     private Integer id;
+    @Column("231232")
     private String username;
     private String pswd;
 
