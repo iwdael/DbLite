@@ -222,11 +222,8 @@ public abstract class OnLite<T> implements ILite<T> {
         boolean result = false;
         String sql = "SELECT COUNT(*) FROM sqlite_master where type='table' and name='" + tableName + "'";
         Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
-        if (cursor.moveToNext()) {
-            int count = cursor.getInt(0);
-            if (count > 0) {
-                result = true;
-            }
+        if (cursor.getCount() > 0) {
+            result = true;
         }
         cursor.close();
         return result;
@@ -241,5 +238,12 @@ public abstract class OnLite<T> implements ILite<T> {
         count = cursor.getCount();
         cursor.close();
         return count;
+    }
+
+    private void change() {
+        String sql = "SELECT sql FROM sqlite_master WHERE type='table' AND name = '" + tableName + "'";
+        Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
+        String createSql= cursor.getString(0);
+        cursor.close();
     }
 }
