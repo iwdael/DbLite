@@ -62,7 +62,7 @@ public class Field {
     public String getAutoInc() {
         if (annotation == null) return null;
         for (String s : annotation) {
-            if (s.equalsIgnoreCase(AutoInc)) return AutoInc;
+            if (s.contains(AutoInc)) return AutoInc;
         }
         return null;
     }
@@ -70,7 +70,7 @@ public class Field {
     public String getUnique() {
         if (annotation == null) return null;
         for (String s : annotation) {
-            if (s.equalsIgnoreCase(Unique)) return Unique;
+            if (s.contains(Unique)) return Unique;
         }
         return null;
     }
@@ -78,7 +78,7 @@ public class Field {
     public String getNotNull() {
         if (annotation == null) return null;
         for (String s : annotation) {
-            if (s.equalsIgnoreCase(NotNull)) return NotNull;
+            if (s.contains(NotNull)) return NotNull;
         }
         return null;
     }

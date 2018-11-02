@@ -1,6 +1,7 @@
 package com.blackchopper.demo_onlite;
 
 import com.hacknife.onlite.annotation.Column;
+import com.hacknife.onlite.annotation.Ignore;
 import com.hacknife.onlite.annotation.Table;
 import com.hacknife.onlite.annotation.Unique;
 
@@ -12,22 +13,25 @@ import com.hacknife.onlite.annotation.Unique;
  */
 @Table("music")
 public class Music {
-    @Column( "url" )
+
     String path;
-    @Column( "fileName" )
+
     @Unique
     String name;
 
-    public Music(String admin, String s) {
-        path = admin;
-        name = s;
-    }
+    String author;
+
+    String abulm;
+
+    @Ignore
+    String length;
 
     public Music() {
+
     }
 
     public String getPath() {
-        return path ;
+        return path;
     }
 
     public void setPath(String path) {
@@ -35,18 +39,34 @@ public class Music {
     }
 
     public String getName() {
-        return name ;
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Music{" +
-                "path='" + path + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getAbulm() {
+        return abulm;
+    }
+
+    public void setAbulm(String abulm) {
+        this.abulm = abulm;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
+    }
+
+    public String getLength() {
+        return length;
     }
 }
