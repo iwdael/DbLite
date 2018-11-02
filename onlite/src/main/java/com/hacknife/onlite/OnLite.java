@@ -19,7 +19,7 @@ public abstract class OnLite<T> implements ILite<T> {
     protected boolean isInit = false;
     protected String tableName;
 
-      synchronized void init(SQLiteDatabase sqLiteDatabase) {
+    synchronized void init(SQLiteDatabase sqLiteDatabase) {
         if (!isInit) {
             this.sqLiteDatabase = sqLiteDatabase;
             sqLiteDatabase.execSQL(createTable());
@@ -210,7 +210,7 @@ public abstract class OnLite<T> implements ILite<T> {
     }
 
     @Override
-    public boolean delete () {
+    public boolean delete() {
         if (!exists()) return false;
         String sql = " DROP TABLE " + this.tableName;
         sqLiteDatabase.execSQL(sql);
@@ -228,10 +228,18 @@ public abstract class OnLite<T> implements ILite<T> {
                 result = true;
             }
         }
+        cursor.close();
         return result;
     }
 
 
-
-
+    @Override
+    public int count() {
+        int count;
+        String sql = "SELECT COUNT(*) FROM " + tableName;
+        Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
+        count = cursor.getCount();
+        cursor.close();
+        return count;
+    }
 }

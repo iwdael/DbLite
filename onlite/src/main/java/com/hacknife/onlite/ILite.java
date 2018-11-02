@@ -53,4 +53,6 @@ public interface ILite<T> {
     boolean delete();
 
     boolean exists();
+
+    int count();
 }
