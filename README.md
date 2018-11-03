@@ -8,7 +8,7 @@ OnLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite
 * 支持升序、降序、分页
 * 支持增删改查
 ## 使用说明
-在使用OnLite之前，必须先通过OnLiteFactory中的getInstance方法初始化Onlite。OnLite实现了一些比较复杂的查询，比如按照某个字段升序或者倒序分页查询等。
+在使用OnLite之前，必须先通过OnLiteFactory中的init方法初始化Onlite。OnLite实现了一些比较复杂的查询，比如按照某个字段升序或者倒序分页查询等。
 ### 代码示例
 初始化OnLiteFactory，并设置数据库储存的位置
 ```Java
