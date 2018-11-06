@@ -112,7 +112,7 @@ public class User {
 	allprojects {
 		repositories {
 			...
-			maven { url 'https://hacknife.com' }
+			maven { url 'https://jitpack.io' }
 		}
 	}
 
