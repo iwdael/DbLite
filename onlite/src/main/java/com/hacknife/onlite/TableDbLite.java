@@ -17,15 +17,15 @@ public class TableDbLite extends OnLite<TableDb> {
     @Override
     protected String createTable() {
         return "CREATE TABLE IF NOT EXISTS table_hacknife ("
-                + "table varchar(255) DEFAULT NULL,"
-                + "version INTEGER DEFAULT NULL)";
+                + "tableName varchar(255) DEFAULT NULL,"
+                + "tableVersion INTEGER DEFAULT NULL)";
     }
 
     @Override
     protected TableDb createObject(Cursor cursor) {
         TableDb tableDb = new TableDb();
-        tableDb.setTable(cursor.getString(cursor.getColumnIndex("table")));
-        tableDb.setVersion(cursor.getInt(cursor.getColumnIndex("version")));
+        tableDb.setTableName(cursor.getString(cursor.getColumnIndex("tableName")));
+        tableDb.setTableVersion(cursor.getInt(cursor.getColumnIndex("tableVersion")));
         return tableDb;
     }
 
@@ -33,10 +33,10 @@ public class TableDbLite extends OnLite<TableDb> {
     protected ContentValues createContentValues(TableDb tableDb) {
         if (tableDb == null) return null;
         ContentValues values = new ContentValues();
-        if (tableDb.getTable() != null)
-            values.put("table", tableDb.getTable());
-        if (tableDb.getVersion() != null)
-            values.put("version", tableDb.getVersion());
+        if (tableDb.getTableName() != null)
+            values.put("tableName", tableDb.getTableName());
+        if (tableDb.getTableVersion() != null)
+            values.put("tableVersion", tableDb.getTableVersion());
         return values;
     }
 
@@ -45,10 +45,10 @@ public class TableDbLite extends OnLite<TableDb> {
         if (where == null) return null;
         StringBuilder builder = new StringBuilder();
         builder.append("1 = 1 ");
-        if (where.getTable() != null)
-            builder.append("and " + "table = ? ");
-        if (where.getVersion() != null)
-            builder.append("and " + "version = ? ");
+        if (where.getTableName() != null)
+            builder.append("and " + "tableName = ? ");
+        if (where.getTableVersion() != null)
+            builder.append("and " + "tableVersion = ? ");
         return builder.toString();
     }
 
@@ -56,10 +56,10 @@ public class TableDbLite extends OnLite<TableDb> {
     protected String[] createSelectionArgv(TableDb where) {
         if (where == null) return null;
         List<String> list = new ArrayList<>();
-        if (where.getTable() != null)
-            list.add(String.valueOf(where.getTable()));
-        if (where.getVersion() != null)
-            list.add(String.valueOf(where.getVersion()));
+        if (where.getTableName() !=null )
+            list.add(String.valueOf(where.getTableName()));
+        if (where.getTableVersion() !=null )
+            list.add(String.valueOf(where.getTableVersion()));
         return list.toArray(new String[list.size()]);
     }
 }

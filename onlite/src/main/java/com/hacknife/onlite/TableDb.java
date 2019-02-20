@@ -1,35 +1,38 @@
 package com.hacknife.onlite;
 
 
+import com.hacknife.onlite.annotation.Table;
+
+@Table("table_hacknife")
 public class TableDb {
-    String table;
-    Integer version;
+    String tableName;
+    Integer tableVersion;
+
+    public TableDb(String tableName, Integer tableVersion) {
+        this.tableName = tableName;
+        this.tableVersion = tableVersion;
+    }
+
+    public TableDb(String tableName) {
+        this.tableName = tableName;
+    }
 
     public TableDb() {
     }
 
-    public TableDb(String table) {
-        this.table = table;
+    public String getTableName() {
+        return tableName;
     }
 
-    public TableDb(String table, Integer version) {
-        this.table = table;
-        this.version = version;
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
-    public String getTable() {
-        return table;
+    public Integer getTableVersion() {
+        return tableVersion;
     }
 
-    public void setTable(String table) {
-        this.table = table;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
+    public void setTableVersion(Integer tableVersion) {
+        this.tableVersion = tableVersion;
     }
 }
