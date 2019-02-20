@@ -1,9 +1,6 @@
 package com.hacknife.onlite;
 
 
-import com.hacknife.onlite.annotation.Table;
-
-@Table("table_hacknife")
 public class TableDb {
     String tableName;
     Integer tableVersion;
