@@ -16,7 +16,6 @@ import com.hacknife.onlite.annotation.Version;
 public class User {
     @AutoInc
     private Integer id;
-    @Column("231232")
     private String username;
     private String pswd;
 
