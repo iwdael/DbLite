@@ -3,7 +3,10 @@ package com.hacknife.onlite;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.hacknife.onlite.annotation.Table;
+
 import java.io.File;
+import java.util.List;
 
 /**
  * author  : Hacknife
@@ -16,6 +19,7 @@ public class OnLiteFactory {
     private static volatile OnLiteFactory instence = null;
     private String path;
     private SQLiteDatabase sqLiteDatabase;
+    private TableDbLite tableDbLite;
 
     private OnLiteFactory(String path) {
         this.path = path;
@@ -43,6 +47,7 @@ public class OnLiteFactory {
                     instence = new OnLiteFactory(path);
             }
         }
+        getInstance().tableDbLite = OnLiteFactory.create(TableDbLite.class);
         return instence;
     }
 
@@ -51,6 +56,18 @@ public class OnLiteFactory {
         OnLite baseLite = null;
         try {
             baseLite = lite.newInstance();
+            if (!lite.equals(TableDbLite.class)) {
+                List<TableDb> tableDbs = factory.tableDbLite.select(new TableDb(baseLite.tableName));
+                if (tableDbs.size() == 0) {
+                    factory.tableDbLite.insert(new TableDb(baseLite.tableName, baseLite.version));
+                } else {
+                    if (!tableDbs.get(0).version.equals(baseLite.version)) {
+                        factory.tableDbLite.updata(new TableDb(baseLite.tableName, baseLite.version), new TableDb(baseLite.tableName));
+                        baseLite.init(factory.sqLiteDatabase);
+                        baseLite.delete();
+                    }
+                }
+            }
             baseLite.init(factory.sqLiteDatabase);
         } catch (Exception e) {
             e.printStackTrace();

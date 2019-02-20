@@ -1,4 +1,4 @@
 include ':example'
-//include ':onlite'
-//include ':onlite-annotation'
-//include ':onlite-compiler'
+include ':onlite'
+include ':onlite-annotation'
+include ':onlite-compiler'

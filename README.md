@@ -109,8 +109,8 @@ public class User {
 ```Java
 	dependencies {
 	  ...
-          compile 'com.hacknife.onlite:onlite:1.3.6'
-          annotationProcessor 'com.hacknife.onlite:onlite-compiler:1.3.6'
+          compile 'com.hacknife.onlite:onlite:1.3.7'
+          annotationProcessor 'com.hacknife.onlite:onlite-compiler:1.3.7'
 	}
 ```
 ### Step 3. 添加权限

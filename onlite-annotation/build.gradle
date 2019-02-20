@@ -11,7 +11,7 @@ publish{
     userOrg = 'hacknife'
     groupId = 'com.hacknife.onlite'
     artifactId = 'onlite-annotation'
-    publishVersion = '1.3.6'
+    publishVersion = '1.3.7'
     desc = ''
     website = 'https://github.com/hacknife/onlite'
 }

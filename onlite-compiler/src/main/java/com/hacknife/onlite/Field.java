@@ -12,6 +12,7 @@ public class Field {
     public static final String NotNull = "NotNull";
     public static final String Unique = "Unique";
     public static final String Ignore = "Ignore";
+    public static final String Version = "Version";
 
     protected static String CREATE = "CREATE TABLE IF NOT EXISTS";
     protected static String NOT_NULL = " NOT NULL";

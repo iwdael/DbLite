@@ -3,6 +3,7 @@ package com.blackchopper.demo_onlite;
 import com.hacknife.onlite.annotation.AutoInc;
 import com.hacknife.onlite.annotation.Column;
 import com.hacknife.onlite.annotation.Table;
+import com.hacknife.onlite.annotation.Version;
 
 /**
  * author  : Hacknife
@@ -11,6 +12,7 @@ import com.hacknife.onlite.annotation.Table;
  * project : OnLite
  */
 @Table("userinfo")
+@Version(1)
 public class User {
     @AutoInc
     private Integer id;

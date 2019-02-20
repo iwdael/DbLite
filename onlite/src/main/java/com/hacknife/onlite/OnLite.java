@@ -18,6 +18,7 @@ public abstract class OnLite<T> implements ILite<T> {
     protected SQLiteDatabase sqLiteDatabase;
     protected boolean isInit = false;
     protected String tableName;
+    protected Integer version;
 
     synchronized void init(SQLiteDatabase sqLiteDatabase) {
         if (!isInit) {
@@ -243,7 +244,7 @@ public abstract class OnLite<T> implements ILite<T> {
     private void change() {
         String sql = "SELECT sql FROM sqlite_master WHERE type='table' AND name = '" + tableName + "'";
         Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
-        String createSql= cursor.getString(0);
+        String createSql = cursor.getString(0);
         cursor.close();
     }
 }
