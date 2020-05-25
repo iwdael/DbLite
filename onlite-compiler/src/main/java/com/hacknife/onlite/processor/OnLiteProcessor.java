@@ -90,10 +90,10 @@ public class OnLiteProcessor extends AbstractProcessor {
                 if (!inited) {
                     //找到当前module
                     buidPath = StringUtil.findBuildDir(jfo.toUri().getPath());
-                    Logger.v("find build directory: " + buidPath);
+//                    Logger.v("find build directory: " + buidPath);
                     inited = true;
                 }
-                Logger.v(jfo.toUri().getPath());
+//                Logger.v(jfo.toUri().getPath());
                 Writer writer = jfo.openWriter();
                 writer.write(liteFile.generateJavaCode(buidPath));
                 writer.flush();

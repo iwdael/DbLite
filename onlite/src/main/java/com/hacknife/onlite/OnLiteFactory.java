@@ -61,7 +61,7 @@ public class OnLiteFactory {
                 if (tableDbs.size() == 0) {
                     factory.tableDbLite.insert(new TableDb(baseLite.tableName, baseLite.version));
                 } else {
-                    if (!tableDbs.get(0).tableName.equals(baseLite.version)) {
+                    if (!tableDbs.get(0).tableVersion.equals(baseLite.version)) {
                         factory.tableDbLite.updata(new TableDb(baseLite.tableName, baseLite.version), new TableDb(baseLite.tableName));
                         baseLite.init(factory.sqLiteDatabase);
                         baseLite.delete();

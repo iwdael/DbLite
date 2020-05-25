@@ -45,7 +45,7 @@ public class ClassParser {
 
                         if (annotationExpr.getNameAsString().equals(Field.Version)) {
                             versions.add(getInteger(annotationExpr.toString()));
-                            Logger.v(versions.toString());
+//                            Logger.v(versions.toString());
                         }
                     }
                 }
@@ -79,7 +79,7 @@ public class ClassParser {
                 builder.append(str.charAt(i));
             }
         }
-        Logger.v("getInteger:"+builder.toString());
+//        Logger.v("getInteger:"+builder.toString());
         return Integer.parseInt(builder.toString());
     }
 

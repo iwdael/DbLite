@@ -1,23 +1,24 @@
-apply plugin: 'java'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'java-library'
 apply plugin: 'com.novoda.bintray-release'
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.google.auto.service:auto-service:1.0-rc2'
-    compile project(':onlite-annotation')
-    compile 'com.github.javaparser:javaparser-core:3.7.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.google.auto.service:auto-service:1.0-rc4'
+    annotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
+    implementation project(':onlite-annotation')
+    implementation 'com.github.javaparser:javaparser-core:3.7.0'
 }
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-group='com.github.hacknife'
 
-publish{
+publish {
     userOrg = 'hacknife'
     groupId = 'com.hacknife.onlite'
     artifactId = 'onlite-compiler'
-    publishVersion = '1.3.7'
+    publishVersion = "${bintrayVer}"
+    bintrayUser = 'hacknife'
+    bintrayKey = "${bintrayKey}"
     desc = ''
     website = 'https://github.com/hacknife/onlite'
+
+
 }
