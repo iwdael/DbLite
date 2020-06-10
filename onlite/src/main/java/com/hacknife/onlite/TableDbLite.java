@@ -7,7 +7,12 @@ import android.database.Cursor;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * author  : Hacknife
+ * e-mail  : hacknife@outlook.com
+ * github  : http://github.com/hacknife
+ * project : OnLite
+ */
 public class TableDbLite extends OnLite<TableDb> {
     public TableDbLite() {
         tableName = "table_hacknife";

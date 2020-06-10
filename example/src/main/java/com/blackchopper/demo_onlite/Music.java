@@ -1,7 +1,7 @@
 package com.blackchopper.demo_onlite;
 
 import com.hacknife.onlite.annotation.Column;
-import com.hacknife.onlite.annotation.Ignore;
+import com.hacknife.onlite.annotation.NotNull;
 import com.hacknife.onlite.annotation.Table;
 import com.hacknife.onlite.annotation.Unique;
 
@@ -14,16 +14,18 @@ import com.hacknife.onlite.annotation.Unique;
 @Table("music")
 public class Music {
 
-    String path;
-
     @Unique
+    @NotNull
+    @Column
+    private String path;
+    @Unique
+    @Column
     String name;
-
+    @Column
     String author;
-
+    @Column
     String abulm;
-
-    @Ignore
+    @Column
     String length;
 
     public Music() {

@@ -3,6 +3,7 @@ package com.blackchopper.demo_onlite;
 import com.hacknife.onlite.annotation.AutoInc;
 import com.hacknife.onlite.annotation.Column;
 import com.hacknife.onlite.annotation.Table;
+import com.hacknife.onlite.annotation.Unique;
 import com.hacknife.onlite.annotation.Version;
 
 /**
@@ -11,13 +12,22 @@ import com.hacknife.onlite.annotation.Version;
  * github  : http://github.com/hacknife
  * project : OnLite
  */
-@Table("userinfo")
+@Table("user_info")
 @Version(1)
 public class User {
+
+    @Column(name = "_id")
     @AutoInc
-    private Integer id;
-    private String username;
-    private String pswd;
+    Integer id;
+
+    @Column(name = "name")
+    String name;
+
+    @Unique
+    @Column(name = "_pwd")
+    String pwd;
+    @Column(name = "_img")
+    String img;
 
     public Integer getId() {
         return id;
@@ -27,28 +37,27 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPswd() {
-        return pswd;
+    public String getPwd() {
+        return pwd;
     }
 
-    public void setPswd(String pswd) {
-        this.pswd = pswd;
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", pswd='" + pswd + '\'' +
-                '}';
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }

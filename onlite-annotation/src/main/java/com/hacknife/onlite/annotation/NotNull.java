@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * author  : Hacknife
- * e-mail  : 4884280@qq.com
+ * e-mail  : hacknife@outlook.com
  * github  : http://github.com/hacknife
  * project : OnLite
  */

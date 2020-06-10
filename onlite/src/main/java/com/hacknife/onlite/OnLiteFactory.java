@@ -3,14 +3,11 @@ package com.hacknife.onlite;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.hacknife.onlite.annotation.Table;
-
 import java.io.File;
 import java.util.List;
-
 /**
  * author  : Hacknife
- * e-mail  : 4884280@qq.com
+ * e-mail  : hacknife@outlook.com
  * github  : http://github.com/hacknife
  * project : OnLite
  */

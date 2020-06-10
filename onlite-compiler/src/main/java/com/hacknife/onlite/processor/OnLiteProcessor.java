@@ -1,14 +1,17 @@
 package com.hacknife.onlite.processor;
 
-import com.hacknife.onlite.LiteFile;
+import com.hacknife.onlite.OnLite;
+import com.hacknife.onlite.annotation.AutoInc;
+import com.hacknife.onlite.annotation.Column;
+import com.hacknife.onlite.annotation.NotNull;
 import com.hacknife.onlite.annotation.Table;
-import com.hacknife.onlite.util.Logger;
 import com.google.auto.service.AutoService;
-import com.hacknife.onlite.util.StringUtil;
+import com.hacknife.onlite.annotation.Unique;
+import com.hacknife.onlite.annotation.Version;
 
 import java.io.Writer;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -21,28 +24,30 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
-import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 
 /**
  * author  : Hacknife
- * e-mail  : 4884280@qq.com
+ * e-mail  : hacknife@outlook.com
  * github  : http://github.com/hacknife
  * project : OnLite
  */
 @AutoService(Processor.class)
 public class OnLiteProcessor extends AbstractProcessor {
     protected Messager messager;
-    protected Elements elementUtils;
-    protected Map<String, LiteFile> mProxyMap = new LinkedHashMap<>();
-    protected String buidPath;
-    protected boolean inited = false;
+    protected Map<String, OnLite> liteMap = new HashMap<>();
+
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         HashSet<String> supportType = new LinkedHashSet<>();
         supportType.add(Table.class.getCanonicalName());
+        supportType.add(Version.class.getCanonicalName());
+        supportType.add(AutoInc.class.getCanonicalName());
+        supportType.add(Column.class.getCanonicalName());
+        supportType.add(NotNull.class.getCanonicalName());
+        supportType.add(Unique.class.getCanonicalName());
         return supportType;
     }
 
@@ -55,51 +60,95 @@ public class OnLiteProcessor extends AbstractProcessor {
     public synchronized void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
         messager = processingEnv.getMessager();
-        elementUtils = processingEnv.getElementUtils();
     }
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         messager.printMessage(Diagnostic.Kind.NOTE, "process...");
-        mProxyMap.clear();
-        processLite(annotations, roundEnv);
+        liteMap.clear();
+        processTable(roundEnv);
+        processVersion(roundEnv);
+        processAutoInc(roundEnv);
+        processColumn(roundEnv);
+        processNotNull(roundEnv);
+        processUnique(roundEnv);
         process();
         return true;
     }
 
-    private void processLite(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+    private void processUnique(RoundEnvironment roundEnv) {
+        Set<? extends Element> uniques = roundEnv.getElementsAnnotatedWith(Unique.class);
+        for (Element element : uniques) {
+            String fullClass = element.getEnclosingElement().toString();
+            OnLite lite = liteMap.get(fullClass);
+            lite.addElement(element);
+        }
+    }
+
+    private void processNotNull(RoundEnvironment roundEnv) {
+        Set<? extends Element> notNulls = roundEnv.getElementsAnnotatedWith(NotNull.class);
+        for (Element element : notNulls) {
+            String fullClass = element.getEnclosingElement().toString();
+            OnLite lite = liteMap.get(fullClass);
+            lite.addElement(element);
+        }
+    }
+
+    private void processColumn(RoundEnvironment roundEnv) {
+        Set<? extends Element> columns = roundEnv.getElementsAnnotatedWith(Column.class);
+        for (Element element : columns) {
+            String fullClass = element.getEnclosingElement().toString();
+            OnLite lite = liteMap.get(fullClass);
+            lite.addElement(element);
+        }
+    }
+
+
+    private void processAutoInc(RoundEnvironment roundEnv) {
+        Set<? extends Element> autoIncs = roundEnv.getElementsAnnotatedWith(AutoInc.class);
+        for (Element element : autoIncs) {
+            String fullClass = element.getEnclosingElement().toString();
+            OnLite lite = liteMap.get(fullClass);
+            lite.addElement(element);
+        }
+    }
+
+    private void processVersion(RoundEnvironment roundEnv) {
+        Set<? extends Element> versions = roundEnv.getElementsAnnotatedWith(Version.class);
+        for (Element element : versions) {
+            String fullClass = element.asType().toString();
+            Version version = element.getAnnotation(Version.class);
+            OnLite lite = liteMap.get(fullClass);
+            lite.setVersion(version.value());
+        }
+    }
+
+    private void processTable(RoundEnvironment roundEnv) {
         Set<? extends Element> tables = roundEnv.getElementsAnnotatedWith(Table.class);
         for (Element element : tables) {
-            String fullClassName = element.asType().toString();
+            String fullClass = element.asType().toString();
             Table table = element.getAnnotation(Table.class);
-
-            if (mProxyMap.get(fullClassName) == null) {
-                mProxyMap.put(fullClassName, new LiteFile(elementUtils, (TypeElement) element, table.value()));
-            }
+            OnLite onLite = new OnLite();
+            liteMap.put(fullClass, onLite);
+            onLite.setElement(element);
+            onLite.setFullClass(fullClass);
+            onLite.setTableName(table.value().equals("") ? fullClass.substring(fullClass.lastIndexOf(".")): table.value());
         }
     }
 
     private void process() {
-        for (String key : mProxyMap.keySet()) {
-            LiteFile liteFile = mProxyMap.get(key);
+        for (String key : liteMap.keySet()) {
             try {
+                OnLite lite = liteMap.get(key);
                 JavaFileObject jfo = processingEnv.getFiler().createSourceFile(
-                        liteFile.getProxyClassFullName(),
-                        liteFile.getTypeElement()
+                        lite.getOnLiteClass(),
+                        lite.getElement()
                 );
-                if (!inited) {
-                    //找到当前module
-                    buidPath = StringUtil.findBuildDir(jfo.toUri().getPath());
-//                    Logger.v("find build directory: " + buidPath);
-                    inited = true;
-                }
-//                Logger.v(jfo.toUri().getPath());
                 Writer writer = jfo.openWriter();
-                writer.write(liteFile.generateJavaCode(buidPath));
+                writer.write(lite.createLite(messager));
                 writer.flush();
                 writer.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
         }
     }

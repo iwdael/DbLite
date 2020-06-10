@@ -7,12 +7,13 @@ import java.lang.annotation.Target;
 
 /**
  * author  : Hacknife
- * e-mail  : 4884280@qq.com
+ * e-mail  : hacknife@outlook.com
  * github  : http://github.com/hacknife
  * project : OnLite
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Column {
-    String value();
+    String name() default "";
+    String type() default "";
 }

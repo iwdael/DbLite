@@ -19,6 +19,4 @@ publish {
     bintrayKey = "${bintrayKey}"
     desc = ''
     website = 'https://github.com/hacknife/onlite'
-
-
 }
