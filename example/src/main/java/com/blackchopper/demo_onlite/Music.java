@@ -11,7 +11,7 @@ import com.hacknife.onlite.annotation.Unique;
  * github  : http://github.com/hacknife
  * project : OnLite
  */
-@Table("music")
+@Table
 public class Music {
 
     @Unique

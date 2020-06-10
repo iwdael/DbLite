@@ -338,9 +338,10 @@ public class OnLite {
             notNull = autoIncAnnotation != null ? " AUTOINCREMENT" : notNull;
             StringLiteralExpr right = new StringLiteralExpr(String.format("%s %s%s%s%s", name, type, unique, notNull, i < listElement.size() - 1 ? "," : ""));
             right.setBlockComment("*\n" +
-                    "                 * class: {@link " + clazz + "}\n" +
-                    "                 * field: {@link " + clazz + "." + list.get(0).toString() + "}\n" +
-                    "                 * ");
+                    "         * column: " + name + "\n" +
+                    "         * class: {@link " + clazz + "}\n" +
+                    "         * field: {@link " + clazz + "." + list.get(0).toString() + "}\n" +
+                    "         * ");
             binaryExpr.setOperator(BinaryExpr.Operator.PLUS).setRight(right);
             binaryExpr = new BinaryExpr().setLeft(binaryExpr);
         }

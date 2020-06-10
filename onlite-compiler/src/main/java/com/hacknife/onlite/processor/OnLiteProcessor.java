@@ -132,7 +132,7 @@ public class OnLiteProcessor extends AbstractProcessor {
             liteMap.put(fullClass, onLite);
             onLite.setElement(element);
             onLite.setFullClass(fullClass);
-            onLite.setTableName(table.value().equals("") ? fullClass.substring(fullClass.lastIndexOf(".")): table.value());
+            onLite.setTableName(table.value().equals("") ? fullClass.substring(fullClass.lastIndexOf(".") + 1) : table.value());
         }
     }
 
