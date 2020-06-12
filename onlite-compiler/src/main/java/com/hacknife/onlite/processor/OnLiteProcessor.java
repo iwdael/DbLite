@@ -3,6 +3,7 @@ package com.hacknife.onlite.processor;
 import com.hacknife.onlite.OnLite;
 import com.hacknife.onlite.annotation.AutoInc;
 import com.hacknife.onlite.annotation.Column;
+import com.hacknife.onlite.annotation.Convert;
 import com.hacknife.onlite.annotation.NotNull;
 import com.hacknife.onlite.annotation.Table;
 import com.google.auto.service.AutoService;
@@ -48,6 +49,7 @@ public class OnLiteProcessor extends AbstractProcessor {
         supportType.add(Column.class.getCanonicalName());
         supportType.add(NotNull.class.getCanonicalName());
         supportType.add(Unique.class.getCanonicalName());
+        supportType.add(Convert.class.getCanonicalName());
         return supportType;
     }
 
@@ -72,8 +74,18 @@ public class OnLiteProcessor extends AbstractProcessor {
         processColumn(roundEnv);
         processNotNull(roundEnv);
         processUnique(roundEnv);
+        processConvert(roundEnv);
         process();
         return true;
+    }
+
+    private void processConvert(RoundEnvironment roundEnv) {
+        Set<? extends Element> converts = roundEnv.getElementsAnnotatedWith(Convert.class);
+        for (Element element : converts) {
+            for (OnLite value : liteMap.values()) {
+                value.addConvert(element);
+            }
+        }
     }
 
     private void processUnique(RoundEnvironment roundEnv) {
@@ -81,6 +93,7 @@ public class OnLiteProcessor extends AbstractProcessor {
         for (Element element : uniques) {
             String fullClass = element.getEnclosingElement().toString();
             OnLite lite = liteMap.get(fullClass);
+            if (lite == null) return;
             lite.addElement(element);
         }
     }
@@ -90,6 +103,7 @@ public class OnLiteProcessor extends AbstractProcessor {
         for (Element element : notNulls) {
             String fullClass = element.getEnclosingElement().toString();
             OnLite lite = liteMap.get(fullClass);
+            if (lite == null) return;
             lite.addElement(element);
         }
     }
@@ -99,6 +113,7 @@ public class OnLiteProcessor extends AbstractProcessor {
         for (Element element : columns) {
             String fullClass = element.getEnclosingElement().toString();
             OnLite lite = liteMap.get(fullClass);
+            if (lite == null) return;
             lite.addElement(element);
         }
     }
@@ -109,6 +124,7 @@ public class OnLiteProcessor extends AbstractProcessor {
         for (Element element : autoIncs) {
             String fullClass = element.getEnclosingElement().toString();
             OnLite lite = liteMap.get(fullClass);
+            if (lite == null) return;
             lite.addElement(element);
         }
     }
@@ -119,6 +135,7 @@ public class OnLiteProcessor extends AbstractProcessor {
             String fullClass = element.asType().toString();
             Version version = element.getAnnotation(Version.class);
             OnLite lite = liteMap.get(fullClass);
+            if (lite == null) return;
             lite.setVersion(version.value());
         }
     }
@@ -137,6 +154,7 @@ public class OnLiteProcessor extends AbstractProcessor {
     }
 
     private void process() {
+
         for (String key : liteMap.keySet()) {
             try {
                 OnLite lite = liteMap.get(key);

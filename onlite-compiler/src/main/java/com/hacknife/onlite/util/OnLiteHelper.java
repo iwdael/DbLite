@@ -1,12 +1,17 @@
 package com.hacknife.onlite.util;
 
+import java.lang.reflect.Field;
+
+import javax.lang.model.element.Element;
+import javax.lang.model.type.TypeMirror;
+
 /**
  * author  : Hacknife
  * e-mail  : hacknife@outlook.com
  * github  : http://github.com/hacknife
  * project : OnLite
  */
-public class Helper {
+public class OnLiteHelper {
     protected static String VARCHAR = "varchar(255)";
     protected static String DOUBLE = "double(64,0)";
     protected static String FLOAT = "float(32,0)";
@@ -22,7 +27,6 @@ public class Helper {
         switch (filed) {
             case "java.lang.String":
                 return VARCHAR;
-
             case "java.lang.Byte":
             case "byte":
                 return BYTE;
@@ -56,10 +60,55 @@ public class Helper {
         }
     }
 
+    public static final int COMMON = 1;
+    public static final int OTHER = 2;
+    public static final int BOOLEAN = 3;
+
+    public static int javaFieldType(String filed) {
+        switch (filed) {
+            case "java.lang.String":
+
+            case "java.lang.Byte[]":
+            case "byte[]":
+
+            case "java.lang.Long":
+            case "long":
+
+            case "java.lang.Double":
+            case "double":
+
+            case "java.lang.Short":
+            case "short":
+
+            case "java.lang.Integer":
+            case "int":
+
+            case "java.lang.Byte":
+            case "byte":
+
+            case "java.lang.Float":
+            case "float":
+                return COMMON;
+
+            case "java.lang.Boolean":
+            case "boolean":
+                return BOOLEAN;
+            default:
+                return OTHER;
+        }
+    }
+
+
+    public static boolean isFieldBoolean(String field) {
+        return javaFieldType(field) == BOOLEAN;
+    }
+
+    public static boolean isFieldOther(String field) {
+        return javaFieldType(field) == OTHER;
+    }
 
     public static String sql2Java(String filed) {
         switch (filed) {
-
             case "java.lang.Byte":
             case "byte":
             case "java.lang.Integer":
@@ -85,9 +134,31 @@ public class Helper {
             case "java.lang.Byte[]":
             case "byte[]":
                 return "Blob";
-
             default:
                 return "String";
         }
+    }
+
+
+    public static String restype(Element element) {
+        try {
+            Field restype_field = element.asType().getClass().getDeclaredField("restype");
+            restype_field.setAccessible(true);
+            return restype_field.get(element.asType()).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String argtypes(Element element) {
+        try {
+            Field argtypes_field = element.asType().getClass().getDeclaredField("argtypes");
+            argtypes_field.setAccessible(true);
+            return argtypes_field.get(element.asType()).toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

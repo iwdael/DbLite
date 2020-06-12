@@ -25,16 +25,19 @@ import com.hacknife.onlite.annotation.AutoInc;
 import com.hacknife.onlite.annotation.Column;
 import com.hacknife.onlite.annotation.NotNull;
 import com.hacknife.onlite.annotation.Unique;
-import com.hacknife.onlite.util.Helper;
+import com.hacknife.onlite.util.OnLiteHelper;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.annotation.processing.Messager;
 import javax.lang.model.element.Element;
+import javax.lang.model.type.TypeMirror;
 
 import static com.github.javaparser.ast.expr.AssignExpr.Operator.ASSIGN;
 import static com.github.javaparser.ast.expr.BinaryExpr.Operator.EQUALS;
@@ -63,6 +66,7 @@ public class OnLite {
     private String fullClass;
     private String tableName;
     private List<Element> elements = new ArrayList<>();
+    private List<Element> converts = new ArrayList<>();
     private int version;
     private Element element;
     private String _package;
@@ -86,6 +90,10 @@ public class OnLite {
 
     public void addElement(Element element) {
         this.elements.add(element);
+    }
+
+    public void addConvert(Element element) {
+        this.converts.add(element);
     }
 
     public void setVersion(int value) {
@@ -205,10 +213,18 @@ public class OnLite {
                 }
             }
             if (col == null || col.length() == 0) col = field;
+            MethodCallExpr strMethod = new MethodCallExpr("String.valueOf", new MethodCallExpr(String.format("where.get%s", fieldU)));
+            if (OnLiteHelper.isFieldOther(elements.get(0).asType().toString()))
+                strMethod = new MethodCallExpr(String.format("where.get%s", fieldU));
+            for (Element convert : converts) {
+                if (!(Objects.equals(OnLiteHelper.argtypes(convert), elements.get(0).asType().toString()) && (Objects.equals(OnLiteHelper.restype(convert), String.class.getName()))))
+                    continue;
+                strMethod = new MethodCallExpr(String.format("%s.%s", convert.getEnclosingElement().toString(), convert.getSimpleName().toString()), new MethodCallExpr(String.format("where.get%s", fieldU)));
+            }
 
             stmt.addStatement(new IfStmt()
                     .setCondition(new BinaryExpr(new MethodCallExpr(String.format("where.get%s", fieldU)), new NameExpr("null"), NOT_EQUALS))
-                    .setThenStmt(new ExpressionStmt().setExpression(new MethodCallExpr("list.add", new MethodCallExpr("String.valueOf", new MethodCallExpr(String.format("where.get%s", fieldU))))))
+                    .setThenStmt(new ExpressionStmt().setExpression(new MethodCallExpr("list.add", strMethod)))
             );
         }
 
@@ -265,9 +281,16 @@ public class OnLite {
                 }
             }
             if (col == null || col.length() == 0) col = field;
+            MethodCallExpr valueMethod = new MethodCallExpr(String.format("%s.get%s", clazzVar, fieldU));
+            for (Element convert : converts) {
+                if (!(Objects.equals(OnLiteHelper.argtypes(convert), elements.get(0).asType().toString()) && (Objects.equals(OnLiteHelper.restype(convert), String.class.getName()))))
+                    continue;
+                valueMethod = new MethodCallExpr(String.format("%s.%s", convert.getEnclosingElement().toString(), convert.getSimpleName().toString()))
+                        .setArguments(new NodeList(valueMethod));
+            }
             stmt.addStatement(new IfStmt()
                     .setCondition(new BinaryExpr(new MethodCallExpr(String.format("%s.get%s", clazzVar, fieldU)), new NameExpr("null"), NOT_EQUALS))
-                    .setThenStmt(new ExpressionStmt(new MethodCallExpr("values.put", new StringLiteralExpr(col), new MethodCallExpr(String.format("%s.get%s", clazzVar, fieldU)))))
+                    .setThenStmt(new ExpressionStmt(new MethodCallExpr("values.put", new StringLiteralExpr(col), valueMethod)))
             );
         }
         stmt.addStatement(new ReturnStmt().setExpression(new NameExpr("values")));
@@ -290,15 +313,46 @@ public class OnLite {
                 }
             }
             if (col == null || col.length() == 0) col = field;
-            stmt.addStatement(new MethodCallExpr(String.format("%s.set%s", clazzVar, Character.toUpperCase(field.charAt(0)) + field.substring(1)))
-                    .setArguments(new NodeList(
-                            new MethodCallExpr(String.format("cursor.get%s", Helper.sql2Java(elements.get(0).asType().toString())))
-                                    .setArguments(new NodeList(
-                                                    new MethodCallExpr("cursor.getColumnIndex")
-                                                            .setArguments(new NodeList(new StringLiteralExpr(col)))
-                                            )
+            MethodCallExpr methodCallExpr = OnLiteHelper.isFieldBoolean(elements.get(0).asType().toString()) ?
+                    new MethodCallExpr("Boolean.parseBoolean")
+                            .setArguments(new NodeList(
+                                            new MethodCallExpr(String.format("cursor.get%s", OnLiteHelper.sql2Java(elements.get(0).asType().toString())))
+                                                    .setArguments(new NodeList(
+                                                                    new MethodCallExpr("cursor.getColumnIndex")
+                                                                            .setArguments(new NodeList(new StringLiteralExpr(col)))
+                                                            )
+                                                    )
                                     )
-                    ))
+                            ) :
+                    new MethodCallExpr(String.format("cursor.get%s", OnLiteHelper.sql2Java(elements.get(0).asType().toString())))
+                            .setArguments(new NodeList(
+                                            new MethodCallExpr("cursor.getColumnIndex")
+                                                    .setArguments(new NodeList(new StringLiteralExpr(col)))
+
+                                    )
+                            );
+
+            if (OnLiteHelper.isFieldOther(elements.get(0).asType().toString())) {
+
+                for (Element convert : converts) {
+                    if (!(Objects.equals(OnLiteHelper.restype(convert), elements.get(0).asType().toString()) && (Objects.equals(OnLiteHelper.argtypes(convert), String.class.getName()))))
+                        continue;
+                    methodCallExpr = new MethodCallExpr(String.format("%s.%s", convert.getEnclosingElement().toString(), convert.getSimpleName().toString()))
+                            .setArguments(new NodeList(
+                                            new MethodCallExpr(String.format("cursor.get%s", OnLiteHelper.sql2Java(elements.get(0).asType().toString())))
+                                                    .setArguments(new NodeList(
+                                                                    new MethodCallExpr("cursor.getColumnIndex")
+                                                                            .setArguments(new NodeList(new StringLiteralExpr(col)))
+                                                            )
+                                                    )
+                                    )
+                            );
+                }
+
+            }
+            stmt.addStatement(new MethodCallExpr(String.format("%s.set%s", clazzVar, Character.toUpperCase(field.charAt(0)) + field.substring(1)))
+                    .setArguments(new NodeList(methodCallExpr)
+                    )
             );
         }
         stmt.addStatement(new ReturnStmt().setExpression(new NameExpr(clazzVar)));
@@ -328,7 +382,7 @@ public class OnLite {
                     uniqueAnnotation = element.getAnnotation(Unique.class);
             }
             String name = columnAnnotation != null ? (columnAnnotation.name().length() == 0 ? list.get(0).toString() : columnAnnotation.name()) : list.get(0).toString();
-            String type = columnAnnotation != null ? (columnAnnotation.type().length() == 0 ? Helper.java2Sql(list.get(0).asType().toString()) : columnAnnotation.type()) : Helper.java2Sql(list.get(0).asType().toString());
+            String type = columnAnnotation != null ? (columnAnnotation.type().length() == 0 ? OnLiteHelper.java2Sql(list.get(0).asType().toString()) : columnAnnotation.type()) : OnLiteHelper.java2Sql(list.get(0).asType().toString());
 
             String notNull = notNullAnnotation != null ? " NOT NULL" : " DEFAULT NULL";
             String unique = uniqueAnnotation != null ? " UNIQUE" : "";
