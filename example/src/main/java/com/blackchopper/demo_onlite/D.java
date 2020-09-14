@@ -5,7 +5,7 @@ import com.hacknife.onlite.annotation.Table;
 
 import java.util.List;
 
-@Table
+@Table("table_DDDDDDDDDDDDDDDD")
 public class D {
 
     @Column(name = "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC")
@@ -47,7 +47,7 @@ public class D {
     @Column
     String ProductName;
 
-    @Column
+    @Column(name = "__________ProductReadUuid___________________")
     String ProductReadUuid;
 
     @Column

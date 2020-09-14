@@ -27,7 +27,6 @@ import com.hacknife.onlite.annotation.NotNull;
 import com.hacknife.onlite.annotation.Unique;
 import com.hacknife.onlite.util.OnLiteHelper;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,7 +36,6 @@ import java.util.Objects;
 
 import javax.annotation.processing.Messager;
 import javax.lang.model.element.Element;
-import javax.lang.model.type.TypeMirror;
 
 import static com.github.javaparser.ast.expr.AssignExpr.Operator.ASSIGN;
 import static com.github.javaparser.ast.expr.BinaryExpr.Operator.EQUALS;
@@ -157,8 +155,12 @@ public class OnLite {
                 " * project : OnLite\n" +
                 " ");
 
+
+        createVariables(clazzOrInterface);
+
         clazzOrInterface.addConstructor(Modifier.PUBLIC)
                 .setBody(createConstructor());
+
 
         clazzOrInterface.addMethod("createTable", Modifier.PROTECTED)
                 .setType(String.class)
@@ -190,6 +192,29 @@ public class OnLite {
                 .setBody(createSelectionArgv());
 
         return unit.toString();
+    }
+
+    private void createVariables(ClassOrInterfaceDeclaration declaration) {
+        declaration
+                .addFieldWithInitializer(String.class, "TABLE_NAME", new StringLiteralExpr(tableName), Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
+        declaration
+                .addFieldWithInitializer(int.class, "VERSION", new IntegerLiteralExpr(version), Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
+
+        List<List<Element>> lists = new ArrayList<>(fields().values());
+
+        for (int i = 0; i < lists.size(); i++) {
+            List<Element> list = lists.get(i);
+            Column columnAnnotation = null;
+            for (Element element : list) {
+                if (element.getAnnotation(Column.class) != null)
+                    columnAnnotation = element.getAnnotation(Column.class);
+            }
+
+            String name = columnAnnotation != null ? (columnAnnotation.name().length() == 0 ? list.get(0).toString() : columnAnnotation.name()) : list.get(0).toString();
+            declaration
+                    .addFieldWithInitializer(String.class,list.get(0).toString(), new StringLiteralExpr(name), Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
+
+        }
     }
 
     private BlockStmt createSelectionArgv() {
