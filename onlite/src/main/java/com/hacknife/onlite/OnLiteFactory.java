@@ -1,10 +1,12 @@
 package com.hacknife.onlite;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.io.File;
 import java.util.List;
+
 /**
  * author  : Hacknife
  * e-mail  : hacknife@outlook.com
@@ -23,8 +25,12 @@ public class OnLiteFactory {
         openDatabase();
     }
 
-    public static OnLiteFactory init(String path) {
-        return OnLiteFactory.getInstance(path);
+    public static OnLiteFactory init(String absPath) {
+        return OnLiteFactory.getInstance(absPath);
+    }
+
+    public static OnLiteFactory init(Context context, String directoryName) {
+        return OnLiteFactory.getInstance(context.getDir(directoryName, Context.MODE_PRIVATE).getAbsolutePath() + "/");
     }
 
     private static OnLiteFactory getInstance() {
