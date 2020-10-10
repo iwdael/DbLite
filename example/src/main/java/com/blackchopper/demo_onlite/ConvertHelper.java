@@ -14,4 +14,14 @@ public class ConvertHelper {
     public static String convert(List<V> c) {
         return null;
     }
+
+    @Convert
+    public static String convert1(Object c) {
+        return null;
+    }
+
+    @Convert
+    public static Object convert1(String c) {
+        return null;
+    }
 }
