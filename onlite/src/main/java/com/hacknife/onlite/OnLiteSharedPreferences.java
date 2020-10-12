@@ -3,7 +3,7 @@ package com.hacknife.onlite;
 import java.util.List;
 
 public class OnLiteSharedPreferences {
-    public final static String OnLiteSharedPreferencesConverter = "com.hacknife.onlite.converter.OnLiteSharedPreferencesConverter";
+    private final static String OnLiteSharedPreferencesConverter = "com.hacknife.onlite.converter.OnLiteSharedPreferencesConverter";
     private static SharedPreferencesConverter converter;
 
     static {
@@ -33,7 +33,6 @@ public class OnLiteSharedPreferences {
 
     public static <T> T obtain(Class<T> clazz, String key) {
         if (clazz == null || key == null) return null;
-
         if (converter == null)
             throw new IllegalArgumentException("you should convert string/object to object/string");
         SharedPreferences where = new SharedPreferences();

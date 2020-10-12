@@ -146,9 +146,19 @@ public class OnLiteHelper {
             restype_field.setAccessible(true);
             return restype_field.get(element.asType()).toString();
         } catch (Exception e) {
-            e.printStackTrace();
+             return resTtype(element);
         }
-        return null;
+    }
+
+    private static String tvars(Element element) {
+        try {
+            Field restype_field = element.asType().getClass().getDeclaredField("tvars");
+            restype_field.setAccessible(true);
+            return restype_field.get(element.asType()).toString();
+        } catch (Exception e) {
+//            e.printStackTrace();
+        }
+        return "";
     }
 
     public static String argtypes(Element element) {
@@ -157,7 +167,30 @@ public class OnLiteHelper {
             argtypes_field.setAccessible(true);
             return argtypes_field.get(element.asType()).toString();
         } catch (Exception e) {
+             return argTtype(element);
+        }
+     }
+
+    private static String argTtype(Element element) {
+        try {
+            Field qtype_field = element.asType().getClass().getField("qtype");
+            qtype_field.setAccessible(true);
+            String qtype = qtype_field.get(element.asType()).toString();
+            return qtype.substring(qtype.indexOf("(") + 1, qtype.indexOf(")")).replaceAll(tvars(element), "");
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+
+    private static String resTtype(Element element) {
+        try {
+            Field qtype_field = element.asType().getClass().getField("qtype");
+            qtype_field.setAccessible(true);
+            String qtype = qtype_field.get(element.asType()).toString();
+            return qtype.substring(qtype.indexOf(")") + 1);
+        } catch (Exception e) {
+//            e.printStackTrace();
         }
         return null;
     }

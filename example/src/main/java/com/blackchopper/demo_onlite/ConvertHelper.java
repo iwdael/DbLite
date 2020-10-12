@@ -16,12 +16,12 @@ public class ConvertHelper {
     }
 
     @Convert
-    public static String convert1(Object c) {
+    public static String objectConvertString(String key, Object value) {
         return null;
     }
 
     @Convert
-    public static Object convert1(String c) {
+    public static <T> T stringConvertObject(Class<T> clazz, String string) {
         return null;
     }
 }

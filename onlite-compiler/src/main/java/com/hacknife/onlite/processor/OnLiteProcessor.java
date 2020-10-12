@@ -1,6 +1,7 @@
 package com.hacknife.onlite.processor;
 
 import com.hacknife.onlite.OnLite;
+import com.hacknife.onlite.OnLiteSharedPreferences;
 import com.hacknife.onlite.annotation.AutoInc;
 import com.hacknife.onlite.annotation.Column;
 import com.hacknife.onlite.annotation.Convert;
@@ -9,12 +10,16 @@ import com.hacknife.onlite.annotation.Table;
 import com.google.auto.service.AutoService;
 import com.hacknife.onlite.annotation.Unique;
 import com.hacknife.onlite.annotation.Version;
+import com.hacknife.onlite.util.OnLiteHelper;
 
+import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -28,6 +33,8 @@ import javax.lang.model.element.TypeElement;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 
+import afu.org.checkerframework.checker.oigj.qual.O;
+
 /**
  * author  : Hacknife
  * e-mail  : hacknife@outlook.com
@@ -38,7 +45,7 @@ import javax.tools.JavaFileObject;
 public class OnLiteProcessor extends AbstractProcessor {
     protected Messager messager;
     protected Map<String, OnLite> liteMap = new HashMap<>();
-
+    protected OnLiteSharedPreferences sharedPreferences;
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
@@ -83,7 +90,20 @@ public class OnLiteProcessor extends AbstractProcessor {
         Set<? extends Element> converts = roundEnv.getElementsAnnotatedWith(Convert.class);
         for (Element element : converts) {
             for (OnLite value : liteMap.values()) {
-                value.addConvert(element);
+                String argtype = OnLiteHelper.argtypes(element);
+
+                if (Objects.equals(argtype, "java.lang.Class<>,java.lang.String")) {
+                    if (sharedPreferences == null)
+                        sharedPreferences = new OnLiteSharedPreferences();
+                    sharedPreferences.setStringConvertObject(element);
+                } else if (Objects.equals(argtype, "java.lang.String,java.lang.Object")) {
+                    if (sharedPreferences == null)
+                        sharedPreferences = new OnLiteSharedPreferences();
+                    sharedPreferences.setObjectConvertString(element);
+                } else {
+                    value.addConvert(element);
+                }
+
             }
         }
     }
@@ -155,6 +175,19 @@ public class OnLiteProcessor extends AbstractProcessor {
 
     private void process() {
 
+        if (sharedPreferences != null) {
+            try {
+                JavaFileObject jfo = processingEnv.getFiler().createSourceFile(
+                        sharedPreferences.getOnLiteClass(),
+                        sharedPreferences.getObjectConvertString()
+                );
+                Writer writer = jfo.openWriter();
+                writer.write(sharedPreferences.createLite(messager));
+                writer.flush();
+                writer.close();
+            } catch (Exception ignored) {
+            }
+        }
         for (String key : liteMap.keySet()) {
             try {
                 OnLite lite = liteMap.get(key);
