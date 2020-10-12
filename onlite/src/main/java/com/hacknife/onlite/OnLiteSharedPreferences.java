@@ -31,8 +31,8 @@ public class OnLiteSharedPreferences {
                 .updataOrInsert(entity, where);
     }
 
-    public static <T> T obtain(Class<T> clazz, String key) {
-        if (clazz == null || key == null) return null;
+    public static <T> T obtain(String key, T defaultT) {
+        if (defaultT == null || key == null) return defaultT;
         if (converter == null)
             throw new IllegalArgumentException("you should convert string/object to object/string");
         SharedPreferences where = new SharedPreferences();
@@ -40,12 +40,11 @@ public class OnLiteSharedPreferences {
         List<SharedPreferences> preferences = OnLiteFactory
                 .create(SharedPreferencesLite.class)
                 .select(where);
-        if (preferences.isEmpty()) return null;
+        if (preferences.isEmpty()) return defaultT;
         SharedPreferences sharedPreferences = preferences.get(0);
-        if (sharedPreferences.getValue() == null) return null;
-        return converter.stringConvertObject(clazz, sharedPreferences.getValue());
+        if (sharedPreferences.getValue() == null) return defaultT;
+        return converter.stringConvertObject((Class<T>) defaultT.getClass(), sharedPreferences.getValue());
     }
-
 
 
 }
