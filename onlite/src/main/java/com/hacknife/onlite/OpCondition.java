@@ -3,7 +3,12 @@ package com.hacknife.onlite;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+/**
+ * author  : Hacknife
+ * e-mail  : hacknife@outlook.com
+ * github  : http://github.com/hacknife
+ * project : OnLite
+ */
 public class OpCondition extends Condition {
 
     public enum Operator {
