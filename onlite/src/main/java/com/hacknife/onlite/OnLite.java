@@ -53,22 +53,27 @@ public abstract class OnLite<T> implements ILite<T> {
     }
 
     @Override
-    public int updata(T entity, T where) {
+    public int update(T entity, T where) {
         int result = -1;
         result = sqLiteDatabase.update(this.tableName, createContentValues(entity), createSelection(where), createSelectionArgv(where));
         return result;
     }
 
     @Override
-    public int updata(T entity, String where, String[] value) {
+    public int update(T entity, Condition condition) {
+        return update(entity, condition.whereClause(), condition.whereArgs());
+    }
+
+    @Override
+    public int update(T entity, String where, String[] value) {
         int result;
         result = sqLiteDatabase.update(this.tableName, createContentValues(entity), where, value);
         return result;
     }
 
     @Override
-    public int updataOrInsert(T entity, T where) {
-        int result = updata(entity, where);
+    public int updateOrInsert(T entity, T where) {
+        int result = update(entity, where);
         if (result == 0 | result == -1) {
             result = Integer.valueOf(String.valueOf(insert(entity)));
         }
@@ -76,12 +81,17 @@ public abstract class OnLite<T> implements ILite<T> {
     }
 
     @Override
-    public int updataOrInsert(T entity, String where, String[] value) {
-        int result = updata(entity, where, value);
+    public int updateOrInsert(T entity, String where, String[] value) {
+        int result = update(entity, where, value);
         if (result == 0 | result == -1) {
             result = Integer.valueOf(String.valueOf(insert(entity)));
         }
         return result;
+    }
+
+    @Override
+    public int updateOrInsert(T entity, Condition condition) {
+        return updateOrInsert(entity, condition.whereClause(), condition.whereArgs());
     }
 
     @Override
@@ -90,8 +100,18 @@ public abstract class OnLite<T> implements ILite<T> {
     }
 
     @Override
+    public List<T> select(Condition where) {
+        return select(where.whereClause(), where.whereArgs());
+    }
+
+    @Override
     public List<T> select(T where, Integer limit) {
         return select(where, limit, null, null, null);
+    }
+
+    @Override
+    public List<T> select(Condition where, Integer limit) {
+        return select(where.whereClause(), where.whereArgs(), limit);
     }
 
     @Override
@@ -100,8 +120,18 @@ public abstract class OnLite<T> implements ILite<T> {
     }
 
     @Override
+    public List<T> select(Condition where, Integer limit, Integer page) {
+        return select(where.whereClause(), where.whereArgs(), limit, page);
+    }
+
+    @Override
     public List<T> select(T where, String orderColumnName, Boolean asc) {
         return select(where, null, null, orderColumnName, asc);
+    }
+
+    @Override
+    public List<T> select(Condition where, String orderColumnName, Boolean asc) {
+        return select(where.whereClause(), where.whereArgs(), orderColumnName, asc);
     }
 
     @Override
@@ -110,8 +140,18 @@ public abstract class OnLite<T> implements ILite<T> {
     }
 
     @Override
-    public List<T> select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc) {
+    public List<T> select(Condition where, Integer limit, String orderColumnName, Boolean asc) {
+        return select(where.whereClause(), where.whereArgs(), limit, orderColumnName, asc);
+    }
 
+
+    @Override
+    public List<T> select(Condition where, Integer limit, Integer page, String orderColumnName, Boolean asc) {
+        return select(where.whereClause(), where.whereArgs(), limit, page, orderColumnName, asc);
+    }
+
+    @Override
+    public List<T> select(T where, Integer limit, Integer page, String orderColumnName, Boolean asc) {
         List<T> result = new ArrayList<>();
         String conditionWhere = null;
         String[] conditionValue = null;
@@ -201,6 +241,11 @@ public abstract class OnLite<T> implements ILite<T> {
         int result = -1;
         result = sqLiteDatabase.delete(tableName, createSelection(where), createSelectionArgv(where));
         return result;
+    }
+
+    @Override
+    public int delete(Condition where) {
+        return delete(where.whereClause(), where.whereArgs());
     }
 
     @Override
