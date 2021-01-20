@@ -27,6 +27,8 @@ public interface ILite<T> {
 
     int updateOrInsert(T entity, String where, String[] value);
 
+    List<T> select();
+
     List<T> select(T where);
 
     List<T> select(Condition where);

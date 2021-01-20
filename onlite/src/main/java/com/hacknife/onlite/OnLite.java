@@ -95,6 +95,11 @@ public abstract class OnLite<T> implements ILite<T> {
     }
 
     @Override
+    public List<T> select() {
+        return select((T) null);
+    }
+
+    @Override
     public List<T> select(T where) {
         return select(where, null, null, null, null);
     }
