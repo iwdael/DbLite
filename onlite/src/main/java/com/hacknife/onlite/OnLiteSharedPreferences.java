@@ -28,11 +28,11 @@ public class OnLiteSharedPreferences {
         where.setKey(key);
         OnLiteFactory
                 .create(SharedPreferencesLite.class)
-                .updataOrInsert(entity, where);
+                .updateOrInsert(entity, where);
     }
 
     public static <T> T obtain(String key, T defaultT) {
-        if (defaultT == null || key == null) return defaultT;
+        if (key == null) return defaultT;
         if (converter == null)
             throw new IllegalArgumentException("you should convert string/object to object/string");
         SharedPreferences where = new SharedPreferences();

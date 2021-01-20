@@ -25,6 +25,26 @@ OnLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite
 ```Java
     OnLiteFactory.init("/sdcard/Android/data/package/db");
 ```
+对象转换
+```
+    @Convert
+    fun convertSongDissToString(ints: Diss): String {
+        return Gson().toJson(ints)
+    }
+
+    @Convert
+    fun convertStringToSongDiss(content: String): Diss {
+        return Gson().fromJson<Diss>(content, object : TypeToken<Diss>() {}.type)
+    }
+```
+对象SharedPreferences转换
+```
+    @Convert
+    fun objectConvertString(key: String, value: Any): String = Gson().toJson(value)
+
+    @Convert
+    fun <T> stringConvertObject(clazz: Class<T>, content: String): T = Gson().fromJson(content, clazz)
+```
 创建javabean，注解表名和build project，会自动生成Lite类。有6个注解能够更好的创建表，其意义正如其名，除了Table以外，其他注解都不是必须的。(@AutoInc/@Column/@Ignore/@NotNull/@Table/@Unique)
 ```Java
 @Table("user")
