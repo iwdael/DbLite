@@ -200,7 +200,7 @@ public abstract class OnLite<T> implements ILite<T> {
         }
         String limitStr = null;
         if (limit != null && page != null) {
-            limitStr = (limit * (page - 1)) + "," + limit;
+            limitStr = (limit * (page)) + "," + limit;
         } else if (limit != null && page == null) {
             limitStr = String.valueOf(limit);
         }
