@@ -1,28 +1,16 @@
+apply from: './../config.gradle'
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
-
 android {
-    compileSdkVersion 29
-
+    buildToolsVersion buidConfig.buildToolsVersion
+    compileSdkVersion buidConfig.compileSdkVersion
     defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion buidConfig.minSdkVersion
+        targetSdkVersion buidConfig.targetSdkVersion
+        versionCode buidConfig.versionCode
+        versionName buidConfig.versionName
     }
 }
 
 dependencies {
     api project(':onlite-annotation')
-}
-
-publish {
-    userOrg = 'hacknife'
-    groupId = 'com.hacknife.onlite'
-    artifactId = 'onlite'
-    publishVersion = "${bintrayVer}"
-    bintrayUser = 'hacknife'
-    bintrayKey = "${bintrayKey}"
-    desc = ''
-    website = 'https://github.com/hacknife/onlite'
 }

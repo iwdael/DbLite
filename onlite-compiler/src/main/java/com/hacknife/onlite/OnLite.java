@@ -8,6 +8,7 @@ import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.expr.ArrayAccessExpr;
 import com.github.javaparser.ast.expr.AssignExpr;
 import com.github.javaparser.ast.expr.BinaryExpr;
+import com.github.javaparser.ast.expr.Expression;
 import com.github.javaparser.ast.expr.IntegerLiteralExpr;
 import com.github.javaparser.ast.expr.MarkerAnnotationExpr;
 import com.github.javaparser.ast.expr.MethodCallExpr;
@@ -40,6 +41,7 @@ import javax.lang.model.element.Element;
 import static com.github.javaparser.ast.expr.AssignExpr.Operator.ASSIGN;
 import static com.github.javaparser.ast.expr.BinaryExpr.Operator.EQUALS;
 import static com.github.javaparser.ast.expr.BinaryExpr.Operator.NOT_EQUALS;
+import static com.github.javaparser.ast.expr.BinaryExpr.Operator.OR;
 
 /**
  * author  : Hacknife
@@ -212,7 +214,7 @@ public class OnLite {
 
             String name = columnAnnotation != null ? (columnAnnotation.name().length() == 0 ? list.get(0).toString() : columnAnnotation.name()) : list.get(0).toString();
             declaration
-                    .addFieldWithInitializer(String.class,list.get(0).toString(), new StringLiteralExpr(name), Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
+                    .addFieldWithInitializer(String.class, list.get(0).toString(), new StringLiteralExpr(name), Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
 
         }
     }
@@ -338,17 +340,19 @@ public class OnLite {
                 }
             }
             if (col == null || col.length() == 0) col = field;
-            MethodCallExpr methodCallExpr = OnLiteHelper.isFieldBoolean(elements.get(0).asType().toString()) ?
-                    new MethodCallExpr("Boolean.parseBoolean")
-                            .setArguments(new NodeList(
-                                            new MethodCallExpr(String.format("cursor.get%s", OnLiteHelper.sql2Java(elements.get(0).asType().toString())))
-                                                    .setArguments(new NodeList(
-                                                                    new MethodCallExpr("cursor.getColumnIndex")
-                                                                            .setArguments(new NodeList(new StringLiteralExpr(col)))
-                                                            )
-                                                    )
-                                    )
-                            ) :
+            Expression methodCallExpr = OnLiteHelper.isFieldBoolean(elements.get(0).asType().toString()) ?
+                    new BinaryExpr(
+                            new MethodCallExpr(
+                                    new MethodCallExpr(
+                                            String.format("cursor.get%s", OnLiteHelper.sql2Java(elements.get(0).asType().toString())))
+                                            .setArguments(new NodeList(new MethodCallExpr("cursor.getColumnIndex").setArguments(new NodeList(new StringLiteralExpr(col))))), "equalsIgnoreCase", NodeList.nodeList(new StringLiteralExpr("1")))
+                            ,
+                            new MethodCallExpr(
+                                    new MethodCallExpr(
+                                            String.format("cursor.get%s", OnLiteHelper.sql2Java(elements.get(0).asType().toString())))
+                                            .setArguments(new NodeList(new MethodCallExpr("cursor.getColumnIndex").setArguments(new NodeList(new StringLiteralExpr(col))))), "equalsIgnoreCase", NodeList.nodeList(new StringLiteralExpr("true")))
+                            ,
+                            OR) :
                     new MethodCallExpr(String.format("cursor.get%s", OnLiteHelper.sql2Java(elements.get(0).asType().toString())))
                             .setArguments(new NodeList(
                                             new MethodCallExpr("cursor.getColumnIndex")

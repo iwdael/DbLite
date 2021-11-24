@@ -14,7 +14,7 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
         android:text="插入数据"
-        app:click="OnInsertClick();" />
+        android:onClick="onInsertClick" />
 
     <Button
         android:id="@+id/btn_delete"
@@ -23,7 +23,7 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
         android:text="删除数据"
-        app:click="OnDeleteClick();" />
+        android:onClick="onDeleteClick" />
 
     <Button
         android:id="@+id/btn_modify"
@@ -32,7 +32,7 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
         android:text="修改数据"
-        app:click="OnUpdateClick();" />
+        android:onClick="onUpdateClick" />
 
     <Button
         android:id="@+id/btn_update"
@@ -41,5 +41,5 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
         android:text="查询数据"
-        app:click="OnQueryClick();" />
+        android:onClick="onQueryClick" />
 </LinearLayout>

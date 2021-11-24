@@ -1,8 +1,6 @@
 apply plugin: 'java-library'
-apply plugin: 'com.novoda.bintray-release'
-
+  
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.google.auto.service:auto-service:1.0-rc4'
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc4'
     implementation project(':onlite-annotation')
@@ -10,13 +8,4 @@ dependencies {
 }
 
 
-publish {
-    userOrg = 'hacknife'
-    groupId = 'com.hacknife.onlite'
-    artifactId = 'onlite-compiler'
-    publishVersion = "${bintrayVer}"
-    bintrayUser = 'hacknife'
-    bintrayKey = "${bintrayKey}"
-    desc = ''
-    website = 'https://github.com/hacknife/onlite'
-}
+ 
