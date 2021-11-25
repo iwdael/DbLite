@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         Entity entity = new Entity();
         entity.setName("name" + new Random().nextInt(100));
         entity.setPwsd("pwsd" + new Random().nextInt(100));
-        entity.setIsPublish(new Random().nextBoolean());
+//        entity.setPublish(new Random().nextBoolean());
         OnLiteFactory.create(EntityLite.class).insert(entity);
         Log.v("dzq", "entity:" + entity.toString());
     }

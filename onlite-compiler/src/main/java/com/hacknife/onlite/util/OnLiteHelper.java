@@ -3,7 +3,6 @@ package com.hacknife.onlite.util;
 import java.lang.reflect.Field;
 
 import javax.lang.model.element.Element;
-import javax.lang.model.type.TypeMirror;
 
 /**
  * author  : Hacknife
@@ -107,6 +106,65 @@ public class OnLiteHelper {
         return javaFieldType(field) == OTHER;
     }
 
+    public static String sql2Set(Boolean targetIsKotlin, String field, String type) {
+        boolean index3FieldIsUpper = field.length() >= 3 && Character.toUpperCase(field.charAt(2)) == field.charAt(2);
+        if (isFieldBoolean(type)) {
+            if (field.startsWith("is") && !targetIsKotlin) {
+                if (index3FieldIsUpper) {
+                    String name = field.replaceFirst("is", "");
+                    return String.format("set%s", Character.toUpperCase(name.charAt(0)) + name.substring(1));
+                }
+            } else if (field.startsWith("is") && targetIsKotlin) {
+                if (index3FieldIsUpper) {
+                    String name = field.replaceFirst("is", "");
+                    return String.format("set%s", Character.toUpperCase(name.charAt(0)) + name.substring(1));
+                }
+            } else if (field.startsWith("Is") && !targetIsKotlin) {
+                if (index3FieldIsUpper) {
+                    String name = field.replaceFirst("Is", "");
+                    return String.format("set%s", Character.toUpperCase(name.charAt(0)) + name.substring(1));
+                }
+            }
+        } else {
+            if (field.startsWith("is") && targetIsKotlin && index3FieldIsUpper) {
+                String name = field.replaceFirst("is", "");
+                return String.format("set%s", Character.toUpperCase(name.charAt(0)) + name.substring(1));
+            }
+        }
+
+        if (field.length() >= 2 && (Character.toLowerCase(field.charAt(0)) == field.charAt(0)) && (Character.toUpperCase(field.charAt(1)) == field.charAt(1)) && !targetIsKotlin)
+            return String.format("set%s", field);
+        return String.format("set%s", Character.toUpperCase(field.charAt(0)) + field.substring(1));
+    }
+
+
+    public static String sql2Get(Boolean targetIsKotlin, String field, String type) {
+        boolean index3FieldIsUpper = field.length() >= 3 && Character.toUpperCase(field.charAt(2)) == field.charAt(2);
+        if (isFieldBoolean(type)) {
+            if (field.startsWith("is") && !targetIsKotlin) {
+                if (index3FieldIsUpper) {
+                    String name = field.replaceFirst("is", "");
+                    return String.format("get%s", Character.toUpperCase(name.charAt(0)) + name.substring(1));
+                }
+            } else if (field.startsWith("is") && targetIsKotlin) {
+                if (index3FieldIsUpper)
+                    return field;
+            } else if (field.startsWith("Is") && !targetIsKotlin) {
+                if (index3FieldIsUpper) {
+                    String name = field.replaceFirst("Is", "");
+                    return String.format("get%s", Character.toUpperCase(name.charAt(0)) + name.substring(1));
+                }
+            }
+        } else {
+            if (field.startsWith("is") && targetIsKotlin && index3FieldIsUpper) {
+                return field;
+            }
+        }
+        if (field.length() >= 2 && (Character.toLowerCase(field.charAt(0)) == field.charAt(0)) && (Character.toUpperCase(field.charAt(1)) == field.charAt(1)) && !targetIsKotlin)
+            return String.format("get%s", field);
+        return String.format("get%s", Character.toUpperCase(field.charAt(0)) + field.substring(1));
+    }
+
     public static String sql2Java(String filed) {
         switch (filed) {
             case "java.lang.Byte":
@@ -146,7 +204,7 @@ public class OnLiteHelper {
             restype_field.setAccessible(true);
             return restype_field.get(element.asType()).toString();
         } catch (Exception e) {
-             return resTtype(element);
+            return resTtype(element);
         }
     }
 
@@ -167,9 +225,9 @@ public class OnLiteHelper {
             argtypes_field.setAccessible(true);
             return argtypes_field.get(element.asType()).toString();
         } catch (Exception e) {
-             return argTtype(element);
+            return argTtype(element);
         }
-     }
+    }
 
     private static String argTtype(Element element) {
         try {

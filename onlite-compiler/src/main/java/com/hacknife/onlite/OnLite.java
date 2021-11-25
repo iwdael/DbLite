@@ -74,6 +74,7 @@ public class OnLite {
     private String fullClassLite;
     private String clazz;
     private String clazzVar;
+    private boolean targetIsKotlin = false;
 
     public void setFullClass(String fullClass) {
         this.fullClass = fullClass;
@@ -106,6 +107,10 @@ public class OnLite {
 
     public void setElement(Element element) {
         this.element = element;
+        List list = this.element.getAnnotationMirrors();
+        for (Object o : list) {
+            if (o.toString().contains("@kotlin.Metadata")) this.targetIsKotlin = true;
+        }
     }
 
     public Element getElement() {
@@ -232,7 +237,6 @@ public class OnLite {
         for (int i = 0; i < listElement.size(); i++) {
             List<Element> elements = listElement.get(i);
             String field = elements.get(0).toString();
-            String fieldU = Character.toUpperCase(field.charAt(0)) + field.substring(1);
             String col = null;
             for (Element element : elements) {
                 if (element.getAnnotation(Column.class) != null) {
@@ -240,17 +244,17 @@ public class OnLite {
                 }
             }
             if (col == null || col.length() == 0) col = field;
-            MethodCallExpr strMethod = new MethodCallExpr("String.valueOf", new MethodCallExpr(String.format("where.get%s", fieldU)));
+            MethodCallExpr strMethod = new MethodCallExpr("String.valueOf", new MethodCallExpr(String.format("where.%s", OnLiteHelper.sql2Get(targetIsKotlin, field, elements.get(0).asType().toString()))));
             if (OnLiteHelper.isFieldOther(elements.get(0).asType().toString()))
-                strMethod = new MethodCallExpr(String.format("where.get%s", fieldU));
+                strMethod = new MethodCallExpr(String.format("where.%s", OnLiteHelper.sql2Get(targetIsKotlin, field, elements.get(0).asType().toString())));
             for (Element convert : converts) {
                 if (!(Objects.equals(OnLiteHelper.argtypes(convert), elements.get(0).asType().toString()) && (Objects.equals(OnLiteHelper.restype(convert), String.class.getName()))))
                     continue;
-                strMethod = new MethodCallExpr(String.format("%s.%s", convert.getEnclosingElement().toString(), convert.getSimpleName().toString()), new MethodCallExpr(String.format("where.get%s", fieldU)));
+                strMethod = new MethodCallExpr(String.format("%s.%s", convert.getEnclosingElement().toString(), convert.getSimpleName().toString()), new MethodCallExpr(String.format("where.%s", OnLiteHelper.sql2Get(targetIsKotlin, field, elements.get(0).asType().toString()))));
             }
 
             stmt.addStatement(new IfStmt()
-                    .setCondition(new BinaryExpr(new MethodCallExpr(String.format("where.get%s", fieldU)), new NameExpr("null"), NOT_EQUALS))
+                    .setCondition(new BinaryExpr(new MethodCallExpr(String.format("where.%s", OnLiteHelper.sql2Get(targetIsKotlin, field, elements.get(0).asType().toString()))), new NameExpr("null"), NOT_EQUALS))
                     .setThenStmt(new ExpressionStmt().setExpression(new MethodCallExpr("list.add", strMethod)))
             );
         }
@@ -273,7 +277,6 @@ public class OnLite {
         for (int i = 0; i < listElement.size(); i++) {
             List<Element> elements = listElement.get(i);
             String field = elements.get(0).toString();
-            String fieldU = Character.toUpperCase(field.charAt(0)) + field.substring(1);
             String col = null;
             for (Element element : elements) {
                 if (element.getAnnotation(Column.class) != null) {
@@ -282,7 +285,7 @@ public class OnLite {
             }
             if (col == null || col.length() == 0) col = field;
             stmt.addStatement(new IfStmt()
-                    .setCondition(new BinaryExpr(new MethodCallExpr(String.format("where.get%s", fieldU)), new NameExpr("null"), NOT_EQUALS))
+                    .setCondition(new BinaryExpr(new MethodCallExpr(String.format("where.%s", OnLiteHelper.sql2Get(targetIsKotlin, field, elements.get(0).asType().toString()))), new NameExpr("null"), NOT_EQUALS))
                     .setThenStmt(new ExpressionStmt(new MethodCallExpr("builder.append", new StringLiteralExpr(String.format("and %s = ? ", col)))))
             );
         }
@@ -300,7 +303,6 @@ public class OnLite {
         for (int i = 0; i < listElement.size(); i++) {
             List<Element> elements = listElement.get(i);
             String field = elements.get(0).toString();
-            String fieldU = Character.toUpperCase(field.charAt(0)) + field.substring(1);
             String col = null;
             for (Element element : elements) {
                 if (element.getAnnotation(Column.class) != null) {
@@ -308,7 +310,7 @@ public class OnLite {
                 }
             }
             if (col == null || col.length() == 0) col = field;
-            MethodCallExpr valueMethod = new MethodCallExpr(String.format("%s.get%s", clazzVar, fieldU));
+            MethodCallExpr valueMethod = new MethodCallExpr(String.format("%s.%s", clazzVar, OnLiteHelper.sql2Get(targetIsKotlin, field, elements.get(0).asType().toString())));
             for (Element convert : converts) {
                 if (!(Objects.equals(OnLiteHelper.argtypes(convert), elements.get(0).asType().toString()) && (Objects.equals(OnLiteHelper.restype(convert), String.class.getName()))))
                     continue;
@@ -316,7 +318,7 @@ public class OnLite {
                         .setArguments(new NodeList(valueMethod));
             }
             stmt.addStatement(new IfStmt()
-                    .setCondition(new BinaryExpr(new MethodCallExpr(String.format("%s.get%s", clazzVar, fieldU)), new NameExpr("null"), NOT_EQUALS))
+                    .setCondition(new BinaryExpr(new MethodCallExpr(String.format("%s.%s", clazzVar, OnLiteHelper.sql2Get(targetIsKotlin, field, elements.get(0).asType().toString()))), new NameExpr("null"), NOT_EQUALS))
                     .setThenStmt(new ExpressionStmt(new MethodCallExpr("values.put", new StringLiteralExpr(col), valueMethod)))
             );
         }
@@ -379,7 +381,7 @@ public class OnLite {
                 }
 
             }
-            stmt.addStatement(new MethodCallExpr(String.format("%s.set%s", clazzVar, Character.toUpperCase(field.charAt(0)) + field.substring(1)))
+            stmt.addStatement(new MethodCallExpr(String.format("%s.%s", clazzVar, OnLiteHelper.sql2Set(targetIsKotlin, field, elements.get(0).asType().toString())))
                     .setArguments(new NodeList(methodCallExpr)
                     )
             );
