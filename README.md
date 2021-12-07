@@ -1,6 +1,6 @@
-# OnLite
-[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/hacknife) [![](https://img.shields.io/badge/language-java-yellow.svg)](https://github.com/hacknife) [![](https://img.shields.io/badge/Jcenter-1.5.6-brightgreen.svg)](http://jcenter.bintray.com/com/hacknife/onlite) [![](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/hacknife) [![](https://img.shields.io/badge/license-apache--2.0-green.svg)](https://github.com/hacknife) [![](https://img.shields.io/badge/api-11+-green.svg)](https://github.com/hacknife)<br/><br/>
-OnLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite实现数据库的数据记录和java对象之间的映射。增加，删除，查询，修改，都可以通过java对象来实现。
+# DbLite
+[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/iwdael) [![](https://img.shields.io/badge/language-java-yellow.svg)](https://github.com/iwdael) [![](https://img.shields.io/badge/Jcenter-1.5.6-brightgreen.svg)](http://jcenter.bintray.com/com/iwdael/dblite) [![](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/iwdael) [![](https://img.shields.io/badge/license-apache--2.0-green.svg)](https://github.com/iwdael) [![](https://img.shields.io/badge/api-11+-green.svg)](https://github.com/iwdael)<br/><br/>
+DbLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite实现数据库的数据记录和java对象之间的映射。增加，删除，查询，修改，都可以通过java对象来实现。
 ## 特点
 * 常规操作免手写sql
 * 支持复杂数据类型储存
@@ -8,7 +8,7 @@ OnLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite
 * 支持升序、降序、分页
 * 支持增删改查
 ## 使用说明
-在使用OnLite之前，必须先通过OnLiteFactory中的init方法初始化Onlite。OnLite实现了一些比较复杂的查询，比如按照某个字段升序或者倒序分页查询等。
+在使用DbLite之前，必须先通过DbLiteFactory中的init方法初始化Onlite。DbLite实现了一些比较复杂的查询，比如按照某个字段升序或者倒序分页查询等。
 
 |注解|功能|对象|默认属性|必须|
 |:------:|:------:|:------:|:------:|:------:|
@@ -21,9 +21,9 @@ OnLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite
 |@Ignore|忽略该字段|类成员变量|无|否|
 
 ### 代码示例
-初始化OnLiteFactory，并设置数据库储存的位置
+初始化DbLiteFactory，并设置数据库储存的位置
 ```Java
-    OnLiteFactory.init("/sdcard/Android/data/package/db");
+    DbLiteFactory.init("/sdcard/Android/data/package/db");
 ```
 对象转换
 ```
@@ -82,7 +82,7 @@ public class User {
 
 获Lite的对象
 ```Java
-    UserLite userLite = OnLiteFactory.create(UserLite.class);
+    UserLite userLite = DbLiteFactory.create(UserLite.class);
 ```
 插入数据
 ```Java
@@ -140,12 +140,12 @@ public class User {
 ```Java
 	dependencies {
 	  ...
-          compile 'com.hacknife.onlite:onlite:1.5.6'
-          annotationProcessor 'com.hacknife.onlite:onlite-compiler:1.5.6'
+          compile 'com.iwdael.dblite:dblite:1.5.6'
+          annotationProcessor 'com.iwdael.dblite:dblite-compiler:1.5.6'
 	}
 ```
 ### Step 3. 添加权限
-合并以下代码到应用的AndroidManifest.xml的manifest标签中。[点击查看详情](https://github.com/hacknife/OnHttp/blob/master/androimanifest.png)
+合并以下代码到应用的AndroidManifest.xml的manifest标签中。[点击查看详情](https://github.com/iwdael/OnHttp/blob/master/androimanifest.png)
 ```Java
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -153,4 +153,4 @@ public class User {
 ## 感谢浏览
 如果你有任何疑问，请加入QQ群，我将竭诚为你解答。欢迎Star和Fork本仓库，当然也欢迎你关注我。
 <br>
-![Image Text](https://github.com/hacknife/CarouselBanner/blob/master/qq_group.png)
+![Image Text](https://github.com/iwdael/CarouselBanner/blob/master/qq_group.png)

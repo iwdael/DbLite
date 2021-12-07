@@ -9,7 +9,7 @@ android {
     compileSdkVersion buidConfig.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.danzekr.onlite.example"
+        applicationId "com.iwdael.dblite.example"
         minSdkVersion buidConfig.minSdkVersion
         targetSdkVersion buidConfig.targetSdkVersion
         versionCode buidConfig.versionCode
@@ -21,6 +21,6 @@ dependencies {
     implementation dependent.kotlinJdk7
     implementation dependent.appcompat
     implementation dependent.constraintlayout
-    implementation project(':onlite')
-    kapt project(':onlite-compiler')
+    implementation project(':dblite')
+    kapt project(':dblite-compiler')
 }
