@@ -1,6 +1,6 @@
 # DbLite
-[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/iwdael) [![](https://img.shields.io/badge/language-java-yellow.svg)](https://github.com/iwdael) [![](https://jitpack.io/v/iwdael/onlite.svg)](https://jitpack.io/#iwdael/onlite) [![](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/iwdael) [![](https://img.shields.io/badge/license-apache--2.0-green.svg)](https://github.com/iwdael) [![](https://img.shields.io/badge/api-11+-green.svg)](https://github.com/iwdael)<br/><br/>
-DbLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite实现数据库的数据记录和java对象之间的映射。增加，删除，查询，修改，都可以通过java对象来实现。
+[![](https://img.shields.io/badge/platform-android-orange.svg)](https://github.com/iwdael) [![](https://img.shields.io/badge/language-java-yellow.svg)](https://github.com/iwdael) [![](https://jitpack.io/v/iwdael/dblite.svg)](https://jitpack.io/#iwdael/dblite) [![](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/iwdael) [![](https://img.shields.io/badge/license-apache--2.0-green.svg)](https://github.com/iwdael) [![](https://img.shields.io/badge/api-11+-green.svg)](https://github.com/iwdael)<br/><br/>
+DbLite是Android的数据库框架，你不需要写任何的sql语句。 Dblite实现数据库的数据记录和java对象之间的映射。增加，删除，查询，修改，都可以通过java对象来实现。
 ## 特点
 * 常规操作免手写sql
 * 支持复杂数据类型储存
@@ -8,7 +8,7 @@ DbLite是Android的数据库框架，你不需要写任何的sql语句。 Onlite
 * 支持升序、降序、分页
 * 支持增删改查
 ## 使用说明
-在使用DbLite之前，必须先通过DbLiteFactory中的init方法初始化Onlite。DbLite实现了一些比较复杂的查询，比如按照某个字段升序或者倒序分页查询等。
+在使用DbLite之前，必须先通过DbLiteFactory中的init方法初始化Dblite。DbLite实现了一些比较复杂的查询，比如按照某个字段升序或者倒序分页查询等。
 
 |注解|功能|对象|默认属性|必须|
 |:------:|:------:|:------:|:------:|:------:|
