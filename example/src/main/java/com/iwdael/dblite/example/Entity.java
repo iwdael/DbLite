@@ -1,4 +1,4 @@
-package com.iwdael.example;
+package com.iwdael.dblite.example;
 
 import com.iwdael.dblite.annotation.Column;
 import com.iwdael.dblite.annotation.Table;
@@ -275,4 +275,35 @@ public class Entity {
         this.ISstring12 = ISstring12;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"name\":\'" + name + "\'" +
+                ", \"pwsd\":\'" + pwsd + "\'" +
+                ", \"isBoolean1\":" + isBoolean1 +
+                ", \"iSBoolean2\":" + iSBoolean2 +
+                ", \"IsBoolean3\":" + IsBoolean3 +
+                ", \"ISBoolean4\":" + ISBoolean4 +
+                ", \"boolean5\":" + boolean5 +
+                ", \"Boolean6\":" + Boolean6 +
+                ", \"BOolean7\":" + BOolean7 +
+                ", \"bOolean8\":" + bOolean8 +
+                ", \"isboolean9\":" + isboolean9 +
+                ", \"iSboolean10\":" + iSboolean10 +
+                ", \"Isboolean11\":" + Isboolean11 +
+                ", \"ISboolean12\":" + ISboolean12 +
+                ", \"isString1\":\'" + isString1 + "\'" +
+                ", \"iSString2\":\'" + iSString2 + "\'" +
+                ", \"IsString3\":\'" + IsString3 + "\'" +
+                ", \"ISString4\":\'" + ISString4 + "\'" +
+                ", \"string5\":\'" + string5 + "\'" +
+                ", \"String6\":\'" + String6 + "\'" +
+                ", \"STring7\":\'" + STring7 + "\'" +
+                ", \"sTring8\":\'" + sTring8 + "\'" +
+                ", \"isstring9\":\'" + isstring9 + "\'" +
+                ", \"iSstring10\":\'" + iSstring10 + "\'" +
+                ", \"Isstring11\":\'" + Isstring11 + "\'" +
+                ", \"ISstring12\":\'" + ISstring12 + "\'" +
+                '}';
+    }
 }

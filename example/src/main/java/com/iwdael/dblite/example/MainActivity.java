@@ -1,4 +1,4 @@
-package com.iwdael.example;
+package com.iwdael.dblite.example;
 
 
 import android.os.Bundle;

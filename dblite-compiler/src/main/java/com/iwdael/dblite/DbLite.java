@@ -385,9 +385,9 @@ public class DbLite {
                     new IfStmt()
                             .setCondition(new BinaryExpr(
                                     new MethodCallExpr(
-                                            String.format("cursor.get%s", DbLiteHelper.sql2Java(elements.get(0).asType().toString())))
+                                            String.format("cursor.isNull" ))
                                             .setArguments(new NodeList(new MethodCallExpr("cursor.getColumnIndex").setArguments(new NodeList(new StringLiteralExpr(col)))))
-                                    , new NameExpr("null"), NOT_EQUALS))
+                                    , new NameExpr("true"), NOT_EQUALS))
                             .setThenStmt(
                                     new ExpressionStmt(new MethodCallExpr(String.format("%s.%s", clazzVar, DbLiteHelper.sql2Set(targetIsKotlin, field, elements.get(0).asType().toString())))
                                             .setArguments(new NodeList(methodCallExpr)

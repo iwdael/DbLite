@@ -1,4 +1,4 @@
-package com.iwdael.example
+package com.iwdael.dblite.example
 
 import com.iwdael.dblite.annotation.Column
 import com.iwdael.dblite.annotation.Table
@@ -76,7 +76,6 @@ class Entity3 {
     var STring8: String? = null
 
 
-
     @Column
     var isstring9: String? = null
 
@@ -88,4 +87,7 @@ class Entity3 {
 
     @Column
     var ISstring12: String? = null
+
+    @Column
+    var ands: Int? = null
 }
