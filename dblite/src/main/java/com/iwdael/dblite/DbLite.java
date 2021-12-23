@@ -242,6 +242,11 @@ public abstract class DbLite<T> implements ILite<T> {
     }
 
     @Override
+    public int delete() {
+        return delete((T) null);
+    }
+
+    @Override
     public int delete(T where) {
         int result = -1;
         result = sqLiteDatabase.delete(tableName, createSelection(where), createSelectionArgv(where));
@@ -261,7 +266,7 @@ public abstract class DbLite<T> implements ILite<T> {
     }
 
     @Override
-    public boolean delete() {
+    public boolean drop() {
         if (!exists()) return false;
         String sql = " DROP TABLE " + this.tableName;
         sqLiteDatabase.execSQL(sql);

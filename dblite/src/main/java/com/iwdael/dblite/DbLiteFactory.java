@@ -67,7 +67,7 @@ public class DbLiteFactory {
                     if (!tableDbs.get(0).tableVersion.equals(baseLite.version)) {
                         factory.tableDbLite.update(new TableDb(baseLite.tableName, baseLite.version), new TableDb(baseLite.tableName));
                         baseLite.init(factory.sqLiteDatabase);
-                        baseLite.delete();
+                        baseLite.drop();
                     }
                 }
             }

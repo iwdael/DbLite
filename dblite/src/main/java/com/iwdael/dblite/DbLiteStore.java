@@ -2,7 +2,7 @@ package com.iwdael.dblite;
 
 import java.util.List;
 
-public class DbLiteSharedPreferences {
+public class DbLiteStore {
     private final static String DbLiteSharedPreferencesConverter = "com.iwdael.dblite.converter.DbLiteSharedPreferencesConverter";
     private static SharedPreferencesConverter converter;
 

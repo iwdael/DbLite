@@ -65,13 +65,15 @@ public interface ILite<T> {
 
     List<T> select(String where, String[] value, Integer limit, Integer page);
 
+    int delete();
+
     int delete(T where);
 
     int delete(Condition where);
 
     int delete(String where, String[] value);
 
-    boolean delete();
+    boolean drop();
 
     boolean exists();
 
